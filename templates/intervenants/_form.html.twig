@@ -1,0 +1,50 @@
+{{ form_start(form) }}
+
+<div class="form-row">
+	<div class="col-md-3">
+		{{ form_row(form.nom,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.nom) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.prenom,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.prenom) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.email,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.email) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.classes,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.classes) }}
+	</div>
+
+</div>
+<br>
+<div class="form-row">
+	<div class="col-md-6">
+		{{ form_row(form.adresse,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.adresse) }}
+	</div>
+	<div class="col-md-6">
+		{{ form_row(form.telephone,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.telephone) }}
+	</div>
+
+</div>
+
+<br>
+<div class="form-row">
+	<div class="col-md-6">
+		{{ form_row(form.modules,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.modules) }}
+	</div>
+
+
+</div>
+
+<br>
+<button class="mt-1 btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+ou
+<a href="{{ path('app_intervenants_index') }}">Retour à la liste</a>
+
+{{ form_end(form) }}
