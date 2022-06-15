@@ -67,20 +67,20 @@
 														<td class="sorting_1 dtr-control">
 															<a href="{{ path('app_modules_show', {'id': module.id}) }}">{{ module.nom }}</a>
 														</td>
-												    
+
 														<td class="sorting_1 dtr-control">
-										
+
 															<a href="{{ path('app_blocs_show', {'id': module.bloc.id}) }}">{{ module.bloc.nom }}</a>
-													
+
 														</td>
 
-	                                                <td class="sorting_1 dtr-control">
-											
+														<td class="sorting_1 dtr-control">
+
 															<a href="{{ path('app_classes_show', {'id': module.classes.id}) }}">{{ module.classes.nom }}</a>
-										
-													</td>
-													
-													<td class="sorting_1 dtr-control">
+
+														</td>
+
+														<td class="sorting_1 dtr-control">
 
 															<a href="{{ path('app_modules_show', {'id': module.id}) }}">{{ module.createdAt|date('d-m-Y H:i') }}</a>
 
@@ -122,4 +122,6 @@
 		</div>
 	</div>
 	{{ block("Footer", "Menus/Footer.html.twig") }}
+
+
 {% endblock %}

@@ -53,6 +53,11 @@ class Telechargements
      */
     private $files;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $type;
+
     public function __construct()
     {
         $this->files = new ArrayCollection();
@@ -150,6 +155,18 @@ class Telechargements
                 $file->setTelechargements(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

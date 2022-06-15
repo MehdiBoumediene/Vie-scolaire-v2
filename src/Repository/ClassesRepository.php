@@ -62,13 +62,11 @@ class ClassesRepository extends ServiceEntityRepository
     }
 
 
-    public function findByIntervenantEtudiant($user,$classe)
+    public function findByIntervenantEtudiant($classe)
     {
         return $this->createQueryBuilder('u')
-            ->innerJoin('u.users', 'c')
-            ->where('c.user = :user')
-            ->andWhere('u.id = :classe')
-            ->setParameter('user', $user)
+    
+            ->where('u.id = :classe')
             ->setParameter('classe', $classe)
             ->orderBy('u.id', 'ASC')
             ->getQuery()

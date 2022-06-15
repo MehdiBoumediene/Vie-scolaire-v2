@@ -38,7 +38,7 @@ class EntreprisesController extends AbstractController
             $date = new \DateTimeImmutable('now');
          
             $entreprise->setCreatedBy($this->getUser()->getEmail());
-            $entreprise->setUser($this->getUser());
+         
             $entreprise->setCreatedAt($date);
             $entreprisesRepository->add($entreprise);
             return $this->redirectToRoute('app_entreprises_index', [], Response::HTTP_SEE_OTHER);

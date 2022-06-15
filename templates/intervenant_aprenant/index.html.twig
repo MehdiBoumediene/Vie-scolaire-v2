@@ -41,8 +41,6 @@
 													<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 233.2px;" aria-label="Position: activate to sort column ascending">Apprenant</th>
 													<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 233.2px;" aria-label="Position: activate to sort column ascending">Téléphone</th>
 													<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 233.2px;" aria-label="Position: activate to sort column ascending">Email</th>
-													<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 233.2px;" aria-label="Position: activate to sort column ascending">Tuteur</th>
-													<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 233.2px;" aria-label="Position: activate to sort column ascending">Classe</th>
 
 
 												</tr>
@@ -51,40 +49,25 @@
 
 												{% for classe in classes %}
 
-													{% for etudiant in  classe.users %}
+													{% for etudiant in  classe.etudiants %}
 
 
-														{% if etudiant.roles[0] == 'ROLE_ETUDIANT' %}
-															<tr role="row" class="odd">
-																<td class="sorting_1 dtr-control">
-																	<a href="{{path('app_users_show',{id:etudiant.id})}}">{{etudiant.nom}}</a>
+														<tr role="row" class="odd">
+															<td class="sorting_1 dtr-control">
+																<a href="{{path('app_etudiants_show',{id:etudiant.id})}}">{{etudiant.nom}}</a>
 
-																</td>
-																<td class="sorting_1 dtr-control">
-																	<a href="{{path('app_etudiants_show',{id:etudiant.id})}}">{{etudiant.telephone}}</a>
+															</td>
+															<td class="sorting_1 dtr-control">
+																<a href="{{path('app_etudiants_show',{id:etudiant.id})}}">{{etudiant.telephone}}</a>
 
-																</td>
-																<td class="sorting_1 dtr-control">
-																	<a href="{{path('app_etudiants_show',{id:etudiant.id})}}">{{etudiant.email}}</a>
+															</td>
+															<td class="sorting_1 dtr-control">
+																<a href="{{path('app_etudiants_show',{id:etudiant.id})}}">{{etudiant.email}}</a>
 
-																</td>
-																<td class="sorting_1 dtr-control">
-																	{% for tuteur in  etudiant.tuteur %}
-																		<a href="{{path('app_tuteurs_show',{id:tuteur.id})}}">{{tuteur.nom}}</a>
-																	{% endfor %}
-																</td>
+															</td>
 
-																<td class="sorting_1 dtr-control">
-																	{% for classe in  etudiant.classe %}
-																		<a href="{{path('app_classes_show',{id:classe.id})}}">{{classe.nom}}</a>
-																	{% endfor %}
 
-																</td>
-
-															</tr>
-															{% else %}
-
-														{% endif %}
+														</tr>
 
 
 													{% endfor %}

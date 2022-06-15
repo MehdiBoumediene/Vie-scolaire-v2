@@ -6,11 +6,11 @@
 		{{ form_errors(form.nom) }}
 	</div>
 	<div class="col-md-3">
-		{{ form_row(form.classes,{'attr': {'class': 'form-control'}}) }}
+		{{ form_row(form.classes,{'attr': {'class': 'form-control meetup_classe'}}) }}
 		{{ form_errors(form.classes) }}
 	</div>
 	<div class="col-md-3">
-		{{ form_row(form.bloc,{'attr': {'class': 'form-control'}}) }}
+		{{ form_row(form.bloc,{'attr': {'class': 'form-control meetup_bloc'}}) }}
 		{{ form_errors(form.bloc) }}
 	</div>
 
@@ -24,3 +24,29 @@ ou
 <a href="{{ path('app_modules_index') }}">Retour à la liste</a>
 
 {{ form_end(form) }}
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+
+<script>
+	var $classe = $('.meetup_classe');
+// When sport gets selected ...
+$classe.change(function () { // ... retrieve the corresponding form.
+var $form = $(this).closest('form');
+// Simulate form data, but only include the selected sport value.
+var data = {};
+data[$classe.attr('name')] = $classe.val();
+// Submit data via AJAX to the form's action path.
+$.ajax({
+url: $form.attr('action'),
+type: $form.attr('method'),
+data: data,
+complete: function (html) { // Replace current position field ...
+$('.meetup_bloc').replaceWith(
+// ... with the returned one from the AJAX response.
+$(html.responseText).find('#meetup_bloc')
+);
+// Position field now displays the appropriate positions.
+}
+});
+});
+</script>

@@ -13,6 +13,7 @@ use App\Entity\Classes;
 use App\Entity\Blocs;
 use App\Entity\Modules;
 use App\Entity\Users;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,14 +22,24 @@ class CalendrierType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('titre')
+        ->add('titre',ChoiceType::class, [
+            'choices' => [
+                'RDV' => 'RDV',
+                'EXAMEN' => 'EXAMEN',
+                
+            ],
+            'expanded' => false,
+            'multiple' => false,
+            'required' => false,
+            'label' => 'Type' 
+        ])
             ->add('start',DateTimeType::class,[
                 'label' => 'Date début',
-                'widget' => "single_text"
+                'widget' => "choice"
             ])
             ->add('end',DateTimeType::class,[
                 'label' => 'Date fin',
-                'widget' => "single_text"
+                'widget' => "choice"
                 
             ])
             ->add('description',TextareaType::class,[

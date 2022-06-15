@@ -53,8 +53,7 @@
 													<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 233.2px;" aria-label="Position: activate to sort column ascending">Nom</th>
 													<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 233.2px;" aria-label="Position: activate to sort column ascending">Téléphone</th>
 													<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 233.2px;" aria-label="Position: activate to sort column ascending">Email</th>
-													<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 233.2px;" aria-label="Position: activate to sort column ascending">Date de création</th>
-													<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 233.2px;" aria-label="Position: activate to sort column ascending">Créé par</th>
+													<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 233.2px;" aria-label="Position: activate to sort column ascending">Classe</th>
 													<th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 110.2px;" aria-label="Start date: activate to sort column ascending">Actions</th>
 
 
@@ -82,17 +81,15 @@
 														</td>
 
 														<td class="sorting_1 dtr-control">
-
-															<a href="{{ path('app_intervenants_show', {'id': intervenant.id}) }}">
-																{{ intervenant.createdAt|date('d-m-Y H:i') }}</a>
-
+															{% if intervenant.classes %}
+																<a href="{{ path('app_classes_show', {'id': intervenant.classes.id}) }}">{{ intervenant.classes.nom }}</a>
+															{% else %}
+																<span style="color:red;">
+																	Sans classe
+																</span>
+															{% endif %}
 														</td>
 
-														<td class="sorting_1 dtr-control">
-
-															<a href="{{ path('app_intervenants_show', {'id': intervenant.user.id}) }}">{{ intervenant.createdBy }}</a>
-
-														</td>
 
 														<td class="sorting_1 dtr-control">
 															<a href="{{ path('app_intervenants_edit', {'id': intervenant.id}) }}">

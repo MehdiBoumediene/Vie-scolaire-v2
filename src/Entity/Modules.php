@@ -81,6 +81,8 @@ class Modules
      */
     private $files;
 
+ 
+
 
 
    
@@ -94,6 +96,7 @@ class Modules
         $this->documents = new ArrayCollection();
         $this->calendriers = new ArrayCollection();
         $this->files = new ArrayCollection();
+
         
     }
 
@@ -347,6 +350,7 @@ class Modules
 
         return $this;
     }
+
 
   
 

@@ -31,6 +31,7 @@ class IntervenantsType extends AbstractType
                         ->orderBy('u.nom', 'ASC');
                 },
                 'choice_label' => 'nom',
+                'placeholder'=>'',
             ])
             ->remove('created_at')
             ->remove('created_by')
