@@ -97,15 +97,7 @@ class MainController extends AbstractController
      
         $result = $stmt->execute();
 
-        // returns an array of Product objects
-        
-
-  
-     
-      
-
-
-  
+        // returns an array of Product objects  
         $response = new JsonResponse();
         $response->setContent(json_encode($etat));
         $response->headers->set('Content-Type','application/json');
