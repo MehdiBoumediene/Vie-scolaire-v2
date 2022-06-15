@@ -19,6 +19,7 @@ use App\Entity\Blocs;
 use App\Entity\Classes;
 use App\Entity\Etudiants;
 use App\Entity\Intervenants;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class TelechargementsType extends AbstractType
 {
@@ -38,6 +39,18 @@ class TelechargementsType extends AbstractType
         
               
 
+            ])
+
+            ->add('type',ChoiceType::class, [
+                'choices' => [
+                    'Devoir' => 'Devoir',
+                    ' Projet pro' => ' Projet pro',
+                    
+                ],
+                'expanded' => false,
+                'multiple' => false,
+                'required' => false,
+                'label' => 'Type' 
             ])
       
             

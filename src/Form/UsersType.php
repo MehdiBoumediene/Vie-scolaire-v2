@@ -54,41 +54,7 @@ class UsersType extends AbstractType
             ->add('prenom', TextType::class)
             ->add('adresse',TextType::class)
             ->add('telephone',TelType::class)
-            ->add('classe', EntityType::class, [
-                'class' => Classes::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.nom', 'ASC');
-                },
-                'choice_label' => 'nom',
-                'multiple' => true,
-                'required' => false
-                
-            ])
-            ->add('module', EntityType::class, [
-                'class' => Modules::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.nom', 'ASC');
-                },
-                'choice_label' => 'nom',
-                'multiple' => true,
-                'required' => false
-            ])
 
-
-            ->add('tuteur', EntityType::class, [
-                'class' => Tuteurs::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.nom', 'ASC');
-                },
-                'choice_label' => 'nom',
-                'multiple' => true,
-                'required' => false,
-
-                
-            ])
         ;
     }
 

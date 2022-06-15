@@ -81,11 +81,14 @@ class Intervenants
      */
     private $user;
 
+   
+
     public function __construct()
     {
         $this->modules = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->documents = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -281,4 +284,6 @@ class Intervenants
 
         return $this;
     }
+
+   
 }

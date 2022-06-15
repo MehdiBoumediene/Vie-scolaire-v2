@@ -69,6 +69,16 @@ class Tuteurs
      */
     private $users;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Etudiants::class, mappedBy="tuteurs")
+     */
+    private $etudiants;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $type;
+
     
 
     public function __construct()
@@ -191,6 +201,45 @@ class Tuteurs
     public function setUsers(?Users $users): self
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Etudiants>
+     */
+    public function getEtudiants(): Collection
+    {
+        return $this->etudiants;
+    }
+
+    public function addEtudiant(Etudiants $etudiant): self
+    {
+        if (!$this->etudiants->contains($etudiant)) {
+            $this->etudiants[] = $etudiant;
+            $etudiant->addTuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEtudiant(Etudiants $etudiant): self
+    {
+        if ($this->etudiants->removeElement($etudiant)) {
+            $etudiant->removeTuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

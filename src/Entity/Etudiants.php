@@ -76,6 +76,13 @@ class Etudiants
      */
     private $user;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Tuteurs::class, inversedBy="etudiants")
+     */
+    private $tuteurs;
+
+
+
    
 
 
@@ -84,6 +91,8 @@ class Etudiants
         $this->modules = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->tuteurs = new ArrayCollection();
+
+   
     }
 
     public function getId(): ?int
@@ -249,6 +258,32 @@ class Etudiants
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Tuteurs>
+     */
+    public function getTuteurs(): Collection
+    {
+        return $this->tuteurs;
+    }
+
+    public function addTuteur(Tuteurs $tuteur): self
+    {
+        if (!$this->tuteurs->contains($tuteur)) {
+            $this->tuteurs[] = $tuteur;
+        }
+
+        return $this;
+    }
+
+    public function removeTuteur(Tuteurs $tuteur): self
+    {
+        $this->tuteurs->removeElement($tuteur);
+
+        return $this;
+    }
+
+   
 
    
 

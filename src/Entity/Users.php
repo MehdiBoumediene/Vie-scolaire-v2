@@ -166,6 +166,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
    
 
+   
+
 
     public function __construct()
     {
@@ -182,6 +184,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         $this->calendriers = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->telechargements = new ArrayCollection();
+      
  
      
        
@@ -781,6 +784,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+  
 
    
 }
