@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Repository\CalendrierRepository;
 use App\Repository\UsersRepository;
 use App\Repository\AbsencesRepository;
+use App\Repository\ApprenantsRepository;
 use App\Entity\Absences;
 use App\Entity\Users;
 use App\Form\AbsencesType;
+use App\Repository\EtudiantsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,7 +33,7 @@ class MainController extends AbstractController
     /**
      * @Route("/gestion/calendrier", name="app_gestion_calendrier")
      */
-    public function calendrier(CalendrierRepository $calendrier,UsersRepository $users,Request $request, AbsencesRepository $absencesRepository): Response
+    public function calendrier(CalendrierRepository $calendrier,EtudiantsRepository $apprenants,Request $request, AbsencesRepository $absencesRepository): Response
     {
         $events = $calendrier->findAll();
         $rdvs = [];
@@ -68,7 +70,7 @@ class MainController extends AbstractController
             
         }
 
-        $etudiants = $users->findByClasse($classe);
+        $etudiants = $apprenants->findByClasse($classe);
 
          
         return $this->render('main/gestion_calendrier.html.twig', [
