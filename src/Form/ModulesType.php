@@ -34,48 +34,18 @@ class ModulesType extends AbstractType
                 'choice_label' => 'nom',
             ])
            
- 
-  
-      
-         
-        ;
-
-        $formModifier = function (FormInterface $form, Classes $classes = null) {
-            $blocs = null === $classes ? [] : $classes->getAvailableClasses();
-
-            $form->add('bloc', EntityType::class, [
+            ->add('classes', EntityType::class, [
                 'class' => Blocs::class,
-                'placeholder' => '',
-                'choices' => $blocs,
-            ]);
-        };
-
-
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($formModifier) {
-                // this would be your entity, i.e. SportMeetup
-                $data = $event->getData();
-
-                $formModifier($event->getForm(), $data->getBloc());
-            }
-        );
-
-        $builder->get('classes')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($formModifier) {
-                // It's important here to fetch $event->getForm()->getData(), as
-                // $event->getData() will get you the client data (that is, the ID)
-                $classes = $event->getForm()->getData();
-
-                // since we've added the listener to the child, we'll have to pass on
-                // the parent to the callback functions!
-                $formModifier($event->getForm()->getParent(), $classes);
-            }
-        );
-       
-
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.nom', 'ASC');
+                },
+                'choice_label' => 'nom',
+            ])
+  
+            ;
     }
+         
 
     public function configureOptions(OptionsResolver $resolver): void
     {
