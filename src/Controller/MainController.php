@@ -113,7 +113,7 @@ class MainController extends AbstractController
     /**
      * @Route("/calendrier_etudiant", name="app_calendrier_etudiant")
      */
-    public function calendrierEtudiant(CalendrierRepository $calendrier,UsersRepository $users): Response
+    public function calendrierEtudiant(CalendrierRepository $calendrier,UsersRepository $users, EtudiantsRepository $apprenants ): Response
     {
         $events = $calendrier->findAll();
         $rdvs = [];
@@ -142,7 +142,7 @@ class MainController extends AbstractController
             $data = json_encode($rdvs);
             $classe= $event->getClasse();
         }
-        $etudiants = $users->findByClasse($classe);
+        $etudiants = $apprenants->findByClasse($classe);
         return $this->render('main/gestion_calendrier.html.twig', [
             'etudiants_calendar' => $etudiants,
             'data' => compact('data'),
