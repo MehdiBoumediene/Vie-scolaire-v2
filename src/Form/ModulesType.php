@@ -34,7 +34,7 @@ class ModulesType extends AbstractType
                 'choice_label' => 'nom',
             ])
            
-            ->add('classes', EntityType::class, [
+            ->add('bloc', EntityType::class, [
                 'class' => Blocs::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
