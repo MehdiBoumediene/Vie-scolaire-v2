@@ -62,7 +62,7 @@ class MainController extends AbstractController
 
 
             
-            $classe= $event->getClasse();
+            $classe= $event->getClasse()->getId();
 
 
             $data = json_encode($rdvs);
@@ -140,7 +140,7 @@ class MainController extends AbstractController
             ];
 
             $data = json_encode($rdvs);
-            $classe= $event->getClasse();
+            $classe= $event->getClasse()->getId();
         }
         $etudiants = $apprenants->findByClasse($classe);
         return $this->render('main/gestion_calendrier.html.twig', [
