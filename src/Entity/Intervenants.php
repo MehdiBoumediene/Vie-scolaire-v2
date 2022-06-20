@@ -47,7 +47,7 @@ class Intervenants
     private $email;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Modules::class, inversedBy="intervenants")
+     * @ORM\ManyToMany(targetEntity=Modules::class, inversedBy="intervenants",cascade={"persist"})
      */
     private $modules;
 
@@ -80,6 +80,11 @@ class Intervenants
      * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="intervenants")
      */
     private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Codepostal::class, inversedBy="intervenants")
+     */
+    private $codepostale;
 
    
 
@@ -281,6 +286,18 @@ class Intervenants
     public function setUser(?Users $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCodepostale(): ?Codepostal
+    {
+        return $this->codepostale;
+    }
+
+    public function setCodepostale(?Codepostal $codepostale): self
+    {
+        $this->codepostale = $codepostale;
 
         return $this;
     }
