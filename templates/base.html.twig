@@ -12,34 +12,36 @@
 		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css" integrity="sha256-16PDMvytZTH9heHu9KBPjzrFTaoner60bnABykjNiM0=" crossorigin="anonymous">
-		<link href="{{asset('main.d810cf0ae7f39f28f336.css')}}" rel="stylesheet">
-		<link href="{{asset('style.css')}}" rel="stylesheet"> {% block stylesheets %}{% endblock %}
+
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
 
 
-		</head>
-		<body>
-			<div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar"> {% block body %}{% endblock %}
+	</head>
+	<body>
+		<div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar"> {% block body %}{% endblock %}
 
 
-				<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js" integrity="sha256-PL1mKrYeZkM5SsJ5nydN6463HLkV918bgDdYL0I5Z+k=" crossorigin="anonymous"></script>
-				{# <script type="text/javascript" src="{{asset('assets/scripts/main.d810cf0ae7f39f28f336.js')}}"></script> #}
-				<script type="text/javascript" src="{{asset('assets/scripts/main.js')}}"></script>
-				{% block javascripts %}{% endblock %}
+			<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js" integrity="sha256-PL1mKrYeZkM5SsJ5nydN6463HLkV918bgDdYL0I5Z+k=" crossorigin="anonymous"></script>
+			{# <script type="text/javascript" src="{{asset('assets/scripts/main.d810cf0ae7f39f28f336.js')}}"></script> #}
+			{% block javascripts %}
+				{{ encore_entry_script_tags('main') }}
+			{% endblock %}
 
 
-			</div>
-			{% for message in app.flashes('message') %}
-				<div id="toast-container" class="toast-top-right">
-					<div class="toast toast-success" aria-live="polite">
-						<div class="toast-progress" style="width: 0.18%;"></div>
-						<button type="button" class="toast-close-button" role="button">×</button>
-						<div class="toast-message">{{message}}</div>
-					</div>
+		</div>
+		{% for message in app.flashes('message') %}
+			<div id="toast-container" class="toast-top-right">
+				<div class="toast toast-success" aria-live="polite">
+					<div class="toast-progress" style="width: 0.18%;"></div>
+					<button type="button" class="toast-close-button" role="button">×</button>
+					<div class="toast-message">{{message}}</div>
 				</div>
+			</div>
 
 
-			{% endfor %}
-		</body>
-	</html>
-	{% block modal %}{% endblock %}
-
+		{% endfor %}
+	</body>
+</html>
+{% block modal %}{% endblock %}

@@ -39,6 +39,7 @@ class IntervenantsType extends AbstractType
                 },
                 'choice_label' => 'nom',
                 'placeholder'=>'',
+                'autocomplete' => true,
             ])
 
             ->add('villes', EntityType::class, [
@@ -47,13 +48,15 @@ class IntervenantsType extends AbstractType
                 'choice_label' => 'nom',
                 'placeholder' => '',
                 'label' => 'Ville',
-                'required' => false
+                'required' => false,
+                'autocomplete' => true,
             ])
 
             ->add('codepostale', ChoiceType::class, [
                 'placeholder' => '',
                 'label'=> 'Code postal',
-                'required' => false
+                'required' => false,
+                'autocomplete' => true,
             ])
             ->remove('created_at')
             ->remove('created_by')
