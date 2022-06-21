@@ -26,11 +26,26 @@ class IntervenantsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom',TextType::class)
-            ->add('prenom',TextType::class)
-            ->add('adresse',TextType::class)
-            ->add('telephone',TelType::class)
-            ->add('email',EmailType::class)
+            ->add('nom',TextType::class,[
+                
+                'label'=>false,
+            ])
+            ->add('prenom',TextType::class,[
+                
+                'label'=>false,
+            ])
+            ->add('adresse',TextType::class,[
+                
+                'label'=>false,
+            ])
+            ->add('telephone',TelType::class,[
+                
+                'label'=>false,
+            ])
+            ->add('email',EmailType::class,[
+                
+                'label'=>false,
+            ])
             ->add('classes',EntityType::class, [
                 'class' => Classes::class,
                 'query_builder' => function (EntityRepository $er) {
@@ -38,6 +53,7 @@ class IntervenantsType extends AbstractType
                         ->orderBy('u.nom', 'ASC');
                 },
                 'choice_label' => 'nom',
+                'label'=>false,
                 'placeholder'=>'',
                 'autocomplete' => true,
             ])
@@ -47,32 +63,32 @@ class IntervenantsType extends AbstractType
                 'class' => Villes::class,
                 'choice_label' => 'nom',
                 'placeholder' => '',
-                'label' => 'Ville',
+                'label' => false,
                 'required' => false,
                 'autocomplete' => true,
             ])
 
             ->add('codepostale', ChoiceType::class, [
                 'placeholder' => '',
-                'label'=> 'Code postal',
+                'label'=> false,
                 'required' => false,
                 'autocomplete' => true,
             ])
             ->remove('created_at')
             ->remove('created_by')
 
-            ->add('modules', EntityType::class, [
+            ->remove('modules', EntityType::class, [
                 'mapped' => false,
                 'class' => Modules::class,
                 'choice_label' => 'nom',
                 'placeholder' => '',
-                'label' => 'Module',
+                'label' => false,
+                'autocomplete' => true,
                 'required' => false
             ])
 
        
         ;
-
         $formModifier = function (FormInterface $form, Villes $villes = null) {
             $codepostal = null === $villes ? [] : $villes->getCodepostale();
 
@@ -81,9 +97,9 @@ class IntervenantsType extends AbstractType
                 'choices' => $codepostal,
                 'required' => false,
                 'choice_label' => 'name',
-                'placeholder' => '',
+                'placeholder' => 'Département (Choisir une région)',
                 'attr' => ['class' => 'custom-select'],
-                'label' => 'Code postal'
+                'label' => 'Département'
             ]);
         };
 
@@ -94,6 +110,7 @@ class IntervenantsType extends AbstractType
                 $formModifier($event->getForm()->getParent(), $ville);
             }
         );
+      
 
     
 
