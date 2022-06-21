@@ -70,6 +70,7 @@ class ClassesController extends AbstractController
 
         return $this->render('classes/show.html.twig', [
             'class' => $class,
+            'classes' => $class,
             'modules' => $modulesRepository->findBy(array('classes'=>$class)),
             'intervenants' => $intervenantsRepository->findByIntervenant(),
             'etudiants' => $etudiantsRepository->findByEtudiant(),

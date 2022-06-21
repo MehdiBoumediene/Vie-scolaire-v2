@@ -10,9 +10,16 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Modules;
 use App\Entity\Classes;
+use App\Entity\Codepostal;
+use App\Entity\Villes;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 
 class IntervenantsType extends AbstractType
 {
@@ -32,21 +39,64 @@ class IntervenantsType extends AbstractType
                 },
                 'choice_label' => 'nom',
                 'placeholder'=>'',
+                'autocomplete' => true,
+            ])
+
+            ->add('villes', EntityType::class, [
+                'mapped' => false,
+                'class' => Villes::class,
+                'choice_label' => 'nom',
+                'placeholder' => '',
+                'label' => 'Ville',
+                'required' => false,
+                'autocomplete' => true,
+            ])
+
+            ->add('codepostale', ChoiceType::class, [
+                'placeholder' => '',
+                'label'=> 'Code postal',
+                'required' => false,
+                'autocomplete' => true,
             ])
             ->remove('created_at')
             ->remove('created_by')
+
             ->add('modules', EntityType::class, [
+                'mapped' => false,
                 'class' => Modules::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.nom', 'ASC');
-                },
                 'choice_label' => 'nom',
-                'multiple' => true,
+                'placeholder' => '',
+                'label' => 'Module',
                 'required' => false
             ])
+
        
         ;
+
+        $formModifier = function (FormInterface $form, Villes $villes = null) {
+            $codepostal = null === $villes ? [] : $villes->getCodepostale();
+
+            $form->add('codepostale', EntityType::class, [
+                'class' => Codepostal::class,
+                'choices' => $codepostal,
+                'required' => false,
+                'choice_label' => 'name',
+                'placeholder' => '',
+                'attr' => ['class' => 'custom-select'],
+                'label' => 'Code postal'
+            ]);
+        };
+
+        $builder->get('villes')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($formModifier) {
+                $ville = $event->getForm()->getData();
+                $formModifier($event->getForm()->getParent(), $ville);
+            }
+        );
+
+    
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

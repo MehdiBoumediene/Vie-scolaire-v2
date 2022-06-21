@@ -1,6 +1,9 @@
 {{ form_start(form) }}
-
+<h4>Informations:
+</h4><br>
 <div class="form-row">
+
+
 	<div class="col-md-3">
 		{{ form_row(form.nom,{'attr': {'class': 'form-control'}}) }}
 		{{ form_errors(form.nom) }}
@@ -10,30 +13,46 @@
 		{{ form_errors(form.prenom) }}
 	</div>
 	<div class="col-md-3">
-		{{ form_row(form.email,{'attr': {'class': 'form-control'}}) }}
-		{{ form_errors(form.email) }}
-	</div>
-	<div class="col-md-3">
-		{{ form_row(form.classes,{'attr': {'class': 'form-control'}}) }}
-		{{ form_errors(form.classes) }}
-	</div>
-
-</div>
-<br>
-<div class="form-row">
-	<div class="col-md-6">
 		{{ form_row(form.adresse,{'attr': {'class': 'form-control'}}) }}
 		{{ form_errors(form.adresse) }}
 	</div>
+
+</div>
+<br><br>
+<div class="form-row">
+
+	<div class="col-md-3">
+		{{ form_row(form.villes,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.villes) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_row(form.codepostale,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.codepostale) }}
+	</div>
+</div>
+<br><br>
+<h4>Contact:
+</h4><br>
+<div class="form-row">
+	<div class="col-md-3">
+		{{ form_row(form.email,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.email) }}
+	</div>
+
 	<div class="col-md-6">
 		{{ form_row(form.telephone,{'attr': {'class': 'form-control'}}) }}
 		{{ form_errors(form.telephone) }}
 	</div>
 
 </div>
-
-<br>
+<br><br>
+<h4>Module:
+</h4><br>
 <div class="form-row">
+	<div class="col-md-6">
+		{{ form_row(form.classes,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.classes) }}
+	</div>
 	<div class="col-md-6">
 		{{ form_row(form.modules,{'attr': {'class': 'form-control'}}) }}
 		{{ form_errors(form.modules) }}

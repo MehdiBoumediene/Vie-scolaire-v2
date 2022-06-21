@@ -65,20 +65,20 @@
 												{% for etudiant in etudiants %}
 													<tr role="row" class="odd">
 														<td class="sorting_1 dtr-control">
-															<a href="{{ path('app_users_show', {'id': etudiant.id}) }}">
+															<a href="{{ path('app_etudiants_show', {'id': etudiant.id}) }}">
 																{{ etudiant.nom }}
 																{{ etudiant.prenom }}
 															</a>
 														</td>
 
 														<td class="sorting_1 dtr-control">
-															<a href="{{ path('app_users_show', {'id': etudiant.id}) }}">
+															<a href="{{ path('app_etudiants_show', {'id': etudiant.id}) }}">
 																{{ etudiant.telephone }}
 															</a>
 														</td>
 
 														<td class="sorting_1 dtr-control">
-															<a href="{{ path('app_users_show', {'id': etudiant.id}) }}">
+															<a href="{{ path('app_etudiants_show', {'id': etudiant.id}) }}">
 																{{ etudiant.email }}
 															</a>
 														</td>
@@ -87,7 +87,7 @@
 														<td class="sorting_1 dtr-control">
 															{% if etudiant.classes %}
 
-																<a href="{{ path('app_classes_show', {'id': etudiant.classes.id}) }}">{{ etudiant.classes.nom }}</a>
+																<a href="{{ path('app_etudiants_show', {'id': etudiant.classes.id}) }}">{{ etudiant.classes.nom }}</a>
 
 
 															{% else %}
@@ -97,7 +97,7 @@
 														</td>
 														<td class="sorting_1 dtr-control">
 
-															<a href="{{ path('app_users_show', {'id': etudiant.id}) }}">
+															<a href="{{ path('app_etudiants_show', {'id': etudiant.id}) }}">
 																{{ etudiant.createdAt|date('d-m-Y H:i') }}
 															</a>
 
@@ -105,7 +105,7 @@
 
 														<td class="sorting_1 dtr-control">
 
-															<a href="{{ path('app_users_show', {'id': etudiant.user.id}) }}">
+															<a href="{{ path('app_etudiants_show', {'id': etudiant.user.id}) }}">
 																{{ etudiant.createdBy }}</a>
 
 														</td>
