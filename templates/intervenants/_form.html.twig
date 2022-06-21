@@ -1,69 +1,121 @@
 {{ form_start(form) }}
+
+<style>
+	span.required {
+		color: firebrick;
+	}
+	h4,
+	.h4 {
+		font-size: 20px;
+		font-weight: bold;
+	}
+</style>
 <h4>Informations:
 </h4><br>
+
 <div class="form-row">
 
 
 	<div class="col-md-3">
+		{{ form_label(form.nom,'Nom ') }}
+		<span class="required">*</span>
 		{{ form_row(form.nom,{'attr': {'class': 'form-control'}}) }}
 		{{ form_errors(form.nom) }}
 	</div>
 	<div class="col-md-3">
+		{{ form_label(form.prenom,'Prenom ') }}
+		<span class="required">*</span>
 		{{ form_row(form.prenom,{'attr': {'class': 'form-control'}}) }}
 		{{ form_errors(form.prenom) }}
 	</div>
+
 	<div class="col-md-3">
-		{{ form_row(form.adresse,{'attr': {'class': 'form-control'}}) }}
-		{{ form_errors(form.adresse) }}
+		{{ form_label(form.classes,'Classe ') }}
+		<span class="required">*</span>
+		{{ form_row(form.classes,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.classes) }}
 	</div>
 
 </div>
-<br><br>
+<br>
 <div class="form-row">
-
 	<div class="col-md-3">
+		{{ form_label(form.adresse,'Adresse ') }}
+		<span class="required">*</span>
+		{{ form_row(form.adresse,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.adresse) }}
+	</div>
+	<div class="col-md-3">
+		{{ form_label(form.villes,'Ville ') }}
+		<span class="required">*</span>
 		{{ form_row(form.villes,{'attr': {'class': 'form-control'}}) }}
 		{{ form_errors(form.villes) }}
 	</div>
 	<div class="col-md-3">
+		{{ form_label(form.codepostale,'Code postal ') }}
+		<span class="required">*</span>
 		{{ form_row(form.codepostale,{'attr': {'class': 'form-control'}}) }}
 		{{ form_errors(form.codepostale) }}
 	</div>
 </div>
-<br><br>
-<h4>Contact:
-</h4><br>
+<br>
+
 <div class="form-row">
 	<div class="col-md-3">
+		{{ form_label(form.email,'Email ') }}
+		<span class="required">*</span>
 		{{ form_row(form.email,{'attr': {'class': 'form-control'}}) }}
 		{{ form_errors(form.email) }}
 	</div>
 
-	<div class="col-md-6">
+	<div class="col-md-3">
+		{{ form_label(form.telephone,'Téléphone ') }}
+		<span class="required">*</span>
 		{{ form_row(form.telephone,{'attr': {'class': 'form-control'}}) }}
 		{{ form_errors(form.telephone) }}
 	</div>
 
 </div>
-<br><br>
-<h4>Module:
-</h4><br>
-<div class="form-row">
-	<div class="col-md-6">
-		{{ form_row(form.classes,{'attr': {'class': 'form-control'}}) }}
-		{{ form_errors(form.classes) }}
-	</div>
-	<div class="col-md-6">
-		{{ form_row(form.modules,{'attr': {'class': 'form-control'}}) }}
-		{{ form_errors(form.modules) }}
-	</div>
 
 
-</div>
-
-<br>
+<br><br><hr>
 <button class="mt-1 btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
 ou
 <a href="{{ path('app_intervenants_index') }}">Retour à la liste</a>
 
 {{ form_end(form) }}
+
+
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/css/tom-select.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/js/tom-select.complete.min.js"></script>
+
+<script>
+	var settings = {};
+new TomSelect('#intervenants_classes', settings);
+new TomSelect('#intervenants_villes', settings);
+</script>
+<script>
+	window.onload = () => { // On va chercher la région
+let region = document.querySelector("#intervenants_villes");
+region.addEventListener("change", function () {
+let form = this.closest("form");
+let data = this.name + "=" + this.value;
+
+fetch(form.action, {
+method: form.getAttribute("method"),
+body: data,
+headers: {
+"Content-Type": "application/x-www-form-urlencoded; charset:UTF-8"
+}
+}).then(response => response.text()).then(html => {
+let content = document.createElement("html");
+content.innerHTML = html;
+let nouveauSelect = content.querySelector("#intervenants_codepostale");
+document.querySelector("#intervenants_codepostale").replaceWith(nouveauSelect);
+}).catch(error => {
+console.log(error);
+})
+});
+}
+</script>

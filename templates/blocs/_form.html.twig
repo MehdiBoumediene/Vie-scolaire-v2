@@ -1,19 +1,30 @@
 {{ form_start(form) }}
-  
-   <div class="form-row">
-        <div class="col-md-6">
-        {{ form_row(form.nom,{'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.nom) }}
-        </div>
-         <div class="col-md-6">
-        {{ form_row(form.Classe,{'attr': {'class': 'form-control'}}) }}
-        {{ form_errors(form.Classe) }}
-        </div>
 
-    </div>
- 
+<div class="form-row">
+	<div class="col-md-6">
+		{{ form_row(form.nom,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.nom) }}
+	</div>
+	<div class="col-md-6">
+		{{ form_row(form.Classe,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.Classe) }}
+	</div>
 
-    <br>
-    <button class="mt-1 btn btn-success">{{ button_label|default('Sauvegarder') }}</button> ou <a href="{{ path('app_blocs_index') }}">Retour à la liste</a>
-  
+</div>
+
+
+<br>
+<button class="mt-1 btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+ou
+<a href="{{ path('app_blocs_index') }}">Retour à la liste</a>
+
 {{ form_end(form) }}
+
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/css/tom-select.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/js/tom-select.complete.min.js"></script>
+
+<script>
+	var settings = {};
+new TomSelect('#blocs_Classe', settings);
+</script>
