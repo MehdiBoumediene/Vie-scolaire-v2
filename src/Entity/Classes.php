@@ -79,6 +79,11 @@ class Classes
      */
     private $telechargements;
 
+
+    public function __toString() {
+        return $this->nom;
+    }
+
     public function __construct()
     {
         $this->blocs = new ArrayCollection();

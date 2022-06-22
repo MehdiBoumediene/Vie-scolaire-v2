@@ -89,33 +89,35 @@ ou
 <link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/css/tom-select.css" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/js/tom-select.complete.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script>
 	var settings = {};
 new TomSelect('#intervenants_classes', settings);
-new TomSelect('#intervenants_villes', settings);
-</script>
-<script>
-	window.onload = () => { // On va chercher la région
-let region = document.querySelector("#intervenants_villes");
-region.addEventListener("change", function () {
-let form = this.closest("form");
-let data = this.name + "=" + this.value;
 
-fetch(form.action, {
-method: form.getAttribute("method"),
-body: data,
-headers: {
-"Content-Type": "application/x-www-form-urlencoded; charset:UTF-8"
-}
-}).then(response => response.text()).then(html => {
-let content = document.createElement("html");
-content.innerHTML = html;
-let nouveauSelect = content.querySelector("#intervenants_codepostale");
-document.querySelector("#intervenants_codepostale").replaceWith(nouveauSelect);
-}).catch(error => {
-console.log(error);
-})
+new TomSelect('#intervenants_codepostale', settings);
+</script>
+ <script>
+var $sport = $('#intervenants_villes');
+// When sport gets selected ...
+$sport.change(function() {
+  // ... retrieve the corresponding form.
+  var $form = $(this).closest('form');
+  // Simulate form data, but only include the selected sport value.
+  var data = {};
+  data[$sport.attr('id')] = $sport.val();
+  // Submit data via AJAX to the form's action path.
+  $.ajax({
+    url : $form.attr('action'),
+    type: $form.attr('method'),
+    data : data,
+    complete: function(html) {
+      // Replace current position field ...
+      $('#intervenants_codepostale').replaceWith(
+        // ... with the returned one from the AJAX response.
+        $(html.responseText).find('#intervenants_codepostale')
+      );
+      // Position field now displays the appropriate positions.
+    }
+  });
 });
-}
 </script>

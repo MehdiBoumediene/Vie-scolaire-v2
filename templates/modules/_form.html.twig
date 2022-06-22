@@ -9,10 +9,7 @@
 		{{ form_row(form.classes,{'attr': {'class': 'form-control meetup_classe'}}) }}
 		{{ form_errors(form.classes) }}
 	</div>
-	<div class="col-md-3">
-		{{ form_row(form.bloc,{'attr': {'class': 'form-control meetup_bloc'}}) }}
-		{{ form_errors(form.bloc) }}
-	</div>
+	<div class="col-md-3"></div>
 
 
 </div>
@@ -31,6 +28,28 @@ ou
 
 <script>
 	var settings = {};
-new TomSelect('#modules_classes', settings);
-new TomSelect('#modules_bloc', settings);
+</script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script>
+	var $sport = $('#modules_classes');
+// When sport gets selected ...
+$sport.change(function () { // ... retrieve the corresponding form.
+var $form = $(this).closest('form');
+// Simulate form data, but only include the selected sport value.
+var data = {};
+data[$sport.attr('id')] = $sport.val();
+// Submit data via AJAX to the form's action path.
+$.ajax({
+url: $form.attr('action'),
+type: $form.attr('method'),
+data: data,
+complete: function (html) { // Replace current position field ...
+$('#modules_bloc').replaceWith(
+// ... with the returned one from the AJAX response.
+$(html.responseText).find('#modules_bloc')
+);
+// Position field now displays the appropriate positions.
+}
+});
+});
 </script>
