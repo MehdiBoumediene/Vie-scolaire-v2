@@ -35,11 +35,12 @@ class CalendrierType extends AbstractType
         ])
             ->add('start',DateTimeType::class,[
                 'label' => 'Date début',
-                'widget' => "choice"
+                'widget' => "single_text"
+       
             ])
             ->add('end',DateTimeType::class,[
                 'label' => 'Date fin',
-                'widget' => "choice"
+                'widget' => "single_text"
                 
             ])
             ->add('description',TextareaType::class,[

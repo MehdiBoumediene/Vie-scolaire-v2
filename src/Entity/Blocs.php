@@ -56,6 +56,10 @@ class Blocs
      */
     private $calendriers;
 
+
+    public function __toString() {
+        return $this->nom;
+    }
     public function __construct()
     {
         $this->modules = new ArrayCollection();

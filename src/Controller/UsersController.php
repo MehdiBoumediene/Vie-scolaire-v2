@@ -62,29 +62,13 @@ class UsersController extends AbstractController
             $usersRepository->add($user);
 
             if($form->get('roles')->getData() == ['ROLE_ETUDIANT']){
-                $etudiant = new Etudiants();
-                $etudiant->setNom($form->get('nom')->getData());
-                $etudiant->setPrenom($form->get('nom')->getData());
-                $etudiant->setAdresse($form->get('adresse')->getData());
-                $etudiant->setTelephone($form->get('telephone')->getData());
-                $etudiant->setEmail($form->get('email')->getData());
-                $etudiant->setUser($user);
-                $entityManager->persist($etudiant);
-                $entityManager->flush();
-                return $this->redirectToRoute('app_etudiants_index', [], Response::HTTP_SEE_OTHER); 
+   
+                return $this->redirectToRoute('app_etudiants_new', [], Response::HTTP_SEE_OTHER); 
             }
 
             if($form->get('roles')->getData() == ['ROLE_INTERVENANT']){
-                $intervenant = new Intervenants();
-                $intervenant->setNom($form->get('nom')->getData());
-                $intervenant->setPrenom($form->get('nom')->getData());
-                $intervenant->setAdresse($form->get('adresse')->getData());
-                $intervenant->setTelephone($form->get('telephone')->getData());
-                $intervenant->setEmail($form->get('email')->getData());
-                $intervenant->setUser($user);
-                $entityManager->persist($intervenant);
-                $entityManager->flush();
-                return $this->redirectToRoute('app_intervenants_index', [], Response::HTTP_SEE_OTHER); 
+     
+                return $this->redirectToRoute('app_intervenants_new', [], Response::HTTP_SEE_OTHER); 
             }
 
             if($form->get('roles')->getData() == ['ROLE_TUTEUR']){
@@ -97,7 +81,7 @@ class UsersController extends AbstractController
                 $tuteur->setUsers($user);
                 $entityManager->persist($tuteur);
                 $entityManager->flush();
-                return $this->redirectToRoute('app_tuteurs_index', [], Response::HTTP_SEE_OTHER); 
+                return $this->redirectToRoute('app_tuteurs_new', ['user' => $user,], Response::HTTP_SEE_OTHER); 
             }
 
 

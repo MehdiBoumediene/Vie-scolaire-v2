@@ -62,15 +62,17 @@ class IntervenantsRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Intervenants
+
+    public function findByClasse($id)
     {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+        return $this->createQueryBuilder('e')
+        ->where('e.classes = :val')
+        ->setParameter('val', 3)
+   
+  
+        ->getQuery()
+        ->getResult()
         ;
     }
-    */
+
 }

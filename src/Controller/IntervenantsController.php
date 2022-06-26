@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Intervenants;
 use App\Form\IntervenantsType;
 use App\Repository\IntervenantsRepository;
+use App\Repository\ModulesRepository;
 use App\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +44,7 @@ class IntervenantsController extends AbstractController
             $intervenant->setCreatedBy($this->getUser()->getEmail());
             $intervenant->setUser($this->getUser());
             $intervenant->setCreatedAt($date);
+            $intervenant->setVille($form->get('ville')->getData());
             $intervenantsRepository->add($intervenant);
             return $this->redirectToRoute('app_intervenants_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -56,9 +58,13 @@ class IntervenantsController extends AbstractController
     /**
      * @Route("/{id}", name="app_intervenants_show", methods={"GET"})
      */
-    public function show(Intervenants $intervenant): Response
+    public function show(Intervenants $intervenant,ModulesRepository $modulesRepository): Response
     {
+
+        $id = $intervenant->getClasses()->getId();
+    
         return $this->render('intervenants/show.html.twig', [
+            'modules' => $modulesRepository->findByClasse($id),
             'intervenant' => $intervenant,
         ]);
     }

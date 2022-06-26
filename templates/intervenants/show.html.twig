@@ -66,70 +66,79 @@
 										<b>Prenom :</b>
 										{{intervenant.prenom}}</p>
 									<p>
-										<b>Adresse :</b>
-										{{ intervenant.adresse }}</p>
-									<p>
-										<b>Téléphone :</b>
-										{{intervenant.telephone}}</p>
-									<p>
-										<b>Email :</b>
-										{{intervenant.email}}</p>
-
-								</div>
-
-							</div>
+										<b>Ville :</b>
+										{{ intervenant.ville.nom }}</p>
+								</p>
+								<p>
+									<b>Code postal :</b>
+									{{ intervenant.codepostale.nom }}</p>
+							</p>
+							<p>
+								<b>Adresse :</b>
+								{{ intervenant.adresse }}</p>
+							<p>
+								<b>Téléphone :</b>
+								{{intervenant.telephone}}</p>
+							<p>
+								<b>Email :</b>
+								{{intervenant.email}}</p>
 
 						</div>
-						<div class="col-md-6">
-							<div class="main-card mb-3 card">
-								<div class="card-body">
-									<h5 class="card-title">Classes</h5>
-									<ul class="list-group list-group-flush">
 
-										<a href="javascript:void(0);" class="list-group-item">
-											{{intervenant.classes.nom}}
-											-
-											{% for bloc in intervenant.classes.blocs %}
-												{{bloc.nom}}
-											{% endfor %}
-										</a>
+					</div>
 
-									</ul>
-								</div>
-							</div>
-						</div>
+				</div>
+				<div class="col-md-6">
+					<div class="main-card mb-3 card">
+						<div class="card-body">
+							<h5 class="card-title">Classes</h5>
+							<ul class="list-group list-group-flush">
 
-						<div class="col-md-6">
-							<div class="main-card mb-3 card">
-								<div class="card-body">
-									<h5 class="card-title">Apprenants</h5>
-									<ul class="list-group list-group-flush">
-										{% for etudiant in intervenant.classes.etudiants %}
-											<a href="javascript:void(0);" class="list-group-item">
-												{{ etudiant.nom}}
-											</a>
-										{% endfor %}
+								<a href="javascript:void(0);" class="list-group-item">
+									{{intervenant.classes.nom}}
+									-
+									{% for bloc in intervenant.classes.blocs %}
+										{{bloc.nom}}
+									{% endfor %}
+								</a>
 
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="main-card mb-3 card">
-								<div class="card-body">
-									<h5 class="card-title">Modules</h5>
-									<ul class="list-group list-group-flush">
-										{% for module in intervenant.classes.modules %}
-											<a href="javascript:void(0);" class="list-group-item">
-												{{ module.nom}}
-											</a>
-										{% endfor %}
-
-									</ul>
-								</div>
-							</div>
+							</ul>
 						</div>
 					</div>
 				</div>
-				{{ block("Footer", "Menus/Footer.html.twig") }}
-			{% endblock %}
+
+				<div class="col-md-6">
+					<div class="main-card mb-3 card">
+						<div class="card-body">
+							<h5 class="card-title">Apprenants</h5>
+							<ul class="list-group list-group-flush">
+								{% for etudiant in intervenant.classes.etudiants %}
+									<a href="javascript:void(0);" class="list-group-item">
+										{{ etudiant.nom}}
+									</a>
+								{% endfor %}
+
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="main-card mb-3 card">
+						<div class="card-body">
+							<h5 class="card-title">Modules</h5>
+							<ul class="list-group list-group-flush">
+
+
+								{% for module in modules %}
+									{{module.nom}}
+								{% endfor %}
+
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{ block("Footer", "Menus/Footer.html.twig") }}
+	{% endblock %}

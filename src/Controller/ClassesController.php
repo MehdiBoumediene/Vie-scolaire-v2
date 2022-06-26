@@ -67,13 +67,13 @@ class ClassesController extends AbstractController
     public function show(Classes $class,ModulesRepository $modulesRepository,UsersRepository $intervenantsRepository,UsersRepository $etudiantsRepository): Response
     {
   
-
+            $id = $class->getId();
         return $this->render('classes/show.html.twig', [
             'class' => $class,
             'classes' => $class,
             'modules' => $modulesRepository->findBy(array('classes'=>$class)),
-            'intervenants' => $intervenantsRepository->findByIntervenant(),
-            'etudiants' => $etudiantsRepository->findByEtudiant(),
+            'intervenants' => $intervenantsRepository->findByClasse($class),
+            'etudiants' => $etudiantsRepository->findByEtudiant($id),
         
         ]);
     }

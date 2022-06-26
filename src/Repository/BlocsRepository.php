@@ -50,8 +50,21 @@ class BlocsRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
       
-        ->innerJoin('u.classe', 'a')
-            ->Where('a.id = :classe')         
+        ->innerJoin('u.classes', 'a')
+            ->where('a.id = :classe')         
+            ->setParameter('classe', $classe)
+            ->orderBy('u.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByblocByClasse($classe)
+    {
+        return $this->createQueryBuilder('u')
+      
+        ->innerJoin('u.Classe', 'a')
+            ->where('a.id = :classe')         
             ->setParameter('classe', $classe)
             ->orderBy('u.id', 'ASC')
             ->getQuery()

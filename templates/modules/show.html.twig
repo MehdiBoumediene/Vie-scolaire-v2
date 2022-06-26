@@ -62,6 +62,7 @@
 								<div class="card-body">
 									<h5 class="card-title">Intervenants</h5>
 									<ul class="list-group list-group-flush">
+
 										{% for intervenant in intervenants %}
 
 											<a href="{{path('app_intervenants_show',{id:intervenant.id})}}" class="list-group-item">{{intervenant.prenom}}

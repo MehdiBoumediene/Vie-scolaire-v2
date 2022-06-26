@@ -58,22 +58,23 @@ class IntervenantsType extends AbstractType
                 'autocomplete' => true,
             ])
 
-            ->add('villes', EntityType::class, [
+            ->add('ville', EntityType::class, [
                 'mapped' => false,
                 'class' => Villes::class,
                 'choice_label' => 'nom',
                 'placeholder' => '',
                 'label' => false,
                 'required' => false,
-                'autocomplete' => true,
+              
             ])
+     
 
             ->add('codepostale', ChoiceType::class, [
-                'placeholder' => '',
-                'label'=> false,
-                'required' => false,
-                'autocomplete' => true,
+                'placeholder' => 'Département (Choisir une région)',
+                'required' => false
             ])
+            
+           
             ->remove('created_at')
             ->remove('created_by')
 
@@ -89,29 +90,41 @@ class IntervenantsType extends AbstractType
 
        
         ;
-        $formModifier = function (FormInterface $form, Villes $villes = null) {
-            $codepostal = null === $villes ? [] : $villes->getCodepostale();
+
+        $formModifier = function (FormInterface $form, Villes $sport = null) {
+            $positions = null === $sport ? [] : $sport->getCodepostale();
 
             $form->add('codepostale', EntityType::class, [
                 'class' => Codepostal::class,
-                'choices' => $codepostal,
-                'required' => false,
-                'choice_label' => 'name',
-                'placeholder' => 'Département (Choisir une région)',
-                'attr' => ['class' => 'custom-select'],
-                'label' => 'Département'
+                'placeholder' => '',
+                'choices' => $positions,
+                'choice_label' => 'nom',
+                'label'=>false,
             ]);
         };
 
-        $builder->get('villes')->addEventListener(
-            FormEvents::POST_SUBMIT,
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($formModifier) {
-                $ville = $event->getForm()->getData();
-                $formModifier($event->getForm()->getParent(), $ville);
+                // this would be your entity, i.e. SportMeetup
+                $data = $event->getData();
+
+                $formModifier($event->getForm(), $data->getVille());
             }
         );
-      
 
+        $builder->get('ville')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($formModifier) {
+                // It's important here to fetch $event->getForm()->getData(), as
+                // $event->getData() will get you the client data (that is, the ID)
+                $sport = $event->getForm()->getData();
+
+                // since we've added the listener to the child, we'll have to pass on
+                // the parent to the callback functions!
+                $formModifier($event->getForm()->getParent(), $sport);
+            }
+        );
     
 
     }

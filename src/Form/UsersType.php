@@ -47,13 +47,14 @@ class UsersType extends AbstractType
                 'expanded' => false,
                 'multiple' => true,
                 'required' => false,
+               
                 'label' => 'Rôles' 
             ])
 
-            ->add('nom',TextType::class)
-            ->add('prenom', TextType::class)
-            ->add('adresse',TextType::class)
-            ->add('telephone',TelType::class)
+            ->remove('nom',TextType::class)
+            ->remove('prenom', TextType::class)
+            ->remove('adresse',TextType::class)
+            ->remove('telephone',TelType::class)
 
             
 
