@@ -59,6 +59,21 @@ class ModulesRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    public function findByClasse($id)
+    {
+        return $this->createQueryBuilder('u')
+        ->innerJoin('u.classes', 'a')
+        ->where('a.id = :classe')
+
+        ->setParameter('classe', $id)
+
+        ->orderBy('u.id', 'ASC')
+        ->getQuery()
+        ->getResult()
+   
+
+        ;
+    }
     // /**
     //  * @return Modules[] Returns an array of Modules objects
     //  */

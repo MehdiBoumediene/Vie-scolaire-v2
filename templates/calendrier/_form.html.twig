@@ -53,3 +53,14 @@ ou
 <a href="{{ path('app_etudiants_index') }}">Retour à la liste</a>
 
 {{ form_end(form) }}
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/css/tom-select.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/js/tom-select.complete.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script>
+	var settings = {};
+new TomSelect('#calendrier_classe', settings);
+new TomSelect('#calendrier_bloc', settings);
+new TomSelect('#calendrier_module', settings);
+new TomSelect('#calendrier_intervenant', settings);
+</script>

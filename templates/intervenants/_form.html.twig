@@ -46,10 +46,10 @@
 		{{ form_errors(form.adresse) }}
 	</div>
 	<div class="col-md-3">
-		{{ form_label(form.villes,'Ville ') }}
+		{{ form_label(form.ville,'Ville ') }}
 		<span class="required">*</span>
-		{{ form_row(form.villes,{'attr': {'class': 'form-control'}}) }}
-		{{ form_errors(form.villes) }}
+		{{ form_row(form.ville,{'attr': {'class': 'form-control'}}) }}
+		{{ form_errors(form.ville) }}
 	</div>
 	<div class="col-md-3">
 		{{ form_label(form.codepostale,'Code postal ') }}
@@ -90,34 +90,31 @@ ou
 
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/js/tom-select.complete.min.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script>
+	var $sport = $('#intervenants_ville');
+// When sport gets selected ...
+$sport.change(function () { // ... retrieve the corresponding form.
+var $form = $(this).closest('form');
+// Simulate form data, but only include the selected sport value.
+var data = {};
+data[$sport.attr('name')] = $sport.val();
+// Submit data via AJAX to the form's action path.
+$.ajax({
+url: $form.attr('action'),
+type: $form.attr('method'),
+data: data,
+complete: function (html) { // Replace current position field ...
+$('#intervenants_codepostale').replaceWith(
+// ... with the returned one from the AJAX response.
+$(html.responseText).find('#intervenants_codepostale')
+);
+// Position field now displays the appropriate positions.
+}
+});
+});
+</script>
 <script>
 	var settings = {};
-new TomSelect('#intervenants_classes', settings);
-
-new TomSelect('#intervenants_codepostale', settings);
-</script>
- <script>
-var $sport = $('#intervenants_villes');
-// When sport gets selected ...
-$sport.change(function() {
-  // ... retrieve the corresponding form.
-  var $form = $(this).closest('form');
-  // Simulate form data, but only include the selected sport value.
-  var data = {};
-  data[$sport.attr('id')] = $sport.val();
-  // Submit data via AJAX to the form's action path.
-  $.ajax({
-    url : $form.attr('action'),
-    type: $form.attr('method'),
-    data : data,
-    complete: function(html) {
-      // Replace current position field ...
-      $('#intervenants_codepostale').replaceWith(
-        // ... with the returned one from the AJAX response.
-        $(html.responseText).find('#intervenants_codepostale')
-      );
-      // Position field now displays the appropriate positions.
-    }
-  });
-});
+new TomSelect('#intervenants_ville', settings);
 </script>

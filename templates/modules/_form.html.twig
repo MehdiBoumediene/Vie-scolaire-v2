@@ -6,10 +6,12 @@
 		{{ form_errors(form.nom) }}
 	</div>
 	<div class="col-md-3">
-		{{ form_row(form.classes,{'attr': {'class': 'form-control meetup_classe'}}) }}
+		{{ form_row(form.classes,{'attr': {'class': 'form-control select'}}) }}
 		{{ form_errors(form.classes) }}
 	</div>
-	<div class="col-md-3"></div>
+	<div class="col-md-3">
+		{{ form_row(form.bloc,{'attr': {'class': 'form-control select'}}) }}
+		{{ form_errors(form.bloc) }}</div>
 
 
 </div>
@@ -26,30 +28,72 @@ ou
 
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.3/dist/js/tom-select.complete.min.js"></script>
 
-<script>
-	var settings = {};
-</script>
+
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
 <script>
 	var $sport = $('#modules_classes');
 // When sport gets selected ...
 $sport.change(function () { // ... retrieve the corresponding form.
+
+if (window.location.pathname == "/modules/new") {
 var $form = $(this).closest('form');
 // Simulate form data, but only include the selected sport value.
-var data = {};
-data[$sport.attr('id')] = $sport.val();
+
+var data = {}
+data[$sport.attr('name')] = $sport.val();
+
 // Submit data via AJAX to the form's action path.
 $.ajax({
 url: $form.attr('action'),
 type: $form.attr('method'),
 data: data,
 complete: function (html) { // Replace current position field ...
+
 $('#modules_bloc').replaceWith(
 // ... with the returned one from the AJAX response.
 $(html.responseText).find('#modules_bloc')
+
 );
 // Position field now displays the appropriate positions.
+
 }
 });
+} else {
+var $form = $(this).closest('form');
+// Simulate form data, but only include the selected sport value.
+
+var data = $form.serializeArray()
+
+
+// Submit data via AJAX to the form's action path.
+$.ajax({
+url: $form.attr('action'),
+type: $form.attr('method'),
+data: data,
+complete: function (html) { // Replace current position field ...
+
+$('#modules_bloc').replaceWith(
+// ... with the returned one from the AJAX response.
+$(html.responseText).find('#modules_bloc')
+
+);
+
+
+// Position field now displays the appropriate positions.
+
+}
+});
+
+}
+
+});
+</script>
+<script>
+
+	document.querySelectorAll('.select').forEach((el) => {
+let settings = {};
+new TomSelect('#modules_classes', settings);
+
 });
 </script>

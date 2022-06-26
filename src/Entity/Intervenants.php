@@ -86,6 +86,11 @@ class Intervenants
      */
     private $codepostale;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Villes::class, inversedBy="intervenants")
+     */
+    private $ville;
+
    
 
     public function __construct()
@@ -298,6 +303,18 @@ class Intervenants
     public function setCodepostale(?Codepostal $codepostale): self
     {
         $this->codepostale = $codepostale;
+
+        return $this;
+    }
+
+    public function getVille(): ?Villes
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Villes $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }

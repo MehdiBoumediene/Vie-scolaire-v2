@@ -58,7 +58,7 @@ class IntervenantsType extends AbstractType
                 'autocomplete' => true,
             ])
 
-            ->add('villes', EntityType::class, [
+            ->add('ville', EntityType::class, [
                 'mapped' => false,
                 'class' => Villes::class,
                 'choice_label' => 'nom',
@@ -74,6 +74,7 @@ class IntervenantsType extends AbstractType
                 'required' => false
             ])
             
+           
             ->remove('created_at')
             ->remove('created_by')
 
@@ -97,6 +98,8 @@ class IntervenantsType extends AbstractType
                 'class' => Codepostal::class,
                 'placeholder' => '',
                 'choices' => $positions,
+                'choice_label' => 'nom',
+                'label'=>false,
             ]);
         };
 
@@ -106,11 +109,11 @@ class IntervenantsType extends AbstractType
                 // this would be your entity, i.e. SportMeetup
                 $data = $event->getData();
 
-                $formModifier($event->getForm(), $data->getCodepostale());
+                $formModifier($event->getForm(), $data->getVille());
             }
         );
 
-        $builder->get('villes')->addEventListener(
+        $builder->get('ville')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) use ($formModifier) {
                 // It's important here to fetch $event->getForm()->getData(), as
@@ -122,7 +125,6 @@ class IntervenantsType extends AbstractType
                 $formModifier($event->getForm()->getParent(), $sport);
             }
         );
-
     
 
     }

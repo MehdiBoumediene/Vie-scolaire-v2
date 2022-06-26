@@ -56,12 +56,10 @@ class ModulesController extends AbstractController
      */
     public function show(Modules $module,UsersRepository $intervenantsRepository,UsersRepository $etudiantsRepository): Response
     {
-      
-
-        
+        $id = $module->getClasses();
         return $this->render('modules/show.html.twig', [
             'module' => $module,
-            'intervenants' => $intervenantsRepository->findByIntervenant(),
+            'intervenants' => $intervenantsRepository->findByClasse($id),
             'etudiants' => $etudiantsRepository->findByEtudiant(),
         
         ]);

@@ -13,11 +13,19 @@ use App\Entity\Blocs;
 use App\Entity\Classes;
 use App\Entity\Etudiants;
 use App\Entity\Intervenants;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 class ModulesType extends AbstractType
 {
+    private $em;
+
+public function __construct(EntityManagerInterface $entityManager)
+{
+    $this->em = $entityManager;
+}
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -29,57 +37,73 @@ class ModulesType extends AbstractType
                 'class' => Classes::class,
             
                 'choice_label' => 'nom',
-                'placeholder' => '',
-                'empty_data' => ''
+                'empty_data'=>'',
+                'required'=>false,
+         
             ])
            
 
            
             ;
 
-            $formModifier = function (FormInterface $form, Classes $sport = null) {
-                $positions = null === $sport ? [] : $sport->getBlocs();
-                if (null === $sport) {
-                    $empriseId= 0;
-                }
-                else { $empriseId= $sport->getId();
-                }
-                $form->add('bloc', EntityType::class, [
-                    'class' => Blocs::class,
-                    'query_builder' => function (EntityRepository $er) use ($empriseId) {
-                        return $er->createQueryBuilder('u')
-                        ->where('u.Classe = :val')
-                        ->setParameter('val',$empriseId)
-                            ->orderBy('u.nom', 'ASC');
-                    },
-                
-                    'choice_label' => 'nom',
-                ]);
-            };
-
-            $builder->addEventListener(
-                FormEvents::PRE_SET_DATA,
-                function (FormEvent $event) use ($formModifier) {
-                    // this would be your entity, i.e. SportMeetup
-                    $data = $event->getData();
-    
-                    $formModifier($event->getForm(), $data->getBloc());
-                }
-            );
-    
+               
             $builder->get('classes')->addEventListener(
                 FormEvents::POST_SUBMIT,
-                function (FormEvent $event) use ($formModifier) {
-                    // It's important here to fetch $event->getForm()->getData(), as
-                    // $event->getData() will get you the client data (that is, the ID)
-                    $sport = $event->getForm()->getData();
+                function (FormEvent $event) {
+                    $form = $event->getForm();
+
+                    $form ->getParent()->add('bloc', EntityType::class, [
+                        'class' => Blocs::class,
+                        'choice_label' => 'nom',
+                        'choices' => $form->getData()->getBlocs(),
+            
+                        'required'=>true
+                        
+                    ]);
     
-                    // since we've added the listener to the child, we'll have to pass on
-                    // the parent to the callback functions!
-                    $formModifier($event->getForm()->getParent(), $sport);
                 }
             );
+
+            $builder->addEventListener(
+                FormEvents::POST_SET_DATA,
+                function (FormEvent $event) {
+                    $form = $event->getForm();
+                    $data = $event->getData();
+                    $blocs = $data->getBloc();
+
+                    if($blocs){
+                        $form->get('classes')->setData($blocs->getClasse());
+
+                        $form->add('bloc', EntityType::class, [
+                            'class' => Blocs::class,
+                            'choice_label' => 'nom',
+                            'attr' => ['class' => 'bloc'],
+                            'choices' => $blocs->getClasse()->getBlocs(),
+                            'required'=>true
+                            
+                        ]);
+                    }else{
+
+                        
+                        $form->add('bloc', EntityType::class, [
+                            'class' => Blocs::class,
+                            'choice_label' => 'nom',
+                            'attr' => ['class' => 'bloc'],
+                            'choices' => [],
+                            'required'=>true
+                            
+                        ]);
+
+                    }
+            
+
     
+                }
+            );
+
+    
+ 
+     
     }
          
 
