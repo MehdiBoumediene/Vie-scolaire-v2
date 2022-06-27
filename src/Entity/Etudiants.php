@@ -81,6 +81,16 @@ class Etudiants
      */
     private $tuteurs;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Codepostal::class, inversedBy="etudiants")
+     */
+    private $codepostale;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Villes::class, inversedBy="etudiants")
+     */
+    private $ville;
+
 
 
    
@@ -279,6 +289,30 @@ class Etudiants
     public function removeTuteur(Tuteurs $tuteur): self
     {
         $this->tuteurs->removeElement($tuteur);
+
+        return $this;
+    }
+
+    public function getCodepostale(): ?Codepostal
+    {
+        return $this->codepostale;
+    }
+
+    public function setCodepostale(?Codepostal $codepostale): self
+    {
+        $this->codepostale = $codepostale;
+
+        return $this;
+    }
+
+    public function getVille(): ?Villes
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Villes $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }

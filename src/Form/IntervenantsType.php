@@ -12,6 +12,8 @@ use App\Entity\Modules;
 use App\Entity\Classes;
 use App\Entity\Codepostal;
 use App\Entity\Villes;
+use App\Form\UsersType;
+
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -42,7 +44,7 @@ class IntervenantsType extends AbstractType
                 
                 'label'=>false,
             ])
-            ->add('email',EmailType::class,[
+            ->remove('email',EmailType::class,[
                 
                 'label'=>false,
             ])
@@ -69,12 +71,6 @@ class IntervenantsType extends AbstractType
             ])
      
 
-            ->add('codepostale', ChoiceType::class, [
-                'placeholder' => 'Département (Choisir une région)',
-                'required' => false
-            ])
-            
-           
             ->remove('created_at')
             ->remove('created_by')
 
@@ -87,45 +83,64 @@ class IntervenantsType extends AbstractType
                 'autocomplete' => true,
                 'required' => false
             ])
-
+            ->add('user', UsersType::class);
        
         ;
 
-        $formModifier = function (FormInterface $form, Villes $sport = null) {
-            $positions = null === $sport ? [] : $sport->getCodepostale();
-
-            $form->add('codepostale', EntityType::class, [
-                'class' => Codepostal::class,
-                'placeholder' => '',
-                'choices' => $positions,
-                'choice_label' => 'nom',
-                'label'=>false,
-            ]);
-        };
-
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($formModifier) {
-                // this would be your entity, i.e. SportMeetup
-                $data = $event->getData();
-
-                $formModifier($event->getForm(), $data->getVille());
-            }
-        );
-
         $builder->get('ville')->addEventListener(
             FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($formModifier) {
-                // It's important here to fetch $event->getForm()->getData(), as
-                // $event->getData() will get you the client data (that is, the ID)
-                $sport = $event->getForm()->getData();
+            function (FormEvent $event) {
+                $form = $event->getForm();
 
-                // since we've added the listener to the child, we'll have to pass on
-                // the parent to the callback functions!
-                $formModifier($event->getForm()->getParent(), $sport);
+                $form ->getParent()->add('codepostale', EntityType::class, [
+                    'class' => Codepostal::class,
+                    'choice_label' => 'nom',
+                    'choices' => $form->getData()->getCodepostale(),
+                    'label' => false,
+                    'required'=>true
+                    
+                ]);
+
             }
         );
-    
+
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+                $data = $event->getData();
+                $code = $data->getCodepostale();
+
+                if($code){
+                    $form->get('ville')->setData($code->getVilles());
+
+                    $form->add('codepostale', EntityType::class, [
+                        'class' => Codepostal::class,
+                        'choice_label' => 'nom',
+                        'choices' => $code->getVilles()->getCodepostale(),
+                        'required'=>true,
+                        'label' => false,
+                    
+                        
+                    ]);
+                }else{
+
+                    
+                    $form->add('codepostale', EntityType::class, [
+                        'class' => Codepostal::class,
+                        'choice_label' => 'nom',
+                        'choices' => [],
+                        'required'=>true,
+                        'label' => false,
+                        
+                    ]);
+
+                }
+        
+
+
+            }
+        );
 
     }
 
