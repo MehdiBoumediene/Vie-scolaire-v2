@@ -91,6 +91,11 @@ class Intervenants
      */
     private $ville;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Calendrier::class, mappedBy="intervenant")
+     */
+    private $calendriers;
+
    
 
     public function __construct()
@@ -98,6 +103,7 @@ class Intervenants
         $this->modules = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->documents = new ArrayCollection();
+        $this->calendriers = new ArrayCollection();
 
     }
 
@@ -315,6 +321,36 @@ class Intervenants
     public function setVille(?Villes $ville): self
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Calendrier>
+     */
+    public function getCalendriers(): Collection
+    {
+        return $this->calendriers;
+    }
+
+    public function addCalendrier(Calendrier $calendrier): self
+    {
+        if (!$this->calendriers->contains($calendrier)) {
+            $this->calendriers[] = $calendrier;
+            $calendrier->setIntervenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCalendrier(Calendrier $calendrier): self
+    {
+        if ($this->calendriers->removeElement($calendrier)) {
+            // set the owning side to null (unless already changed)
+            if ($calendrier->getIntervenant() === $this) {
+                $calendrier->setIntervenant(null);
+            }
+        }
 
         return $this;
     }

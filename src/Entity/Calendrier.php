@@ -81,10 +81,7 @@ class Calendrier
      */
     private $module;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="calendriers")
-     */
-    private $intervenant;
+
 
     /**
      * @ORM\Column(type="time", nullable=true)
@@ -105,6 +102,11 @@ class Calendrier
      * @ORM\Column(type="date", nullable=true)
      */
     private $date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Intervenants::class, inversedBy="calendriers")
+     */
+    private $intervenant;
 
    
 
@@ -257,18 +259,7 @@ class Calendrier
         return $this;
     }
 
-    public function getIntervenant(): ?Users
-    {
-        return $this->intervenant;
-    }
-
-    public function setIntervenant(?Users $intervenant): self
-    {
-        $this->intervenant = $intervenant;
-
-        return $this;
-    }
-
+   
     public function getHeurdebut(): ?\DateTimeInterface
     {
         return $this->heurdebut;
@@ -313,6 +304,18 @@ class Calendrier
     public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getIntervenant(): ?Intervenants
+    {
+        return $this->intervenant;
+    }
+
+    public function setIntervenant(?Intervenants $intervenant): self
+    {
+        $this->intervenant = $intervenant;
 
         return $this;
     }
