@@ -8,6 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Classes;
 use App\Entity\Blocs;
@@ -33,14 +35,20 @@ class CalendrierType extends AbstractType
             'required' => false,
             'label' => 'Type' 
         ])
+
             ->add('start',DateTimeType::class,[
                 'label' => 'Date début',
-                'widget' => "single_text"
-       
+                'widget' => "single_text",
+     
+                
+                
+           
             ])
             ->add('end',DateTimeType::class,[
                 'label' => 'Date fin',
-                'widget' => "single_text"
+                'widget' => "single_text",
+          
+                
                 
             ])
             ->add('description',TextareaType::class,[
@@ -60,6 +68,7 @@ class CalendrierType extends AbstractType
             ])
             ->add('text_color', ColorType::class,[
                 'label' => 'Couleur du texte ',
+                'data'=> '#ffffff'
                 
                 
             ])
@@ -75,7 +84,7 @@ class CalendrierType extends AbstractType
                 'required' => true,
             ])
 
-            ->add('bloc', EntityType::class, [
+            ->remove('bloc', EntityType::class, [
                 'class' => Blocs::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
@@ -112,7 +121,29 @@ class CalendrierType extends AbstractType
 
             ])
 
+
             ->remove('type')
+         ->add('date', DateType::class, [
+        
+                'widget' => 'single_text',
+                'label' => 'Date'
+            ])
+
+            ->add('heurdebut', TimeType::class, [
+        
+                'widget' => 'single_text',
+                'label' => false
+            ])
+            ->add('duree', TimeType::class, [
+        
+                'widget' => 'single_text',
+                'label' => false
+            ])
+            ->remove('heurefin', TimeType::class, [
+             
+                'widget' => 'single_text',
+                'label' => false
+            ]);
         ;
     }
 

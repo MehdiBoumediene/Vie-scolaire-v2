@@ -86,6 +86,26 @@ class Calendrier
      */
     private $intervenant;
 
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $heurdebut;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $heurefin;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $duree;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $date;
+
    
 
     public function getId(): ?int
@@ -245,6 +265,54 @@ class Calendrier
     public function setIntervenant(?Users $intervenant): self
     {
         $this->intervenant = $intervenant;
+
+        return $this;
+    }
+
+    public function getHeurdebut(): ?\DateTimeInterface
+    {
+        return $this->heurdebut;
+    }
+
+    public function setHeurdebut(?\DateTimeInterface $heurdebut): self
+    {
+        $this->heurdebut = $heurdebut;
+
+        return $this;
+    }
+
+    public function getHeurefin(): ?\DateTimeInterface
+    {
+        return $this->heurefin;
+    }
+
+    public function setHeurefin(?\DateTimeInterface $heurefin): self
+    {
+        $this->heurefin = $heurefin;
+
+        return $this;
+    }
+
+    public function getDuree(): ?\DateTimeInterface
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?\DateTimeInterface $duree): self
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }
