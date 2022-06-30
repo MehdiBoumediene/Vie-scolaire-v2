@@ -15,6 +15,20 @@ use App\Entity\Classes;
 use App\Entity\Blocs;
 use App\Entity\Modules;
 use App\Entity\Users;
+
+use App\Entity\Tuteurs;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use App\Entity\Intervenants;
+
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use App\Entity\Codepostal;
+use App\Entity\Villes;
+use App\Form\UsersType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,8 +40,8 @@ class CalendrierType extends AbstractType
         $builder
         ->add('titre',ChoiceType::class, [
             'choices' => [
-                'RDV' => 'RDV',
-                'EXAMEN' => 'EXAMEN',
+                'Cour' => 'Cour',
+                'Examen' => 'Examen',
                 
             ],
             'expanded' => false,
@@ -75,13 +89,10 @@ class CalendrierType extends AbstractType
 
             ->add('classe', EntityType::class, [
                 'class' => Classes::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.nom', 'ASC');
-                },
                 'choice_label' => 'nom',
-                'multiple'=>false,
-                'required' => true,
+                'placeholder' => '',
+                'label' => false,
+                'required' => false,
             ])
 
             ->remove('bloc', EntityType::class, [
@@ -95,16 +106,7 @@ class CalendrierType extends AbstractType
                 'required' => true,
             ])
 
-            ->add('module', EntityType::class, [
-                'class' => Modules::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.nom', 'ASC');
-                },
-                'choice_label' => 'nom',
-                'multiple'=>false,
-                'required' => true,
-            ])
+
 
             ->add('intervenant', EntityType::class, [
                 'class' => Users::class,
@@ -145,6 +147,63 @@ class CalendrierType extends AbstractType
                 'label' => false
             ]);
         ;
+
+        $builder->get('classe')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+    
+                $form ->getParent()->add('module', EntityType::class, [
+                    'class' => Modules::class,
+                    'choice_label' => 'nom',
+                    'choices' => $form->getData()->getModules(),
+                    'label' => false,
+                    'required'=>true
+                    
+                ]);
+    
+            }
+        );
+    
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+                $data = $event->getData();
+                $code = $data->getModule();
+    
+                if($code){
+                    $form->get('classes')->setData($code->getClasse());
+    
+                    $form->add('module', EntityType::class, [
+                        'class' => Modules::class,
+                        'choice_label' => 'nom',
+                        'choices' => $code->getClasses()->getModules(),
+                        'required'=>true,
+                        'label' => false,
+                    
+                        
+                    ]);
+                }else{
+    
+                    
+                    $form->add('module', EntityType::class, [
+                        'class' => Modules::class,
+                        'choice_label' => 'nom',
+                        'choices' => [],
+                        'required'=>true,
+                        'label' => false,
+                        
+                    ]);
+    
+                }
+        
+    
+    
+            }
+        );
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

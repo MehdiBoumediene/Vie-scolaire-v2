@@ -60,7 +60,7 @@
 
 
 	</div>
-	<div style="display:none;">
+	<div style="">
 		{{ form_row(form.start,{'attr': {'class': 'form-control start'}}) }}
 
 		{{ form_row(form.end,{'attr': {'class': 'form-control end'}}) }}
@@ -143,8 +143,14 @@ var total1 = total
 
 }
 console.log(a + b)
+if (totall >= 60) {
+var a1 = duree.split(":")[1];
+var datefin2 = date + 'T' + Number(total1 + 1) + ':' + a1;
 
+} else {
 var datefin2 = date + 'T' + total1 + ':' + totall
+}
+
 $('#calendrier_end').val(datefin2)
 
 });
@@ -162,6 +168,7 @@ var a = Number(duree.split(":")[0]);
 var b = Number(heuredebut.split(":")[0]);
 
 var c = Number(duree.split(":")[1]);
+
 
 var d = Number(heuredebut.split(":")[1]);
 
@@ -181,12 +188,93 @@ var total1 = '0' + total
 var total1 = total
 
 }
-console.log(totall)
 
+
+console.log('n1 =' + totall + 'n2 =' + total1)
+if (totall >= 60) {
+var a1 = duree.split(":")[1];
+var datefin2 = date + 'T' + Number(total1 + 1) + ':' + a1;
+
+} else {
 var datefin2 = date + 'T' + total1 + ':' + totall
+}
+
+
 $('#calendrier_end').val(datefin2)
+
+
 });
 
+var $sport = $('#calendrier_classe');
+// When sport gets selected ...
+$sport.change(function () { // ... retrieve the corresponding form.
+
+if (window.location.pathname == "/calendrier/new") {
+var $form = $(this).closest('form');
+// Simulate form data, but only include the selected sport value.
+
+var data = {}
+data[$sport.attr('name')] = $sport.val();
+
+// Submit data via AJAX to the form's action path.
+$.ajax({
+url: $form.attr('action'),
+type: $form.attr('method'),
+data: data,
+complete: function (html) { // Replace current position field ...
+
+$('#calendrier_module').replaceWith(
+// ... with the returned one from the AJAX response.
+$(html.responseText).find('#calendrier_module')
+
+);
+// Position field now displays the appropriate positions.
+$('#calendrier_module').select2();
+}
+});
+} else {
+var $form = $(this).closest('form');
+// Simulate form data, but only include the selected sport value.
+
+var data = $form.serializeArray()
+
+
+// Submit data via AJAX to the form's action path.
+$.ajax({
+url: $form.attr('action'),
+type: $form.attr('method'),
+data: data,
+complete: function (html) { // Replace current position field ...
+
+$('#calendrier_module').replaceWith(
+// ... with the returned one from the AJAX response.
+$(html.responseText).find('#calendrier_module')
+
+);
+
+$('#calendrier_module').select2();
+
+// Position field now displays the appropriate positions.
+
+}
+});
+
+}
+
+});
+});
+</script>
+
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+
+	$(document).ready(function () {
+$('#calendrier_module').select2();
+$('#calendrier_classe').select2();
 
 });
 </script>
