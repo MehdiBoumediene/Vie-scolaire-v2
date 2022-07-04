@@ -59,6 +59,18 @@ class EtudiantsRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByUser($user)
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin('e.user', 'a')
+            ->where('a.id = :user')
+            ->setParameter('user', $user)
+       
+      
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?Etudiants

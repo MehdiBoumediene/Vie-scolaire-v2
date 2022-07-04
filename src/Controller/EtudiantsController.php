@@ -58,9 +58,10 @@ class EtudiantsController extends AbstractController
             $date = new \DateTimeImmutable('now');
          
             $etudiant->setCreatedBy($this->getUser()->getEmail());
-            $etudiant->setUser($this->getUser());
+            $etudiant->setUser($user);
             $etudiant->setEmail($form->get('user')->get('email')->getData());
             $etudiant->setCreatedAt($date);
+            $etudiant->setClasses($form->get('classes')->getData());
             $etudiantsRepository->add($etudiant);
 
             $password = $passwordEncoder->encodePassword($user, $form->get('user')->get('password')->getData());

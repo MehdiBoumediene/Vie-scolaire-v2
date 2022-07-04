@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Documents;
 use App\Entity\Modules;
 use App\Form\ModulesType;
 use App\Repository\UsersRepository;
 use App\Repository\ModulesRepository;
 use App\Repository\IntervenantsRepository;
+use App\Entity\Files;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,11 +39,51 @@ class ModulesController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $date = new \DateTimeImmutable('now');
-         
+            $files = $form->get('files')->getData();
+            $videos = $form->get('documents')->getData();
+           
+            foreach($files as $file){
+                // Je génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $file->guessExtension();
+
+                // Je copie le fichier dans le dossier uploads
+                $file->move(
+                    $this->getParameter('videos_directory'),
+                    $fichier
+                );
+
+                // Je stocke le document dans la BDD (nom du fichier)
+                $file= new Files();
+                $file->setName($fichier);
+                $file->setNom($fichier);
+                $module->addFile($file);
+
+            }
+            foreach($videos as $video){
+                // Je génère un nouveau nom de fichier
+                $fichier = md5(uniqid()) . '.' . $video->guessExtension();
+
+                // Je copie le fichier dans le dossier uploads
+                $video->move(
+                    $this->getParameter('videos_directory'),
+                    $fichier
+                );
+
+                // Je stocke la video dans la BDD (nom du fichier)
+                $media= new Documents();
+                $media->setName($fichier);
+                $media->setNom($fichier);
+                $module->addDocument($media);
+
+            }
+
             $module->setCreatedBy($this->getUser()->getEmail());
             $module->setUsers($this->getUser());
             $module->setCreatedAt($date);
             $modulesRepository->add($module);
+
+
+
             return $this->redirectToRoute('app_modules_index', [], Response::HTTP_SEE_OTHER);
         }
 

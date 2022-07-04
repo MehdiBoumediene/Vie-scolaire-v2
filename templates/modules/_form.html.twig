@@ -12,14 +12,21 @@
 	<div class="col-md-3">
 		{{ form_row(form.bloc,{'attr': {'class': 'form-control select'}}) }}
 		{{ form_errors(form.bloc) }}</div>
+
+
+</div>
+<br>
+<div class="form-row">
 	<div class="col-md-3">
 		{{ form_row(form.files,{'attr': {'class': ''}}) }}
 		{{ form_errors(form.files) }}</div>
-
+	<div class="col-md-3">
+		{{ form_row(form.documents,{'attr': {'class': ''}}) }}
+		{{ form_errors(form.documents) }}</div>
 </div>
 
 
-<br>
+<br><br><hr>
 <button class="mt-1 btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
 ou
 <a href="{{ path('app_modules_index') }}">Retour à la liste</a>

@@ -66,7 +66,6 @@
 									<li><a href="{{path('app_tuteurs_index')}}"{% if route_name == "app_tuteurs_index" %} class="mm-active"{% elseif route_name == "app_tuteurs_new" %} class="mm-active"{% elseif route_name == "app_tuteurs_edit" %} class="mm-active"{% elseif route_name == "app_tuteurs_show" %} class="mm-active"{% else %} class=" "{% endif %}><i class="metismenu-icon pe-7s-display2"></i>Liste des tuteurs<i class="metismenu-state-icon "></i></a></li>
 
 
-
 									<li><a href="{{path('app_gestion_calendrier')}}"{% if route_name == "app_gestion_calendrier" %} class="mm-active"{% else %} class=" "{% endif %}><i class="metismenu-icon pe-7s-display2"></i>Calendrier<i class="metismenu-state-icon "></i></a></li>
 								</ul>
 							</li>
@@ -101,7 +100,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="{{path('app_telechargements_index')}}">
+							<a href="{{path('app_supportcours')}}">
 								<i class="metismenu-icon pe-7s-notebook"></i>Supports et cours
 							</a>
 						</li>
@@ -137,7 +136,8 @@
 						</li>
 						<li>
 							<a href="{{path('app_notes_index')}}">
-								<i class="metismenu-icon pe-7s-display2"></i>Gérer les notes <i class="metismenu-state-icon "></i>
+								<i class="metismenu-icon pe-7s-display2"></i>Gérer les notes
+								<i class="metismenu-state-icon "></i>
 							</a>
 						</li>
 
@@ -187,6 +187,4 @@
 		</div>
 
 
-
-		
 	{% endblock %}

@@ -72,7 +72,7 @@ class Etudiants
     private $classes;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="etudiants")
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="etudiants",cascade={"persist"})
      */
     private $user;
 

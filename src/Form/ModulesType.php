@@ -45,7 +45,7 @@ public function __construct(EntityManagerInterface $entityManager)
             ])
            
             ->add('files',FileType::class,[
-                'label'=> 'Fichiers',
+                'label'=> 'Documents',
                 'multiple' => true,
                 'mapped'=> false,
                 'required'=> false,
@@ -53,6 +53,14 @@ public function __construct(EntityManagerInterface $entityManager)
             
             ])
            
+            ->add('documents',FileType::class,[
+                'label'=> 'Video (mp4)',
+                'multiple' => true,
+                'mapped'=> false,
+                'required'=> false,
+        
+            
+            ])
             ;
 
                
