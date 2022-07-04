@@ -70,51 +70,63 @@
 									<p>
 										<b>Adresse :</b>
 										{{ etudiant.adresse }}</p>
+									<p></p>
 									<p>
-										<b>Téléphone :</b>
-										{{etudiant.telephone}}</p>
+										<b>Code postal :</b>
+										{% for code in etudiant.ville %}
+											{{code.nom}}
+										{% endfor %}
+									</p>
 									<p>
-										<b>Email :</b>
-										{{etudiant.email}}</p>
-
-								</div>
+										<b>Département :</b>
+										{% for departement in etudiant.codepostale %}
+											{{departement.nom}}
+										{% endfor %}
+									</p>
+									<b>Téléphone :</b>
+									{{etudiant.telephone}}</p>
+								<p>
+									<b>Email :</b>
+									{{etudiant.email}}</p>
 
 							</div>
 
 						</div>
-						<div class="col-md-6">
-							<div class="main-card mb-3 card">
-								<div class="card-body">
-									<h5 class="card-title">Classes</h5>
-									<ul class="list-group list-group-flush">
 
-										<a href="javascript:void(0);" class="list-group-item">
-											-
+					</div>
+					<div class="col-md-6">
+						<div class="main-card mb-3 card">
+							<div class="card-body">
+								<h5 class="card-title">Classes</h5>
+								<ul class="list-group list-group-flush">
 
-										</a>
+									<a href="javascript:void(0);" class="list-group-item">
+										-
 
-									</ul>
-								</div>
+									</a>
+
+								</ul>
 							</div>
 						</div>
+					</div>
 
-						<div class="col-md-6">
-							<div class="main-card mb-3 card">
-								<div class="card-body">
-									<h5 class="card-title">Absences</h5>
-									<ul class="list-group list-group-flush"></ul>
-								</div>
+					<div class="col-md-6">
+						<div class="main-card mb-3 card">
+							<div class="card-body">
+								<h5 class="card-title">Absences</h5>
+								<ul class="list-group list-group-flush"></ul>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="main-card mb-3 card">
-								<div class="card-body">
-									<h5 class="card-title">Progression et résultat</h5>
-									<ul class="list-group list-group-flush"></ul>
-								</div>
+					</div>
+					<div class="col-md-6">
+						<div class="main-card mb-3 card">
+							<div class="card-body">
+								<h5 class="card-title">Progression et résultat</h5>
+								<ul class="list-group list-group-flush"></ul>
 							</div>
 						</div>
 					</div>
 				</div>
-				{{ block("Footer", "Menus/Footer.html.twig") }}
-			{% endblock %}
+			</div>
+			{{ block("Footer", "Menus/Footer.html.twig") }}
+		{% endblock %}

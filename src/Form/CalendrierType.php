@@ -15,23 +15,16 @@ use App\Entity\Classes;
 use App\Entity\Blocs;
 use App\Entity\Modules;
 use App\Entity\Users;
-
-use App\Entity\Tuteurs;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use App\Entity\Etudiants;
 use App\Entity\Intervenants;
-
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
-use App\Entity\Codepostal;
-use App\Entity\Villes;
-use App\Form\UsersType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormInterface;
 
 class CalendrierType extends AbstractType
 {
@@ -40,8 +33,8 @@ class CalendrierType extends AbstractType
         $builder
         ->add('titre',ChoiceType::class, [
             'choices' => [
-                'Cour' => 'Cour',
-                'Examen' => 'Examen',
+                'COUR' => 'COUR',
+                'EXAMEN' => 'EXAMEN',
                 
             ],
             'expanded' => false,
@@ -53,15 +46,12 @@ class CalendrierType extends AbstractType
             ->add('start',DateTimeType::class,[
                 'label' => 'Date début',
                 'widget' => "single_text",
-     
-                
-                
-           
+                'empty_data' => null,
             ])
             ->add('end',DateTimeType::class,[
                 'label' => 'Date fin',
                 'widget' => "single_text",
-          
+                'empty_data' => null,
                 
                 
             ])
@@ -89,10 +79,13 @@ class CalendrierType extends AbstractType
 
             ->add('classe', EntityType::class, [
                 'class' => Classes::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.nom', 'ASC');
+                },
                 'choice_label' => 'nom',
-                'placeholder' => '',
-                'label' => false,
-                'required' => false,
+                'multiple'=>false,
+                'required' => true,
             ])
 
             ->remove('bloc', EntityType::class, [
@@ -106,18 +99,28 @@ class CalendrierType extends AbstractType
                 'required' => true,
             ])
 
-
-
-            ->add('intervenant', EntityType::class, [
-                'class' => Users::class,
+            ->add('module', EntityType::class, [
+                'class' => Modules::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->orderBy('u.email', 'ASC')
-                        ->where('u.roles LIKE :role')
-                            ->setParameter('role','%"'.'ROLE_INTERVENANT'.'"%')
+                        ->orderBy('u.nom', 'ASC');
+                },
+                'choice_label' => 'nom',
+                'multiple'=>false,
+                'required' => true,
+            ])
+
+            ->add('intervenant', EntityType::class, [
+                'class' => Intervenants::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.nom', 'ASC')
+            
                         ;
                 },
-                'choice_label' => 'email',
+                'choice_label' => function ($category) {
+                    return $category->getNom() . ' ' . $category->getPrenom();
+                },
                 'multiple'=>false,
                 'required' => true,
 
@@ -148,61 +151,38 @@ class CalendrierType extends AbstractType
             ]);
         ;
 
-        $builder->get('classe')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) {
-                $form = $event->getForm();
-    
-                $form ->getParent()->add('module', EntityType::class, [
-                    'class' => Modules::class,
-                    'choice_label' => 'nom',
-                    'choices' => $form->getData()->getModules(),
-                    'label' => false,
-                    'required'=>true
-                    
-                ]);
-    
-            }
-        );
-    
+        $formModifier = function (FormInterface $form, Classes $sport = null) {
+            $positions = null === $sport ? [] : $sport->getModules();
+
+            $form->add('module', EntityType::class, [
+                'class' => Modules::class,
+                'placeholder' => '',
+                'choices' => $positions,
+            ]);
+        };
+
         $builder->addEventListener(
-            FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
-                $form = $event->getForm();
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($formModifier) {
+                // this would be your entity, i.e. SportMeetup
                 $data = $event->getData();
-                $code = $data->getModule();
-    
-                if($code){
-                    $form->get('classes')->setData($code->getClasse());
-    
-                    $form->add('module', EntityType::class, [
-                        'class' => Modules::class,
-                        'choice_label' => 'nom',
-                        'choices' => $code->getClasses()->getModules(),
-                        'required'=>true,
-                        'label' => false,
-                    
-                        
-                    ]);
-                }else{
-    
-                    
-                    $form->add('module', EntityType::class, [
-                        'class' => Modules::class,
-                        'choice_label' => 'nom',
-                        'choices' => [],
-                        'required'=>true,
-                        'label' => false,
-                        
-                    ]);
-    
-                }
-        
-    
-    
+
+                $formModifier($event->getForm(), $data->getClasse());
             }
         );
 
+        $builder->get('classe')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($formModifier) {
+                // It's important here to fetch $event->getForm()->getData(), as
+                // $event->getData() will get you the client data (that is, the ID)
+                $sport = $event->getForm()->getData();
+
+                // since we've added the listener to the child, we'll have to pass on
+                // the parent to the callback functions!
+                $formModifier($event->getForm()->getParent(), $sport);
+            }
+        );
 
     }
 

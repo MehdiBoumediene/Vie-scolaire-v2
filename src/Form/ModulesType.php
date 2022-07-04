@@ -14,6 +14,8 @@ use App\Entity\Classes;
 use App\Entity\Etudiants;
 use App\Entity\Intervenants;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -42,7 +44,14 @@ public function __construct(EntityManagerInterface $entityManager)
          
             ])
            
-
+            ->add('files',FileType::class,[
+                'label'=> 'Fichiers',
+                'multiple' => true,
+                'mapped'=> false,
+                'required'=> false,
+        
+            
+            ])
            
             ;
 

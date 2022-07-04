@@ -63,11 +63,11 @@ class IntervenantsRepository extends ServiceEntityRepository
     */
 
 
-    public function findByClasse($id)
+    public function findByClasse($classe)
     {
         return $this->createQueryBuilder('e')
         ->where('e.classes = :val')
-        ->setParameter('val', 3)
+        ->setParameter('val', $classe)
    
   
         ->getQuery()

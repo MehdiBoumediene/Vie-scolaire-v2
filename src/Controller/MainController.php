@@ -129,7 +129,6 @@ class MainController extends AbstractController
                 'title' => $event->getTitre(),
                 'description' => $event->getDescription(),
                 'classe' => $event->getClasse()->getNom(),
-                'bloc' => $event->getBloc()->getNom(),
                 'module' => $event->getModule()->getNom(),
                 'intervenant' => $event->getIntervenant()->getNom(),
                 'textColor' => $event->getTextColor(),
