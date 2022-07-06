@@ -36,10 +36,16 @@ class Villes
      */
     private $intervenants;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Etudiants::class, mappedBy="ville")
+     */
+    private $etudiants;
+
     public function __construct()
     {
         $this->codepostale = new ArrayCollection();
         $this->intervenants = new ArrayCollection();
+        $this->etudiants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,6 +119,36 @@ class Villes
             // set the owning side to null (unless already changed)
             if ($intervenant->getVille() === $this) {
                 $intervenant->setVille(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Etudiants>
+     */
+    public function getEtudiants(): Collection
+    {
+        return $this->etudiants;
+    }
+
+    public function addEtudiant(Etudiants $etudiant): self
+    {
+        if (!$this->etudiants->contains($etudiant)) {
+            $this->etudiants[] = $etudiant;
+            $etudiant->setVille($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEtudiant(Etudiants $etudiant): self
+    {
+        if ($this->etudiants->removeElement($etudiant)) {
+            // set the owning side to null (unless already changed)
+            if ($etudiant->getVille() === $this) {
+                $etudiant->setVille(null);
             }
         }
 

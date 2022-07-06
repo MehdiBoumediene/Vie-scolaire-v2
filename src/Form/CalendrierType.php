@@ -8,14 +8,23 @@ use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Classes;
 use App\Entity\Blocs;
 use App\Entity\Modules;
 use App\Entity\Users;
+use App\Entity\Etudiants;
+use App\Entity\Intervenants;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormInterface;
 
 class CalendrierType extends AbstractType
 {
@@ -24,7 +33,7 @@ class CalendrierType extends AbstractType
         $builder
         ->add('titre',ChoiceType::class, [
             'choices' => [
-                'RDV' => 'RDV',
+                'COUR' => 'COUR',
                 'EXAMEN' => 'EXAMEN',
                 
             ],
@@ -33,14 +42,17 @@ class CalendrierType extends AbstractType
             'required' => false,
             'label' => 'Type' 
         ])
+
             ->add('start',DateTimeType::class,[
                 'label' => 'Date début',
-                'widget' => "single_text"
-       
+                'widget' => "single_text",
+                'empty_data' => null,
             ])
             ->add('end',DateTimeType::class,[
                 'label' => 'Date fin',
-                'widget' => "single_text"
+                'widget' => "single_text",
+                'empty_data' => null,
+                
                 
             ])
             ->add('description',TextareaType::class,[
@@ -60,6 +72,7 @@ class CalendrierType extends AbstractType
             ])
             ->add('text_color', ColorType::class,[
                 'label' => 'Couleur du texte ',
+                'data'=> '#ffffff'
                 
                 
             ])
@@ -75,7 +88,7 @@ class CalendrierType extends AbstractType
                 'required' => true,
             ])
 
-            ->add('bloc', EntityType::class, [
+            ->remove('bloc', EntityType::class, [
                 'class' => Blocs::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
@@ -98,22 +111,79 @@ class CalendrierType extends AbstractType
             ])
 
             ->add('intervenant', EntityType::class, [
-                'class' => Users::class,
+                'class' => Intervenants::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->orderBy('u.email', 'ASC')
-                        ->where('u.roles LIKE :role')
-                            ->setParameter('role','%"'.'ROLE_INTERVENANT'.'"%')
+                        ->orderBy('u.nom', 'ASC')
+            
                         ;
                 },
-                'choice_label' => 'email',
+                'choice_label' => function ($category) {
+                    return $category->getNom() . ' ' . $category->getPrenom();
+                },
                 'multiple'=>false,
                 'required' => true,
 
             ])
 
+
             ->remove('type')
+         ->add('date', DateType::class, [
+        
+                'widget' => 'single_text',
+                'label' => 'Date'
+            ])
+
+            ->add('heurdebut', TimeType::class, [
+        
+                'widget' => 'single_text',
+                'label' => false
+            ])
+            ->add('duree', TimeType::class, [
+        
+                'widget' => 'single_text',
+                'label' => false
+            ])
+            ->remove('heurefin', TimeType::class, [
+             
+                'widget' => 'single_text',
+                'label' => false
+            ]);
         ;
+
+        $formModifier = function (FormInterface $form, Classes $sport = null) {
+            $positions = null === $sport ? [] : $sport->getModules();
+
+            $form->add('module', EntityType::class, [
+                'class' => Modules::class,
+                'placeholder' => '',
+                'choices' => $positions,
+            ]);
+        };
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($formModifier) {
+                // this would be your entity, i.e. SportMeetup
+                $data = $event->getData();
+
+                $formModifier($event->getForm(), $data->getClasse());
+            }
+        );
+
+        $builder->get('classe')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($formModifier) {
+                // It's important here to fetch $event->getForm()->getData(), as
+                // $event->getData() will get you the client data (that is, the ID)
+                $sport = $event->getForm()->getData();
+
+                // since we've added the listener to the child, we'll have to pass on
+                // the parent to the callback functions!
+                $formModifier($event->getForm()->getParent(), $sport);
+            }
+        );
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

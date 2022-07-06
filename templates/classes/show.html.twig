@@ -67,7 +67,7 @@
 										<h5 class="card-title">Intervenants</h5>
 										<ul class="list-group list-group-flush">
 
-											{% for intervenant in intervenants %}
+											{% for intervenant in class.intervenants %}
 
 												<a href="{{path('app_intervenants_show',{id:intervenant.id})}}" class="list-group-item">{{intervenant.prenom}}
 													{{intervenant.nom}}</a>
@@ -83,9 +83,10 @@
 									<div class="card-body">
 										<h5 class="card-title">Apprenants</h5>
 										<ul class="list-group list-group-flush">
-											{% for etudiant in etudiants %}
+											{% for etudiant in class.etudiants %}
 
-												<a href="{{path('app_etudiants_show',{id:etudiant.id})}}" class="list-group-item">{{etudiant.prenom}}
+												<a href="{{path('app_etudiants_show',{id:etudiant.id})}}" class="list-group-item">
+													{{etudiant.prenom}}
 													{{etudiant.nom}}
 												</a>
 

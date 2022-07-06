@@ -39,7 +39,7 @@ class MainController extends AbstractController
         $rdvs = [];
         $rdvs2 = [];
         foreach ($events as $event){
-
+            
             $rdvs[] = [
                 'id' => $event->getId(),
                 'start' => $event->getStart()->format('Y-m-d H:i'),
@@ -50,7 +50,7 @@ class MainController extends AbstractController
                 'title' => $event->getTitre(),
                 'description' => $event->getDescription(),
                 'classe' => $event->getClasse()->getNom(),
-                'bloc' => $event->getBloc()->getNom(),
+             
                 'module' => $event->getModule()->getNom(),
                 'intervenant' => $event->getIntervenant()->getNom(),
                 'textColor' => $event->getTextColor(),
@@ -129,7 +129,6 @@ class MainController extends AbstractController
                 'title' => $event->getTitre(),
                 'description' => $event->getDescription(),
                 'classe' => $event->getClasse()->getNom(),
-                'bloc' => $event->getBloc()->getNom(),
                 'module' => $event->getModule()->getNom(),
                 'intervenant' => $event->getIntervenant()->getNom(),
                 'textColor' => $event->getTextColor(),

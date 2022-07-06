@@ -57,7 +57,7 @@ class Modules
     private $absences;
 
     /**
-     * @ORM\OneToMany(targetEntity=Documents::class, mappedBy="module")
+     * @ORM\OneToMany(targetEntity=Documents::class, mappedBy="module", cascade={"all"})
      */
     private $documents;
 
@@ -85,7 +85,9 @@ class Modules
 
 
 
-   
+    public function __toString() {
+        return $this->nom;
+    }
    
 
     public function __construct()

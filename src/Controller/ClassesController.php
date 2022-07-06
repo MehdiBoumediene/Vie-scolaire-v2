@@ -73,7 +73,7 @@ class ClassesController extends AbstractController
             'classes' => $class,
             'modules' => $modulesRepository->findBy(array('classes'=>$class)),
             'intervenants' => $intervenantsRepository->findByClasse($class),
-            'etudiants' => $etudiantsRepository->findByEtudiant($id),
+            'etudiants' => $etudiantsRepository->findByEtudiant($class),
         
         ]);
     }

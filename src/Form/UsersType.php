@@ -28,15 +28,20 @@ class UsersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email',EmailType::class)
+            ->add('email',EmailType::class,[
+                'label' => false,
+            ])
             ->add('password', PasswordType::class,[  
+                'required'=>false,
+                'empty_data' => '',
+                'label'=>false,
             ])
             ->add('isVerified',CheckboxType::class,[
-                'label' => 'Compte Activé', 
+               
                 'data' => true,
-           
+                'label' => false 
             ])
-            ->add('roles', ChoiceType::class, [
+            ->remove('roles', ChoiceType::class, [
                 'choices' => [
                     'Étudiant' => 'ROLE_ETUDIANT',
                     'Intervenant' => 'ROLE_INTERVENANT',
@@ -48,7 +53,7 @@ class UsersType extends AbstractType
                 'multiple' => true,
                 'required' => false,
                
-                'label' => 'Rôles' 
+                'label' => false 
             ])
 
             ->remove('nom',TextType::class)
