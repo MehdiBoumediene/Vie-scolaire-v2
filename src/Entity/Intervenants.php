@@ -77,7 +77,7 @@ class Intervenants
     private $classes;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="intervenants")
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="intervenants",cascade={"persist"})
      */
     private $user;
 
