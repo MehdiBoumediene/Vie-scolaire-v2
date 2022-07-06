@@ -33,8 +33,11 @@ class CalendrierType extends AbstractType
         $builder
         ->add('titre',ChoiceType::class, [
             'choices' => [
-                'COUR' => 'COUR',
+                'COURS' => 'COURS',
                 'EXAMEN' => 'EXAMEN',
+                'ATELIER' => 'ATELIER',
+                'CONFÉRENCE' => 'CONFÉRENCE',
+                'DIVERS' => 'DIVERS',
                 
             ],
             'expanded' => false,

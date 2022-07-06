@@ -91,6 +91,11 @@ class Etudiants
      */
     private $ville;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Cv::class, mappedBy="etudiant")
+     */
+    private $cvs;
+
 
 
    
@@ -101,6 +106,7 @@ class Etudiants
         $this->modules = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->tuteurs = new ArrayCollection();
+        $this->cvs = new ArrayCollection();
 
    
     }
@@ -313,6 +319,36 @@ class Etudiants
     public function setVille(?Villes $ville): self
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cv>
+     */
+    public function getCvs(): Collection
+    {
+        return $this->cvs;
+    }
+
+    public function addCv(Cv $cv): self
+    {
+        if (!$this->cvs->contains($cv)) {
+            $this->cvs[] = $cv;
+            $cv->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCv(Cv $cv): self
+    {
+        if ($this->cvs->removeElement($cv)) {
+            // set the owning side to null (unless already changed)
+            if ($cv->getEtudiant() === $this) {
+                $cv->setEtudiant(null);
+            }
+        }
 
         return $this;
     }
