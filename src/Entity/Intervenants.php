@@ -96,6 +96,11 @@ class Intervenants
      */
     private $calendriers;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Cv::class, mappedBy="intervenant")
+     */
+    private $cvs;
+
    
 
     public function __construct()
@@ -104,6 +109,7 @@ class Intervenants
         $this->absences = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->calendriers = new ArrayCollection();
+        $this->cvs = new ArrayCollection();
 
     }
 
@@ -349,6 +355,36 @@ class Intervenants
             // set the owning side to null (unless already changed)
             if ($calendrier->getIntervenant() === $this) {
                 $calendrier->setIntervenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cv>
+     */
+    public function getCvs(): Collection
+    {
+        return $this->cvs;
+    }
+
+    public function addCv(Cv $cv): self
+    {
+        if (!$this->cvs->contains($cv)) {
+            $this->cvs[] = $cv;
+            $cv->setIntervenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCv(Cv $cv): self
+    {
+        if ($this->cvs->removeElement($cv)) {
+            // set the owning side to null (unless already changed)
+            if ($cv->getIntervenant() === $this) {
+                $cv->setIntervenant(null);
             }
         }
 
