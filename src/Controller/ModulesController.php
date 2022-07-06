@@ -8,6 +8,7 @@ use App\Form\ModulesType;
 use App\Repository\UsersRepository;
 use App\Repository\ModulesRepository;
 use App\Repository\IntervenantsRepository;
+
 use App\Entity\Files;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,11 +23,33 @@ class ModulesController extends AbstractController
     /**
      * @Route("/", name="app_modules_index", methods={"GET"})
      */
-    public function index(ModulesRepository $modulesRepository): Response
+    public function index(ModulesRepository $modulesRepository,IntervenantsRepository $intervenantsRepository): Response
     {
-        return $this->render('modules/index.html.twig', [
-            'modules' => $modulesRepository->findAll(),
-        ]);
+
+
+        $user = $this->getUser();
+        $role = $this->getUser()->getRoles();
+
+        $intervenant = $intervenantsRepository->findOneBy(array('user'=>$user));
+
+        $classe = $intervenant->getClasses();
+
+        if(in_array('ROLE_INTERVENANT', $this->getUser()->getRoles())){
+            $find = $modulesRepository->findByClasse($classe);
+        }elseif(in_array('ROLE_ETUDIANT', $this->getUser()->getRoles())){
+          
+        }else {
+            $find = $modulesRepository->findAll();
+        }
+           
+            return $this->render('modules/index.html.twig', [
+                
+                'modules' => $find,
+            ]);
+
+ 
+
+     
     }
     /**
      * @Route("/new", name="app_modules_new", methods={"GET", "POST"})
