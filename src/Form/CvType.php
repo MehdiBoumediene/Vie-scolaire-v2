@@ -22,12 +22,15 @@ class CvType extends AbstractType
             ->add('type')
             ->add('entreprise',TextType::class,[
                 'label'=> 'Entreprise',
+                'required'=>false,
             ])
             ->add('ecole',TextType::class,[
                 'label'=> 'Ecole',
+                'required'=>false,
             ])
             ->add('formation',TextType::class,[
                 'label'=> 'Formation',
+                'required'=>false,
             ])
             ->add('debut',DateType::class,[
                 'label' => 'Date début',
@@ -41,11 +44,13 @@ class CvType extends AbstractType
             ])
             ->add('titre',TextType::class,[
                 'label'=> 'Poste',
+                'required'=>false,
             ])
 
             ->add('description',TextareaType::class,[
                 'label'=>'Description',
                 'required' => false,
+                
             ])
 
 
