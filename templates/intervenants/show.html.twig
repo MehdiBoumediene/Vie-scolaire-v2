@@ -66,16 +66,17 @@
 										<b>Prenom :</b>
 										{{intervenant.prenom}}</p>
 									<p>
-										<b>Ville :</b>
+										<b>Adresse :</b>
+										{{ intervenant.adresse }}</p>
+									<p>
+										<b>Code postal :</b>
 										{{ intervenant.ville.nom }}</p>
 								</p>
 								<p>
-									<b>Code postal :</b>
+									<b>Ville :</b>
 									{{ intervenant.codepostale.nom }}</p>
 							</p>
-							<p>
-								<b>Adresse :</b>
-								{{ intervenant.adresse }}</p>
+
 							<p>
 								<b>Téléphone :</b>
 								{{intervenant.telephone}}</p>
@@ -96,10 +97,7 @@
 
 								<a href="javascript:void(0);" class="list-group-item">
 									{{intervenant.classes.nom}}
-									-
-									{% for bloc in intervenant.classes.blocs %}
-										{{bloc.nom}}
-									{% endfor %}
+
 								</a>
 
 							</ul>
