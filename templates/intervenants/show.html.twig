@@ -112,7 +112,7 @@
 							<ul class="list-group list-group-flush">
 								{% for etudiant in intervenant.classes.etudiants %}
 									<a href="javascript:void(0);" class="list-group-item">
-										{{ etudiant.nom}}
+										{{ etudiant.nom}} {{ etudiant.prenom}}
 									</a>
 								{% endfor %}
 
