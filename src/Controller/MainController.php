@@ -94,7 +94,7 @@ class MainController extends AbstractController
         $user = $request->query->get('user');
 
  
-        $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `userid`, `user_id`) VALUES (NULL, '6', '2021-09-26 16:43:54', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '1', '2022-06-07 16:48:04', '1', '2022-06-07 16:48:04', '1', '2022-06-07 16:48:04', '1', $user)";
+        $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`) VALUES (NULL, '6', '2021-09-26 16:43:54', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '1', '2022-06-07 16:48:04', '1', '2022-06-07 16:48:04', '1', '2022-06-07 16:48:04', '1', $user)";
         $stmt = $em->getConnection()->prepare($sql);
      
         $result = $stmt->execute();
