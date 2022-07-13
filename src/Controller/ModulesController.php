@@ -32,9 +32,10 @@ class ModulesController extends AbstractController
 
         $intervenant = $intervenantsRepository->findOneBy(array('user'=>$user));
 
-        $classe = $intervenant->getClasses();
+       
 
         if(in_array('ROLE_INTERVENANT', $this->getUser()->getRoles())){
+            $classe = $intervenant->getClasses();
             $find = $modulesRepository->findByClasse($classe);
         }elseif(in_array('ROLE_ETUDIANT', $this->getUser()->getRoles())){
           
