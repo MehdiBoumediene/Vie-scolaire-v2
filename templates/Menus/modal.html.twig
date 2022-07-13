@@ -171,6 +171,10 @@
 		background: #3c5b79 !important;
 		color: white !important;
 	}
+	.dureeretard {
+		display: contents;
+
+	}
 </style>
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
@@ -208,6 +212,11 @@
 						<br><br></th>
 					<th>Etat
 						<br><br></th>
+					<label for="resultsForm_1111009155_checkall">Cocher tout présent</label>
+					&nbsp;
+					<input type="checkbox" id="resultsForm_1111009155_checkall" class="checkall_box" title="Tout cocher">
+
+
 					{% if etudiants_calendar %}
 						{% for etudiant in etudiants_calendar %}
 							<tr style="border-bottom: solid 1px  #dddddd;" id="etat{{etudiant.id}}">
@@ -219,14 +228,18 @@
 								</td>
 								<td style="padding-bottom: 10px;">
 
-
 									<fieldset>
+
 										<label for="Présent{{etudiant.id}}">Présent</label>
 										<input type="checkbox" id="Présent{{etudiant.id}}" name="{{etudiant.id}}" class="Présent" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
 										<label for="Enretard{{etudiant.id}}">En retard</label>
-										<input type="checkbox" id="Enretard{{etudiant.id}}" name="{{etudiant.id}}" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" id="Enretard" name="Enretard" class="Enretard" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
+										<div class="dureeretard" style="display: contents;">
+											<label for="duree{{etudiant.id}}">Durée</label>
+											<input type="time" id="duree{{etudiant.id}}" name="duree" class="duree" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
+										</div>
 										<label for="Absent{{etudiant.id}}">Absent</label>
-										<input type="checkbox" id="Absent{{etudiant.id}}" name="{{etudiant.id}}" user="{{etudiant.id}}"></td>
+										<input type="checkbox" id="Absent{{etudiant.id}}" name="{{etudiant.id}}" class="Absent" user="{{etudiant.id}}"></td>
 								</td>
 							</tr>
 						</fieldset>
@@ -255,13 +268,13 @@ chks[i].checked = false;
 
 $(this).click(function () {
 if ($(this).is(':checked')) {
-var et = '1';
+var et = 'Présent';
 } else {
 var et = '0';
 }
 $.ajax({
 type: 'GET',
-url: "{{ path('app_gestion_calendrier_absences', {'etat': 'En attente','user': "+$(this).attr('user')+"}) }}",
+url: "{{ path('app_gestion_calendrier_absences', {'etat': 'Présent','user': "+$(this).attr('user')+"}) }}",
 data: {
 etat: et,
 user: $(this).attr('user')
@@ -270,10 +283,10 @@ user: $(this).attr('user')
 },
 success: function (data) { // $('#magasinDatas').html(data);
 if (data.etat == 1) {
-$("#Présent"+data.user).attr("checked", "checked")
+$("#Présent" + data.user).attr("checked", "checked")
 
 } else {
-$("#Présent"+data.user).attr("checked", false)
+$("#Présent" + data.user).attr("checked", false)
 }
 
 }
@@ -285,55 +298,159 @@ $("#Présent"+data.user).attr("checked", false)
 
 });
 
-$('.enRetard').click(function () {
 
+$(".Enretard").each(function (index) {
+console.log(index + ": " + $(this).attr("id"));
+
+var tblFruits = document.getElementById('etat' + $(this).attr('user'));
+var chks = tblFruits.getElementsByTagName("INPUT");
+for (var i = 0; i < chks.length; i++) {
+chks[i].onclick = function () {
+for (var i = 0; i < chks.length; i++) {
+if (chks[i] != this && this.checked) {
+chks[i].checked = false;
+
+}
+}
+};
+}
+$('.dureeretard').hide();
+$(this).click(function () {
+$('.dureeretard').show();
+if ($(this).is(':checked')) {
+$('.dureeretard').show();
+var et = 'En retard';
+} else {
+var et = '0';
+$('.dureeretard').hide();
+}
 $.ajax({
 type: 'GET',
-url: "{{ path('app_gestion_calendrier_absences', {'etat': 'En attente','user': "+$('.user_id').text() +"}) }}",
+url: "{{ path('app_gestion_calendrier_absences', {'etat': 'En retard','user': "+$(this).attr('user')+"}) }}",
 data: {
-etat: "En retard",
-user: $(this).attr('id')
+etat: et,
+user: $(this).attr('user'),
+duree: $(this).attr('user')
 
 
 },
 success: function (data) { // $('#magasinDatas').html(data);
+if (data.etat == 1) {
+$("#Enretard" + data.user).attr("checked", "checked")
 
-$('#etat' + data.user).removeClass().addClass("colored_select badge3 status-issued");
-
-$('.prog' + data.user).remove();
-$('#etat' + data.user).removeAttr('style');
-$('#etat' + data.user).css('background-position: -100px 0;');
-$('#etat' + data.user).removeClass().addClass("progst colored_select badge3 status-issued");
-
-$('#etat' + data.user).html('En retard ' + "<i class='fa fa-fw'> </i>");
-
+} else {
+$("#Enretard" + data.user).attr("checked", false)
+}
 
 }
 });
 
 
 });
-$('.Absent').click(function () {
+
+
+});
+
+
+$(".duree").each(function (index) {
+console.log(index + ": " + $(this).attr("id"));
+
+var tblFruits = document.getElementById('etat' + $(this).attr('user'));
+var chks = tblFruits.getElementsByTagName("INPUT");
+for (var i = 0; i < chks.length; i++) {
+chks[i].onclick = function () {
+for (var i = 0; i < chks.length; i++) {
+if (chks[i] != this && this.checked) {
+chks[i].checked = false;
+
+}
+}
+};
+}
+$('.dureeretard').hide();
+$(this).change(function () {
+$('.dureeretard').show();
+if ($(this)) {
+
+var et = 'duree';
+} else {
+var et = '0';
+
+}
 $.ajax({
 type: 'GET',
-url: "{{ path('app_gestion_calendrier_absences', {'etat': 'En attente','user': "+$('.user_id').text() +"}) }}",
+url: "{{ path('app_gestion_calendrier_absences', {'etat': 'En retard','user': "+$(this).attr('user')+"}) }}",
 data: {
-etat: "Absent",
-user: $(this).attr('id')
+etat: et,
+user: $(this).attr('user'),
+duree: $(this).val()
 
 
 },
 success: function (data) { // $('#magasinDatas').html(data);
+if (data.etat == 1) {
+$("#Enretard" + data.user).attr("checked", "checked")
 
-$('#etat' + data.user).removeClass().addClass("colored_select badge4 status-issued");
-
-$('.prog' + data.user).remove();
-$('#etat' + data.user).removeAttr('style');
-$('#etat' + data.user).css('background-position: -100px 0;');
-$('#etat' + data.user).removeClass().addClass("progst colored_select badge4 status-issued");
-$('#etat' + data.user).html('Absent ' + "<i class='fa fa-fw'> </i>");
+} else {
+$("#Enretard" + data.user).attr("checked", false)
+}
 
 }
+});
+
+
+});
+
+
+});
+
+$(".absent").each(function (index) {
+console.log(index + ": " + $(this).attr("id"));
+
+var tblFruits = document.getElementById('etat' + $(this).attr('user'));
+var chks = tblFruits.getElementsByTagName("INPUT");
+for (var i = 0; i < chks.length; i++) {
+chks[i].onclick = function () {
+for (var i = 0; i < chks.length; i++) {
+if (chks[i] != this && this.checked) {
+chks[i].checked = false;
+
+}
+}
+};
+}
+$('.dureeretard').hide();
+$(this).click(function () {
+$('.dureeretard').show();
+if ($(this).is(':checked')) {
+$('.dureeretard').show();
+var et = 'En retard';
+} else {
+var et = '0';
+$('.dureeretard').hide();
+}
+$.ajax({
+type: 'GET',
+url: "{{ path('app_gestion_calendrier_absences', {'etat': 'En retard','user': "+$(this).attr('user')+"}) }}",
+data: {
+etat: et,
+user: $(this).attr('user'),
+duree: $(this).attr('user')
+
+
+},
+success: function (data) { // $('#magasinDatas').html(data);
+if (data.etat == 1) {
+$("#Enretard" + data.user).attr("checked", "checked")
+
+} else {
+$("#Enretard" + data.user).attr("checked", false)
+}
+
+}
+});
+
+
 });
 
 

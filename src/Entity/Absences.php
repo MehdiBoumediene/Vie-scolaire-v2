@@ -108,6 +108,11 @@ class Absences
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $dureeretard;
+
  
 
 
@@ -355,6 +360,18 @@ class Absences
     public function setUser(?Users $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDureeretard(): ?\DateTimeInterface
+    {
+        return $this->dureeretard;
+    }
+
+    public function setDureeretard(?\DateTimeInterface $dureeretard): self
+    {
+        $this->dureeretard = $dureeretard;
 
         return $this;
     }

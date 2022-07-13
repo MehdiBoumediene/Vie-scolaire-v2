@@ -11,6 +11,7 @@ use App\Entity\Modules;
 use App\Entity\Users;
 use App\Entity\Absences;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -45,6 +46,11 @@ class AbsencesType extends AbstractType
         ->add('au',DateTimeType::class,[
             'label' => 'Date fin',
             'widget' => "single_text"
+            
+        ])
+        ->add('absent',CheckboxType::class,[
+            'label' => 'Absent',
+         
             
         ])
             ->add('user', EntityType::class, [
