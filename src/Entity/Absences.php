@@ -113,6 +113,21 @@ class Absences
      */
     private $dureeretard;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $retard;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $heure;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $minute;
+
  
 
 
@@ -372,6 +387,42 @@ class Absences
     public function setDureeretard(?\DateTimeInterface $dureeretard): self
     {
         $this->dureeretard = $dureeretard;
+
+        return $this;
+    }
+
+    public function getRetard(): ?string
+    {
+        return $this->retard;
+    }
+
+    public function setRetard(?string $retard): self
+    {
+        $this->retard = $retard;
+
+        return $this;
+    }
+
+    public function getHeure(): ?string
+    {
+        return $this->heure;
+    }
+
+    public function setHeure(?string $heure): self
+    {
+        $this->heure = $heure;
+
+        return $this;
+    }
+
+    public function getMinute(): ?string
+    {
+        return $this->minute;
+    }
+
+    public function setMinute(?string $minute): self
+    {
+        $this->minute = $minute;
 
         return $this;
     }
