@@ -93,27 +93,29 @@ class MainController extends AbstractController
         $etat = $request->query->get('etat');
         $user = $request->query->get('user');
         $duree = $request->query->get('duree');
+     
+     
 
   if( $etat == 'Présent'){
-    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `dureeretard`) VALUES (NULL, '6', '2021-09-26 16:43:54', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '0', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '1', '2022-06-07 16:48:04', $user, $user,'00:00')";
+    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `retard`) VALUES (NULL, '6', '2021-09-26 16:43:54', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '0', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '1', '2022-06-07 16:48:04', $user, $user,null)";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();
   
   }  elseif( $etat == 'En retard'){
-    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `dureeretard`) VALUES (NULL, '6', '2021-09-26 16:43:54', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '0', '2022-06-07 16:48:04', '1', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', $user, $user,'00:00')";
+    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `retard`) VALUES (NULL, '6', '2021-09-26 16:43:54', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '0', '2022-06-07 16:48:04', '1', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', $user, $user,null)";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();
   } elseif( $etat == 'Absent'){
-    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `dureeretard`) VALUES (NULL, '6', '2021-09-26 16:43:54', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '1', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', $user, $user,'00:00')";
+    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `dureeretard`) VALUES (NULL, '6', '2021-09-26 16:43:54', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '1', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', $user, $user,null)";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();
   }
   elseif( $etat == 'duree'){
     
-    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `dureeretard`) VALUES (NULL, '6', '2021-09-26 16:43:54', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '1', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', $user, $user,$duree)";
+    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `dureeretard`) VALUES (NULL, '6', '2022-06-07 16:40:41', null, NULL, null, null, '2', '1', null, '0', null, '0', null, $user, $user,'$duree')";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();

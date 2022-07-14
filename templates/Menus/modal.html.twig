@@ -237,6 +237,7 @@
 										<div class="dureeretard" style="display: contents;">
 											<label for="duree{{etudiant.id}}">Durée</label>
 											<input type="time" id="duree{{etudiant.id}}" name="duree" class="duree" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
+
 										</div>
 										<label for="Absent{{etudiant.id}}">Absent</label>
 										<input type="checkbox" id="Absent{{etudiant.id}}" name="{{etudiant.id}}" class="Absent" user="{{etudiant.id}}"></td>
@@ -250,7 +251,7 @@
 		</tr>
 
 	</td>
-</tr>{% endfor %}{% else %}{% endif %}</table><br></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div></div></div></div><script type="text/javascript"></script><script>$(".Présent").each(function (index) {
+</tr>{% endfor %}{% else %}{% endif %}</table><br></div><div class="modal-footer"><button type="button" class="btn btn-success sauvegarder">sauvegarder</button><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div></div></div></div><script type="text/javascript"></script><script>$(".Présent").each(function (index) {
 console.log(index + ": " + $(this).attr("id"));
 
 var tblFruits = document.getElementById('etat' + $(this).attr('user'));
@@ -316,6 +317,7 @@ chks[i].checked = false;
 }
 $('.dureeretard').hide();
 $(this).click(function () {
+
 $('.dureeretard').show();
 if ($(this).is(':checked')) {
 $('.dureeretard').show();
@@ -324,13 +326,14 @@ var et = 'En retard';
 var et = '0';
 $('.dureeretard').hide();
 }
+
+
 $.ajax({
 type: 'GET',
 url: "{{ path('app_gestion_calendrier_absences', {'etat': 'En retard','user': "+$(this).attr('user')+"}) }}",
 data: {
 etat: et,
-user: $(this).attr('user'),
-duree: $(this).attr('user')
+user: $(this).attr('user')
 
 
 },
@@ -369,6 +372,14 @@ chks[i].checked = false;
 }
 $('.dureeretard').hide();
 $(this).change(function () {
+var duree = $(this).val();
+
+var a = Number(duree.split(":")[0]);
+var c = Number(duree.split(":")[1]);
+
+var time = a + ':' + c
+console.log(time)
+
 $('.dureeretard').show();
 if ($(this)) {
 
@@ -377,6 +388,7 @@ var et = 'duree';
 var et = '0';
 
 }
+
 $.ajax({
 type: 'GET',
 url: "{{ path('app_gestion_calendrier_absences', {'etat': 'En retard','user': "+$(this).attr('user')+"}) }}",
@@ -402,6 +414,10 @@ $("#Enretard" + data.user).attr("checked", false)
 });
 
 
+});
+
+$(".sauvegarder").click(function () {
+alert("Handler for .click() called.");
 });
 
 $(".absent").each(function (index) {
