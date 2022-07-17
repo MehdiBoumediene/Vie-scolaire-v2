@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Notes;
 use App\Form\NotesType;
 use App\Repository\NotesRepository;
+use App\Repository\IntervenantsRepository;
+use App\Repository\EtudiantsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,6 +43,31 @@ class NotesController extends AbstractController
         }
 
         return $this->renderForm('notes/new.html.twig', [
+            'note' => $note,
+            'form' => $form,
+        ]);
+    }
+
+    
+    /**
+     * @Route("/gestion", name="app_notes_gestion", methods={"GET", "POST"})
+     */
+    public function gestionnotes(Request $request, NotesRepository $notesRepository,intervenantsRepository $intervenantsRepository,etudiantsRepository $etudiantsRepository): Response
+    {
+        $note = new Notes();
+        $user = $this->getUser();
+        $form = $this->createForm(NotesType::class, $note);
+        $form->handleRequest($request);
+   
+        $classe = $intervenantsRepository->findOneBy(array('user'=>$user));
+      
+       $a = $classe->getClasses()->getId();
+
+        $etudiant = $etudiantsRepository->findByClasse($a);
+       
+        return $this->renderForm('notes/gestion.html.twig', [
+            'etudiants' => $etudiant,
+            'a'=>$a,
             'note' => $note,
             'form' => $form,
         ]);
