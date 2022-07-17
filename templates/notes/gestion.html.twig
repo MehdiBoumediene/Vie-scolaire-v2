@@ -44,13 +44,7 @@
 
 							<div class="row">
 								<div class="col-sm-12">
-									{{ form_start(form) }}
-									<ul class="tags">
-										{% for form in form %}
-											<li>{{ form_row(form.note) }}</li>
-										{% endfor %}
-									</ul>
-									{{ form_end(form) }}
+						
 									{% for etudiant in etudiants %}
 										{{etudiant.nom }}
 										{{etudiant.prenom }}
