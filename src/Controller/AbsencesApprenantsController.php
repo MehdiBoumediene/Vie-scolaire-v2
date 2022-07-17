@@ -15,7 +15,7 @@ class AbsencesApprenantsController extends AbstractController
      */
     public function index(AbsencesRepository $absencesRepository): Response
     {
-        $user = 1;
+        $user = $this->getUser();
         $delay = new \Datetime('last month');
         $day = new \Datetime('last day');
 

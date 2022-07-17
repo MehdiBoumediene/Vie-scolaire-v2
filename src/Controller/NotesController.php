@@ -55,19 +55,20 @@ class NotesController extends AbstractController
     public function gestionnotes(Request $request, NotesRepository $notesRepository,intervenantsRepository $intervenantsRepository,etudiantsRepository $etudiantsRepository): Response
     {
         $note = new Notes();
-        $user = $this->getUser();
         $form = $this->createForm(NotesType::class, $note);
         $form->handleRequest($request);
-   
-        $classe = $intervenantsRepository->findOneBy(array('user'=>$user));
-      
-       $a = $classe->getClasses()->getId();
+        $user = $this->getUser();
+        $intervenant = $user->getIntervenants();
 
-        $etudiant = $etudiantsRepository->findByClasse($a);
+        foreach ($intervenant as $inter){
+          $classe =  $inter->getClasses();
+        }
+
+
+        $etudiant = $etudiantsRepository->findByClasse($classe);
        
         return $this->renderForm('notes/gestion.html.twig', [
             'etudiants' => $etudiant,
-            'a'=>$a,
             'note' => $note,
             'form' => $form,
         ]);
