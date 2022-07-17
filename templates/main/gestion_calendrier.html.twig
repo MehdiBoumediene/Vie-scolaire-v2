@@ -146,6 +146,8 @@ $('.bloc').remove();
 $('.module').remove();
 $('.intervenant').remove();
 $('.table_etudiants').hide();
+$('.allpresent').hide();
+
 $(".etudiants").click(function () {
 $('.detail').remove();
 $('.du').remove();
@@ -155,10 +157,12 @@ $('.bloc').remove();
 $('.module').remove();
 $('.intervenant').remove();
 $('.table_etudiants').show();
+$('.allpresent').show();
 });
 $('.modal-body').append('<input class="moduleid" type="text" style="display:none;" value="' + info.event.extendedProps.moduleid + '" >');
 
 $(".informations").click(function () {
+$('.allpresent').hide();
 $('.detail').remove();
 $('.du').remove();
 $('.au').remove();

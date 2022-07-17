@@ -212,10 +212,11 @@
 						<br><br></th>
 					<th>Etat
 						<br><br></th>
-					<label for="resultsForm_1111009155_checkall">Cocher tout présent</label>
-					&nbsp;
-					<input type="checkbox" id="resultsForm_1111009155_checkall" class="checkall_box" title="Tout cocher">
+					<div class="allpresent" style="float: right;">
+						<label for="resultsForm_1111009155_checkall">Cocher tout "Présent"</label>
 
+						<input type="checkbox" id="resultsForm_1111009155_checkall" class="checkall_box" title="Tout cocher">
+					</div>
 
 					{% if etudiants_calendar %}
 						{% for etudiant in etudiants_calendar %}
@@ -288,7 +289,8 @@ type: 'GET',
 url: "{{ path('app_gestion_calendrier_absences', {'etat': 'Présent','user': "+$(this).attr('user')+"}) }}",
 data: {
 etat: et,
-user: $(this).attr('user')
+user: $(this).attr('user'),
+module: $(".moduleid").val()
 
 
 },
@@ -343,7 +345,8 @@ type: 'GET',
 url: "{{ path('app_gestion_calendrier_absences', {'etat': 'En retard','user': "+$(this).attr('user')+"}) }}",
 data: {
 etat: et,
-user: $(this).attr('user')
+user: $(this).attr('user'),
+module: $(".moduleid").val()
 
 
 },
@@ -405,7 +408,8 @@ url: "{{ path('app_gestion_calendrier_absences', {'etat': 'En retard','user': "+
 data: {
 etat: et,
 user: $(this).attr('user'),
-duree: $(this).val()
+duree: $(this).val(),
+module: $(".moduleid").val()
 
 
 },
