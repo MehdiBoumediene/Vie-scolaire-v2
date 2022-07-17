@@ -93,7 +93,7 @@ class MainController extends AbstractController
         $etat = $request->query->get('etat');
         $user = $request->query->get('user');
         $duree = $request->query->get('duree');
-        $module = $this->getUser()->getModules();
+        $module = $this->getUser()->getModule();
      
      
 
