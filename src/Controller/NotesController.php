@@ -52,7 +52,7 @@ class NotesController extends AbstractController
     /**
      * @Route("/gestion", name="app_notes_gestion", methods={"GET", "POST"})
      */
-    public function gestionnotes(Request $request, NotesRepository $notesRepository,IntervenantsRepository $IntervenantsRepository,EtudiantsRepository $etudiantsRepository): Response
+    public function gestionnotes(Request $request, NotesRepository $notesRepository,intervenantsRepository $intervenantsRepository,etudiantsRepository $etudiantsRepository): Response
     {
         $note = new Notes();
         $form = $this->createForm(NotesType::class, $note);
@@ -65,10 +65,10 @@ class NotesController extends AbstractController
         }
 
 
-        $etudiants = $etudiantsRepository->findAll();
+        $etudiant = $etudiantsRepository->findByClasse($classe);
        
         return $this->renderForm('notes/gestion.html.twig', [
-            'etudiants' => $etudiants,
+            'etudiants' => $etudiant,
             'note' => $note,
             'form' => $form,
         ]);
