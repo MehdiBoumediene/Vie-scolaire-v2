@@ -46,41 +46,39 @@
 						<div class="col-md-6">
 							<div class="main-card mb-3 card">
 								<div class="card-body">
-									<h5 class="card-title">Mes absences</h5>
+									<h5 class="card-title">Mes retards</h5>
 									<div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
 										<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
 											<thead>
 												<tr role="row">
 													<th>Etat</th>
-													<th>Date/Heur</th>
-
+													<th>Date</th>
+													<th>Durée</th>
 
 												</tr>
 											</thead>
 											<tbody>
 
-												{% for absence in absences %}
+												{% for retard in retards %}
 													<tr>
 
 														<td>
-															{% if absence.absent == 1 %}
-																Absent
-															{% elseif absence.enretard == 1 %}
-																En retard
-																{% else %}
 
-															{% endif %}
+															En retard
+
 														</td>
 
 														<td>
-															{% if absence.absent == 1 %}
-																{{ absence.dateabsence|date('Y-m-d H:i:s') }}
-															{% elseif absence.enretard == 1 %}
-																{{ absence.dateretard|date('Y-m-d H:i:s') }}
-																{% else %}
 
-															{% endif %}
+															{{ retard.date|date('Y-m-d H:i') }}
+
+
+														</td>
+
+														<td>
+
+															{{ retard.dureeretard|date('H:i') }}
 
 
 														</td>
@@ -89,7 +87,7 @@
 													</tr>
 												{% else %}
 													<tr>
-														<td colspan="7">no records found</td>
+														<td colspan="7">Pas de retards</td>
 													</tr>
 												{% endfor %}
 
@@ -109,24 +107,45 @@
 						<div class="col-md-6">
 							<div class="main-card mb-3 card">
 								<div class="card-body">
-									<div class="chartjs-size-monitor">
-										<div class="chartjs-size-monitor-expand">
-											<div class=""></div>
-										</div>
-										<div class="chartjs-size-monitor-shrink">
-											<div class=""></div>
-										</div>
-									</div>
-									<div class="chartjs-size-monitor">
-										<div class="chartjs-size-monitor-expand">
-											<div class=""></div>
-										</div>
-										<div class="chartjs-size-monitor-shrink">
-											<div class=""></div>
-										</div>
-									</div>
-									<h5 class="card-title">Mon assiduité</h5>
-									<canvas id="chart-area" width="450" height="225" style="display: block; width: 450px; height: 225px;" class="chartjs-render-monitor"></canvas>
+
+									<h5 class="card-title">Mes absences</h5>
+									<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+										<thead>
+											<tr role="row">
+												<th>Etat</th>
+												<th>Date</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											{% for absence in absences %}
+												<tr>
+
+													<td>
+
+														Absent
+
+													</td>
+
+													<td>
+
+														{{ absence.date|date('Y-m-d H:i') }}
+
+
+													</td>
+
+
+												</tr>
+											{% else %}
+												<tr>
+													<td colspan="7">Pas d'absences</td>
+												</tr>
+											{% endfor %}
+
+										</tbody>
+
+									</table>
+
 								</div>
 							</div>
 						</div>

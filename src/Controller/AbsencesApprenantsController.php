@@ -15,10 +15,14 @@ class AbsencesApprenantsController extends AbstractController
      */
     public function index(AbsencesRepository $absencesRepository): Response
     {
-        $user = $this->getUser();
+        $user = 1;
+        $delay = new \Datetime('last month');
+        $day = new \Datetime('last day');
+
         return $this->render('absences_apprenants/index.html.twig', [
             'controller_name' => 'AbsencesApprenantsController',
-            'absences' => $absencesRepository->findByUser($user),
+            'retards' => $absencesRepository->findByUserAbsences($user,$delay,$day),
+            'absences' => $absencesRepository->findByUser($user,$delay,$day),
 
         ]);
     }
