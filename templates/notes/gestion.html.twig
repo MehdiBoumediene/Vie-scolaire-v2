@@ -44,12 +44,18 @@
 
 							<div class="row">
 								<div class="col-sm-12">
-						
+									{{ form_start(form) }}
+
+
 									{% for etudiant in etudiants %}
 										{{etudiant.nom }}
 										{{etudiant.prenom }}
+										{{ form_row(form.note,{'attr': {'class': 'form-control'}}) }}
+										{{ form_errors(form.note) }}
 										<br>
 									{% endfor %}
+
+									{{ form_end(form) }}
 								</div>
 							</div>
 
