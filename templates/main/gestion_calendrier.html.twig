@@ -156,6 +156,8 @@ $('.module').remove();
 $('.intervenant').remove();
 $('.table_etudiants').show();
 });
+$('.modal-body').append('<input class="moduleid" type="text" style="display:none;" value="' + info.event.extendedProps.moduleid + '" >');
+
 $(".informations").click(function () {
 $('.detail').remove();
 $('.du').remove();
@@ -169,6 +171,7 @@ $('.modal-body').append('<span class="au"><b>Fin : </b> ' + jour_end + '/' + moi
 $('.modal-body').append('<span class="classe"><b>Classe : </b> ' + info.event.extendedProps.classe + '<br></span>');
 $('.modal-body').append('<span class="bloc"><b>Bloc : </b> ' + info.event.extendedProps.bloc + '<br></span>');
 $('.modal-body').append('<span class="module"><b>Module : </b> ' + info.event.extendedProps.module + '<br></span>');
+
 $('.modal-body').append('<span class="intervenant"><b>Intervenant : </b> ' + info.event.extendedProps.intervenant + '<br><br></span>');
 $('.modal-body').append('<span class="intervenant"><b>Etudiants : </b> ' + info.event.extendedProps.etudiants + '<br><br></span>');
 $('.modal-body').append('<span class="detail"><b>Commentaire:</b><br> ' + info.event.extendedProps.description + '<br></span>');
@@ -181,6 +184,8 @@ $('.modal-body').append('<span class="bloc"><b>Bloc : </b> ' + info.event.extend
 $('.modal-body').append('<span class="module"><b>Module : </b> ' + info.event.extendedProps.module + '<br></span>');
 $('.modal-body').append('<span class="intervenant"><b>Intervenant : </b> ' + info.event.extendedProps.intervenant + '<br><br></span>');
 $('.modal-body').append('<span class="detail"><b>Commentaire:</b><br> ' + info.event.extendedProps.description + '<br></span>');
+
+
 // change the border color just for fun
 info.el.style.borderColor = 'red';
 }

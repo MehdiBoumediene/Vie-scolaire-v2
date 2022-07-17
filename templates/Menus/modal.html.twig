@@ -234,22 +234,22 @@
 
 										<label for="Présent{{etudiant.id}}">Présent</label>
 
-										<input type="checkbox" id="Présent{{etudiant.id}}" name="{{etudiant.id}}" class="Présent" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" id="Présent{{etudiant.id}}" name="{{etudiant.id}}" class="Présent" classe="{{etudiant.classes.id}}" module="" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
 
 										<label for="Enretard{{etudiant.id}}">En retard</label>
 
-										<input type="checkbox" id="Enretard" name="Enretard" class="Enretard" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" id="Enretard" name="Enretard" class="Enretard" classe="{{etudiant.classes.id}}" module="" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
 
 										<div class="dureeretard" style="display: contents;">
 											<label for="duree{{etudiant.id}}">Durée</label>
-											<input type="time" id="duree{{etudiant.id}}" name="duree" class="duree" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
+											<input type="time" id="duree{{etudiant.id}}" name="duree" class="duree" classe="{{etudiant.classes.id}}" module="" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
 
 										</div>
 
 										<label for="Absent{{etudiant.id}}">Absent</label>
 
 
-										<input type="checkbox" id="Absent{{etudiant.id}}" name="{{etudiant.id}}" class="Absent" user="{{etudiant.id}}">
+										<input type="checkbox" id="Absent{{etudiant.id}}" name="{{etudiant.id}}" class="Absent" classe="{{etudiant.classes.id}}" module="" user="{{etudiant.id}}">
 
 
 									</td>
@@ -263,7 +263,7 @@
 	</td>
 </tr></td></tr></td></tr>{% endfor %}{% else %}{% endif %}</table><br></div><div class="modal-footer"><button type="button" class="btn btn-success sauvegarder">sauvegarder</button><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div></div> </div></div><script type="text/javascript"></script><script> $(".Présent").each(function (index) {
 console.log(index + ": " + $(this).attr("id"));
-
+$(this).attr("module", $('.moduleid').text())
 var tblFruits = document.getElementById('etat' + $(this).attr('user'));
 var chks = tblFruits.getElementsByTagName("INPUT");
 for (var i = 0; i < chks.length; i++) {
@@ -430,6 +430,7 @@ $("#Enretard" + data.user).attr("checked", false)
 $(".Absent").each(function (index) {
 console.log(index + ": " + $(this).attr("id"));
 
+
 var tblFruits = document.getElementById('etat' + $(this).attr('user'));
 var chks = tblFruits.getElementsByTagName("INPUT");
 for (var i = 0; i < chks.length; i++) {
@@ -455,10 +456,11 @@ var et = '0';
 
 $.ajax({
 type: 'GET',
-url: "{{ path('app_gestion_calendrier_absences', {'etat': 'Absent','user': "+$(this).attr('user')+"}) }}",
+url: "{{ path('app_gestion_calendrier_absences', {'etat': 'absent','user': "+$(this).attr('user')+"}) }}",
 data: {
 etat: et,
-user: $(this).attr('user')
+user: $(this).attr('user'),
+module: $(".moduleid").val()
 
 
 },
@@ -468,6 +470,7 @@ $("#Enretard" + data.user).attr("checked", "checked")
 
 } else {
 $("#Enretard" + data.user).attr("checked", false)
+
 }
 
 }
