@@ -7,9 +7,12 @@ use App\Form\NotesType;
 use App\Repository\NotesRepository;
 use App\Repository\IntervenantsRepository;
 use App\Repository\EtudiantsRepository;
+use App\Repository\ModulesRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -72,6 +75,43 @@ class NotesController extends AbstractController
             'note' => $note,
             'form' => $form,
         ]);
+    }
+
+
+ /**
+     * @Route("/calendrier_absences", name="user_notes", methods={"GET", "POST"})
+     */
+    public function userNotes( EntityManagerInterface $em, IntervenantsRepository $intervenantsRepository, ModulesRepository $modulesRepository, Request $request): Response
+    {
+        $date = date('Y-m-d H:i:s');
+        $note = $request->query->get('note');
+
+        $user = $this->getUser();
+
+        $intervenant = $intervenantsRepository->findOneBy(array('user'=>$user));
+        $ap= $intervenant->getId();
+        
+
+        $apprenant = $request->query->get('user');
+        $mod = $request->query->get('module');
+        $module = $modulesRepository->findOneBy(array('nom'=>$mod));
+
+        $module_id = $module->getId();
+  
+    $sql = "INSERT INTO `notes` (`id`,`note`, `moduleid`, `etudiantid`, `intervenantid`) VALUES (null,'$note','$apprenant','$module_id', '$ap')";
+    $stmt = $em->getConnection()->prepare($sql);
+ 
+    $result = $stmt->execute();
+
+        // returns an array of Product objects  
+        $response = new JsonResponse();
+        $response->setContent(json_encode($note));
+        $response->headers->set('Content-Type','application/json');
+
+        return $response->setData(array('note'=>$note,'user'=>$user));
+
+    
+  
     }
 
     /**

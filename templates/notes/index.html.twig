@@ -52,10 +52,7 @@
 
 													<th>Id</th>
 													<th>Note</th>
-													<th>Coefmodule</th>
-													<th>Coefbloc</th>
-													<th>Moy</th>
-													<th>Moygeneral</th>
+												<th>Etudiant</th>
 													<th>actions</th>
 
 												</tr>
@@ -66,10 +63,8 @@
 													<tr>
 														<td>{{ note.id }}</td>
 														<td>{{ note.note }}</td>
-														<td>{{ note.coefmodule }}</td>
-														<td>{{ note.coefbloc }}</td>
-														<td>{{ note.moy }}</td>
-														<td>{{ note.moygeneral }}</td>
+														<td>{{ note.etudiantid }}</td>
+														
 														<td>
 															<a href="{{ path('app_notes_edit', {'id': note.id}) }}">edit</a>
 														</td>
