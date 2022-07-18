@@ -17,6 +17,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
@@ -31,7 +32,13 @@ public function __construct(EntityManagerInterface $entityManager)
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
+            ->add('nom',TextType::class,[
+                'label'=>'nom'
+            ])
+            ->add('coefficient',TextType::class,[
+                'label'=>'coefficient'
+            ])
+             
             ->remove('created_at')
             ->remove('created_by')
 

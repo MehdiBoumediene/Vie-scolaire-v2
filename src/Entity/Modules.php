@@ -81,6 +81,11 @@ class Modules
      */
     private $files;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $coefficient;
+
  
 
 
@@ -349,6 +354,18 @@ class Modules
                 $file->setModule(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCoefficient(): ?string
+    {
+        return $this->coefficient;
+    }
+
+    public function setCoefficient(?string $coefficient): self
+    {
+        $this->coefficient = $coefficient;
 
         return $this;
     }
