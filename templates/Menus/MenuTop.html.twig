@@ -2,7 +2,7 @@
 	<div class="app-header header-shadow bg-night-sky header-text-light">
 		<div class="app-header__logo">
 			<h3 style="    color: white;
-								    font-weight: bold;font-size:26px;">NEW CRM</h3>
+												    font-weight: bold;font-size:26px;">NEW CRM</h3>
 			<div class="header__pane ml-auto">
 				<div>
 					<button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
@@ -515,7 +515,11 @@
 										<div class="scroll-area-xs" style="height: 150px;">
 											<div class="scrollbar-container ps">
 												<ul class="nav flex-column">
-
+													{% if is_granted('ROLE_ETUDIANT') %}
+														<li class="nav-item">
+														<a href="{{ path('app_etudiants_show', {'id': app.user.etudiants.id}) }}" class="nav-link">Mon profil</a>
+													</li>
+													{% endif %}
 
 													<li class="nav-item">
 														<a href="javascript:void(0);" class="nav-link">Changer mon mot de passe</a>

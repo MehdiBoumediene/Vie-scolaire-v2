@@ -94,6 +94,7 @@ class EtudiantsController extends AbstractController
      */
     public function show(Etudiants $etudiant): Response
     {
+        
         return $this->render('etudiants/show.html.twig', [
             'etudiant' => $etudiant,
         ]);
