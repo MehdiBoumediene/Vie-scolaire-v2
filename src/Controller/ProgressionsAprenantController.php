@@ -13,6 +13,7 @@ class ProgressionsAprenantController extends AbstractController
      */
     public function index(): Response
     {
+        
         return $this->render('progressions_aprenant/index.html.twig', [
             'controller_name' => 'ProgressionsAprenantController',
         ]);
