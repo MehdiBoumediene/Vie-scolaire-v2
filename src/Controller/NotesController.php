@@ -99,9 +99,15 @@ class NotesController extends AbstractController
         $mod = $request->query->get('module');
         $module = $modulesRepository->findOneBy(array('nom'=>$mod));
 
+
         $module_id = $module->getId();
+
+        /* calculer la moyene */
+        $coefficient = $module->getCoefficient();
+
+        $moyenne = ($note * $coefficient) / $coefficient;
   
-    $sql = "INSERT INTO `notes` (`id`,`note`, `moduleid`, `etudiantid`, `intervenantid`, `type`) VALUES (null,'$note','$lemodule','$etud','$ap','$type')";
+    $sql = "INSERT INTO `notes` (`id`,`note`, `moduleid`, `etudiantid`, `intervenantid`, `type`, `moyenne`) VALUES (null,'$note','$lemodule','$etud','$ap','$type','$moyenne')";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();

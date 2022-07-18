@@ -46,6 +46,11 @@ class Notes
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $moyenne;
+
 
 
 
@@ -113,6 +118,18 @@ class Notes
     public function setType(?string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getMoyenne(): ?string
+    {
+        return $this->moyenne;
+    }
+
+    public function setMoyenne(?string $moyenne): self
+    {
+        $this->moyenne = $moyenne;
 
         return $this;
     }
