@@ -42,24 +42,33 @@
 					<div class="main-card mb-3 card">
 						<div class="card-body">
 
-							<div class="row">
-								<div class="col-sm-12">
-									{{ form_start(form) }}
-									{{ form_row(form.module,{'attr': {'class': 'form-control'}}) }}
-									{{ form_errors(form.module) }}
-
-									{% for etudiant in etudiants %}
-										{{etudiant.nom }}
-										{{etudiant.prenom }}
-
-
-										<br>
-									{% endfor %}
-
+					
+						            {{ form_start(form) }}
+									{{ form_row(form.moduleid,{'attr': {'class': 'form-control'}}) }}
+									{{ form_errors(form.moduleid) }}
+									<br>
 									{{ form_end(form) }}
-								</div>
-							</div>
 
+
+			
+							
+								<table>
+									<tr>
+										<th>Etudiant</th>
+										<th>Note /20</th>
+
+									</tr>
+										{% for etudiant in etudiants %}
+									<tr>
+										<td>{{etudiant.nom }} {{etudiant.prenom }} &nbsp;&nbsp;&nbsp;</td>
+										<td><input user="{{etudiant.id }}" type="text" class="etudiant"></td>
+									
+									</tr>
+										
+											{% endfor %}
+								</table>
+				
+<button type="button" class="btn btn-success sauvegarder">sauvegarder</button>
 
 						</div>
 					</div>
@@ -74,4 +83,30 @@
 	</div>
 
 	{{ block("Footer", "Menus/Footer.html.twig") }}
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+	<script>
+	$( ".sauvegarder" ).click(function() {
+
+$(".etudiant").each(function() {
+
+$.ajax({
+type: 'GET',
+url: "{{ path('user_notes', {'note':"+$(this).val()+",'module':"+$('#notes_moduleid option:selected').text()+",'user': "+$(this).attr('user')+"}) }}",
+data: {
+user: $(this).attr('user'),
+note: $(this).val(),
+module: $('#notes_moduleid option:selected').text()
+
+
+},
+success: function (data) { // $('#magasinDatas').html(data);
+
+}
+});
+
+});
+
+});
+	</script>
 {% endblock %}

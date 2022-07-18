@@ -22,44 +22,28 @@ class Notes
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, unique=false)
      */
     private $note;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $coefmodule;
+    private $etudiantid;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $coefbloc;
+    private $moduleid;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $moy;
+    private $intervenantid;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $moygeneral;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Modules::class, cascade={"persist", "remove"})
-     */
-    private $module;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Etudiants::class, cascade={"persist", "remove"})
-     */
-    private $apprenant;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Intervenants::class, cascade={"persist", "remove"})
-     */
-    private $Intervenant;
 
     
 
@@ -80,91 +64,43 @@ class Notes
         return $this;
     }
 
-    public function getCoefmodule(): ?string
+    public function getEtudiantid(): ?string
     {
-        return $this->coefmodule;
+        return $this->etudiantid;
     }
 
-    public function setCoefmodule(?string $coefmodule): self
+    public function setEtudiantid(?string $etudiantid): self
     {
-        $this->coefmodule = $coefmodule;
+        $this->etudiantid = $etudiantid;
 
         return $this;
     }
 
-    public function getCoefbloc(): ?string
+    public function getModuleid(): ?string
     {
-        return $this->coefbloc;
+        return $this->moduleid;
     }
 
-    public function setCoefbloc(?string $coefbloc): self
+    public function setModuleid(?string $moduleid): self
     {
-        $this->coefbloc = $coefbloc;
+        $this->moduleid = $moduleid;
 
         return $this;
     }
 
-    public function getMoy(): ?string
+    public function getIntervenantid(): ?string
     {
-        return $this->moy;
+        return $this->intervenantid;
     }
 
-    public function setMoy(?string $moy): self
+    public function setIntervenantid(?string $intervenantid): self
     {
-        $this->moy = $moy;
+        $this->intervenantid = $intervenantid;
 
         return $this;
     }
 
-    public function getMoygeneral(): ?string
-    {
-        return $this->moygeneral;
-    }
 
-    public function setMoygeneral(?string $moygeneral): self
-    {
-        $this->moygeneral = $moygeneral;
-
-        return $this;
-    }
-
-    public function getModule(): ?Modules
-    {
-        return $this->module;
-    }
-
-    public function setModule(?Modules $module): self
-    {
-        $this->module = $module;
-
-        return $this;
-    }
-
-    public function getApprenant(): ?Etudiants
-    {
-        return $this->apprenant;
-    }
-
-    public function setApprenant(?Etudiants $apprenant): self
-    {
-        $this->apprenant = $apprenant;
-
-        return $this;
-    }
-
-    public function getIntervenant(): ?Intervenants
-    {
-        return $this->Intervenant;
-    }
-
-    public function setIntervenant(?Intervenants $Intervenant): self
-    {
-        $this->Intervenant = $Intervenant;
-
-        return $this;
-    }
-
-    
 
     
 }
