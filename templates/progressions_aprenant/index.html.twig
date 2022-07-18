@@ -87,28 +87,35 @@
 								<div class="card-body">
 									{% for note in notes %}
 										<div class="row">
-											<div class="col-md-12">
-											  <b>Module:</b>{{note.moduleid}}  <b>type:</b> {{note.type}} <b>Note:</b> {{note.note}}
-											</div>
 
-										</div>
+											<b>Module:</b>
+											{{note.moduleid}}<br>
+											<b>type:</b>
+											{{note.type}}
+										</br>
+										<b>Note:</b>
+										{{note.note}}
+									</br>
 
-									{% endfor %}
 
 								</div>
-							</div>
+
+							{% endfor %}
+
 						</div>
-
-
 					</div>
-
-
 				</div>
+
+
 			</div>
 
+
 		</div>
-		<script>
-			var acc = document.getElementsByClassName("accordion");
+	</div>
+
+</div>
+<script>
+	var acc = document.getElementsByClassName("accordion");
 var i;
 for (i = 0; i < acc.length; i++) {
 acc[i].addEventListener("click", function () {
@@ -121,5 +128,4 @@ panel.style.display = "block";
 }
 });
 }
-		</script>
-	{% endblock %}
+</script>{% endblock %}
