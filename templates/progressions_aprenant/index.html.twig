@@ -85,11 +85,11 @@
 						<div class="col-md-12">
 							<div class="main-card mb-3 card">
 								<div class="card-body">
-									{% for etudiant in etudiants %}
-										{% for notes in etudiant.notes %}
-											{{notes.note}}
-										{% endfor %}
+									{% for note in notes %}
+										{{note.note}}
+
 									{% endfor %}
+
 								</div>
 							</div>
 						</div>
