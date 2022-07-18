@@ -99,7 +99,7 @@ class NotesController extends AbstractController
 
         $module_id = $module->getId();
   
-    $sql = "INSERT INTO `notes` (`id`,`note`, `moduleid`, `etudiantid`, `intervenantid`) VALUES (null,'$note','$etud','$module_id', '$ap')";
+    $sql = "INSERT INTO `notes` (`id`,`note`, `moduleid`, `etudiantid`, `intervenantid`) VALUES (null,'$note','$module_id','$etud','$ap')";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();
