@@ -16,11 +16,12 @@ class ProgressionsAprenantController extends AbstractController
     public function index(EtudiantsRepository $etudiantsRepository,NotesRepository $notesRepository): Response
     {
         $user= $this->getUser();
+        $etudiant = $etudiantsRepository->findOneBy(array('user'=>$user));
 
         return $this->render('progressions_aprenant/index.html.twig', [
             'controller_name' => 'ProgressionsAprenantController',
-            'etudiants' => $etudiantsRepository->findByUser($user),
-            'notes' => $notesRepository->findBy(array('etudiantid'=>$user)),
+            'etudiants' => $etudiantsRepository->findBy(array('user'=>$user)),
+            'notes' => $notesRepository->findBy(array('etudiantid'=>$etudiant)),
         ]);
     }
 }
