@@ -94,6 +94,9 @@
 													<a href="{{path('app_supportcours_show',{id:module.id })}}">
 														<button class="accordion module">{{module.nom}}</button>
 													</a>
+													{% for note in module.notes %}
+														{{note.note}}
+													{% endfor %}
 												{% endfor %}
 											</div>
 										{% endfor %}
