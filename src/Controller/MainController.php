@@ -198,6 +198,7 @@ class MainController extends AbstractController
                 'textColor' => $event->getTextColor(),
                 'allDay' => $event->getAllDay(),
                 'type' => $event->getType(),
+                'moduleid'=> $event->getModule()->getId(),
 
 
             ];
