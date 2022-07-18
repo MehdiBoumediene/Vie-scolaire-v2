@@ -108,7 +108,8 @@ url: "{{ path('user_notes', {'note':"+$(this).val()+",'module':"+$('#notes_modul
 data: {
 user: $(this).attr('user'),
 note: $(this).val(),
-module: $('#notes_moduleid option:selected').text()
+module: $('#notes_moduleid option:selected').text(),
+type: $('.type option:selected').text()
 
 
 },
