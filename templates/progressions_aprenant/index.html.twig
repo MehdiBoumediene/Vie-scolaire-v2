@@ -86,36 +86,33 @@
 							<div class="main-card mb-3 card">
 								<div class="card-body">
 									{% for note in notes %}
-										<div class="row">
 
-											<b>Module:</b>
-											{{note.moduleid}}<br>
-											<b>type:</b>
-											{{note.type}}
-										</br>
-										<b>Note:</b>
-										{{note.note}}
+
+										<b>Module:</b>
+										{{note.moduleid}}<br>
+										<b>type:</b>
+										{{note.type}}
 									</br>
+									<b>Note:</b>
+									{{note.note}}
+								</br>
 
 
-								</div>
+							</div>
 
-							{% endfor %}
+						{% endfor %}
 
-						</div>
 					</div>
 				</div>
-
-
 			</div>
 
 
 		</div>
-	</div>
 
-</div>
-<script>
-	var acc = document.getElementsByClassName("accordion");
+
+	</div>
+</div></div><script>
+var acc = document.getElementsByClassName("accordion");
 var i;
 for (i = 0; i < acc.length; i++) {
 acc[i].addEventListener("click", function () {
@@ -127,5 +124,4 @@ panel.style.display = "none";
 panel.style.display = "block";
 }
 });
-}
-</script>{% endblock %}
+}</script>{% endblock %}
