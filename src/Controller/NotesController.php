@@ -85,6 +85,7 @@ class NotesController extends AbstractController
     {
         $date = date('Y-m-d H:i:s');
         $note = $request->query->get('note');
+        $etud = $request->query->get('user');
 
         $user = $this->getUser();
         $etudiant = $etudiantsRepository->findOneBy(array('user'=>$user));
@@ -98,7 +99,7 @@ class NotesController extends AbstractController
 
         $module_id = $module->getId();
   
-    $sql = "INSERT INTO `notes` (`id`,`note`, `moduleid`, `etudiantid`, `intervenantid`) VALUES (null,'$note','$etudiant','$module_id', '$ap')";
+    $sql = "INSERT INTO `notes` (`id`,`note`, `moduleid`, `etudiantid`, `intervenantid`) VALUES (null,'$note','$etud','$module_id', '$ap')";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();
