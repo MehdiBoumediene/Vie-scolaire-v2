@@ -42,33 +42,45 @@
 					<div class="main-card mb-3 card">
 						<div class="card-body">
 
-					
-						            {{ form_start(form) }}
+							<div class="form-row">
+								<div class="col-md-3">
+									{{ form_start(form) }}
 									{{ form_row(form.moduleid,{'attr': {'class': 'form-control'}}) }}
 									{{ form_errors(form.moduleid) }}
 									<br>
 									{{ form_end(form) }}
+								</div>
+								<div class="col-md-3">
+									<label for="pet-select">Type:</label>
+
+									<select name="type" id="type" class="type">
+										<option value="Devoir">Devoir</option>
+										<option value="Examen">Examen</option>
+									</select>
+									<br>
+								</div>
+							</div>
 
 
-			
-							
-								<table>
+							<table>
+								<tr>
+									<th>Etudiant</th>
+									<th>Note /20</th>
+
+								</tr>
+								{% for etudiant in etudiants %}
 									<tr>
-										<th>Etudiant</th>
-										<th>Note /20</th>
-
-									</tr>
-										{% for etudiant in etudiants %}
-									<tr>
-										<td>{{etudiant.nom }} {{etudiant.prenom }} &nbsp;&nbsp;&nbsp;</td>
+										<td>{{etudiant.nom }}
+											{{etudiant.prenom }}
+											&nbsp;&nbsp;&nbsp;</td>
 										<td><input user="{{etudiant.id }}" type="text" class="etudiant"></td>
-									
+
 									</tr>
-										
-											{% endfor %}
-								</table>
-				
-<button type="button" class="btn btn-success sauvegarder">sauvegarder</button>
+
+								{% endfor %}
+							</table>
+
+							<button type="button" class="btn btn-success sauvegarder">sauvegarder</button>
 
 						</div>
 					</div>
@@ -83,12 +95,12 @@
 	</div>
 
 	{{ block("Footer", "Menus/Footer.html.twig") }}
-		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
 	<script>
-	$( ".sauvegarder" ).click(function() {
+		$(".sauvegarder").click(function () {
 
-$(".etudiant").each(function() {
+$(".etudiant").each(function () {
 
 $.ajax({
 type: 'GET',
