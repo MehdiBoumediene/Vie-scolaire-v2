@@ -41,6 +41,11 @@ class Notes
      */
     private $intervenantid;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $type;
+
 
 
 
@@ -96,6 +101,18 @@ class Notes
     public function setIntervenantid(?string $intervenantid): self
     {
         $this->intervenantid = $intervenantid;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
