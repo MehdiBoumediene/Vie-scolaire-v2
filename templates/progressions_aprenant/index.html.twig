@@ -87,16 +87,10 @@
 								<div class="card-body">
 									{% for note in notes %}
 										<div class="row">
-											<div class="col-md-3">
-												{{note.type}}
-											</div>
-											<div class="col-md-3">
-												{{note.moduleid}}
+											<div class="col-md-12">
+											  <b>Module:</b>{{note.moduleid}}  <b>type:</b> {{note.type}} <b>Note:</b> {{note.note}}
 											</div>
 
-											<div class="col-md-3">
-												{{note.note}}
-											</div>
 										</div>
 
 									{% endfor %}
