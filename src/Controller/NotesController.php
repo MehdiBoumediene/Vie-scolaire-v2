@@ -81,13 +81,13 @@ class NotesController extends AbstractController
  /**
      * @Route("/calendrier_absences", name="user_notes", methods={"GET", "POST"})
      */
-    public function userNotes( EntityManagerInterface $em, IntervenantsRepository $intervenantsRepository, ModulesRepository $modulesRepository, Request $request): Response
+    public function userNotes( EntityManagerInterface $em, IntervenantsRepository $intervenantsRepository, EtudiantsRepository $etudiantsRepository, ModulesRepository $modulesRepository, Request $request): Response
     {
         $date = date('Y-m-d H:i:s');
         $note = $request->query->get('note');
 
         $user = $this->getUser();
-
+        $etudiant = $etudiantsRepository->findOneBy(array('user'=>$user));
         $intervenant = $intervenantsRepository->findOneBy(array('user'=>$user));
         $ap= $intervenant->getId();
         
@@ -98,7 +98,7 @@ class NotesController extends AbstractController
 
         $module_id = $module->getId();
   
-    $sql = "INSERT INTO `notes` (`id`,`note`, `moduleid`, `etudiantid`, `intervenantid`) VALUES (null,'$note','$apprenant','$module_id', '$ap')";
+    $sql = "INSERT INTO `notes` (`id`,`note`, `moduleid`, `etudiantid`, `intervenantid`) VALUES (null,'$note','$etudiant','$module_id', '$ap')";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();
