@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Intervenants;
+use App\Repository\NotesRepository;
 use App\Entity\Users;
 use App\Form\UsersType;
 use App\Form\IntervenantsType;
@@ -93,7 +94,7 @@ class EtudiantsController extends AbstractController
     /**
      * @Route("/{id}", name="app_etudiants_show", methods={"GET"})
      */
-    public function show(Etudiants $etudiant, AbsencesRepository $absencesRepository): Response
+    public function show(Etudiants $etudiant, AbsencesRepository $absencesRepository,NotesRepository $notesRepository): Response
     {
         $delay = new \Datetime('last month');
         $day = new \Datetime('last day');
@@ -102,6 +103,8 @@ class EtudiantsController extends AbstractController
             'etudiant' => $etudiant,
             'retards' => $absencesRepository->findByUserAbsences($etudiant,$delay,$day),
             'absences' => $absencesRepository->findByUser($etudiant,$delay,$day),
+            'notes' => $notesRepository->findBy(array('etudiantid'=>$etudiant)),
+
         ]);
     }
 
