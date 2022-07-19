@@ -73,13 +73,12 @@
 									<p></p>
 									<p>
 										<b>Code postal :</b>
-										{{ etudiant.codepostale.nom }}
+										{{ etudiant.codepostale.ville.nom }}
 									</p>
 									<p>
 										<b>Département :</b>
-										{% for ville in etudiant.ville %}
-											{{ ville.nom }}
-										{% endfor %}
+										{{ etudiant.codepostale.nom }}
+
 									</p>
 									<b>Téléphone :</b>
 									{{etudiant.telephone}}</p>
