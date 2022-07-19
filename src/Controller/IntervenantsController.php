@@ -67,6 +67,7 @@ class IntervenantsController extends AbstractController
          
             $user->setCreatedBy($this->getUser()->getEmail());
             $user->setUser($user);
+            $user->setClasse($form->get('classes')->getData());
             $user->setEmail($form->get('user')->get('email')->getData());
             $user->setRoles(['ROLE_INTERVENANT']);
             $user->setCreatedAt($date);

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @Route("/calendrier")
@@ -28,7 +29,7 @@ class CalendrierController extends AbstractController
     /**
      * @Route("/new", name="app_calendrier_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, CalendrierRepository $calendrierRepository): Response
+    public function new(Request $request, CalendrierRepository $calendrierRepository,EntityManagerInterface $em): Response
     {
         $calendrier = new Calendrier();
         $form = $this->createForm(CalendrierType::class, $calendrier);
@@ -36,6 +37,25 @@ class CalendrierController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $calendrierRepository->add($calendrier);
+
+            $type = $calendrier->getTitre();
+            $classe = $calendrier->getClasse();
+            $module = $calendrier->getModule();
+            $date = $calendrier->getDate();
+            $heure = $calendrier->getHeurdebut();
+
+
+            $message= "Nouvel événement: $type $module le $date à $heure";
+         
+
+
+            $sql = "INSERT INTO `notifications` (`id`, `type`, `classeid`, `message` ) VALUES (NULL, '$type', '$classe', '$message')";
+            $stmt = $em->getConnection()->prepare($sql);
+         
+            $result = $stmt->execute();
+
+
+
             return $this->redirectToRoute('app_gestion_calendrier', [], Response::HTTP_SEE_OTHER);
         }
 

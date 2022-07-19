@@ -6,6 +6,7 @@ use App\Repository\CalendrierRepository;
 use App\Repository\UsersRepository;
 use App\Repository\AbsencesRepository;
 use App\Repository\ApprenantsRepository;
+use App\Repository\ClassesRepository;
 use App\Entity\Absences;
 use App\Entity\Users;
 use App\Form\AbsencesType;
@@ -16,16 +17,22 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\NotificationsRepository;
 
 class MainController extends AbstractController
 {
     /**
      * @Route("/", name="app_main")
      */
-    public function index(): Response
+    public function index(NotificationsRepository $notificationsRepository, ClassesRepository $classesRepository, ): Response
     {
+        $user = $this->getUser();
+        
+
+
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
+            'notifications' => $notificationsRepository->findAll(),
         ]);
     }
 
