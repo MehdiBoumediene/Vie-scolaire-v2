@@ -77,7 +77,9 @@
 									</p>
 									<p>
 										<b>Département :</b>
-										{{ etudiant.villes.nom }}
+										{% for ville in etudiant.villes %}
+											{{ ville.nom }}
+										{% endfor %}
 									</p>
 									<b>Téléphone :</b>
 									{{etudiant.telephone}}</p>
