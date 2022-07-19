@@ -19,11 +19,14 @@
 								{{ etudiant.nom }}
 								{{ etudiant.prenom }}
 								<div class="page-title-subheading" style="opacity: 1;">
+									{% if app.user.roles[0] == "ROLE_ADMIN" %}
+										Créée Le
+										{{ etudiant.createdAt ? etudiant.createdAt|date('Y-m-d H:i') : '' }}
+										Par
+										{{ etudiant.createdBy }}
+										{% else %}
 
-									Créée Le
-									{{ etudiant.createdAt ? etudiant.createdAt|date('Y-m-d H:i') : '' }}
-									Par
-									{{ etudiant.createdBy }}
+									{% endif %}
 								</div>
 							</div>
 						</div>
@@ -39,14 +42,18 @@
 									</button>
 
 								</a>
-								<a href="{{ path('app_etudiants_edit',{id:etudiant.id}) }}">
-									<button class="mb-2 mr-2 btn-outline-2x btn btn-shadow-warning btn-outline-warning">
-										<span class="btn-icon-wrapper pr-2 opacity-7">
-											<i class="fa fa-fw" aria-hidden="true" title="Copy to use edit"></i>
-										</span>
-										Modifier
-									</button>
-								</a>
+								{% if app.user.roles[0] == "ROLE_ADMIN" %}
+									<a href="{{ path('app_etudiants_edit',{id:etudiant.id}) }}">
+										<button class="mb-2 mr-2 btn-outline-2x btn btn-shadow-warning btn-outline-warning">
+											<span class="btn-icon-wrapper pr-2 opacity-7">
+												<i class="fa fa-fw" aria-hidden="true" title="Copy to use edit"></i>
+											</span>
+											Modifier
+										</button>
+									</a>
+									{% else %}
+
+								{% endif %}
 
 								{{ include('etudiants/_delete_form.html.twig') }}
 
