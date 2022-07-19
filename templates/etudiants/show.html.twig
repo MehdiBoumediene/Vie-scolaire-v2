@@ -115,14 +115,95 @@
 							<div class="card-body">
 								<h5 class="card-title">Absences</h5>
 								<ul class="list-group list-group-flush"></ul>
+								<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+									<thead>
+										<tr role="row">
+											<th>Etat</th>
+											<th>Date</th>
+										</tr>
+									</thead>
+									<tbody>
+
+										{% for absence in absences %}
+											<tr>
+
+												<td>
+
+													Absent
+
+												</td>
+
+												<td>
+
+													{{ absence.date|date('Y-m-d H:i') }}
+
+
+												</td>
+
+
+											</tr>
+										{% else %}
+											<tr>
+												<td colspan="7">Pas d'absences</td>
+											</tr>
+										{% endfor %}
+
+									</tbody>
+
+								</table>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="main-card mb-3 card">
 							<div class="card-body">
-								<h5 class="card-title">Progression et résultat</h5>
+								<h5 class="card-title">Retards</h5>
 								<ul class="list-group list-group-flush"></ul>
+								<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+									<thead>
+										<tr role="row">
+											<th>Etat</th>
+											<th>Date</th>
+											<th>Durée</th>
+
+										</tr>
+									</thead>
+									<tbody>
+
+										{% for retard in retards %}
+											<tr>
+
+												<td>
+
+													En retard
+
+												</td>
+
+												<td>
+
+													{{ retard.date|date('Y-m-d H:i') }}
+
+
+												</td>
+
+												<td>
+
+													{{ retard.dureeretard|date('H:i') }}
+
+
+												</td>
+
+
+											</tr>
+										{% else %}
+											<tr>
+												<td colspan="7">Pas de retards</td>
+											</tr>
+										{% endfor %}
+
+									</tbody>
+
+								</table>
 							</div>
 						</div>
 					</div>
