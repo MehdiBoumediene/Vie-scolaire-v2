@@ -2,7 +2,7 @@
 	<div class="app-header header-shadow bg-night-sky header-text-light">
 		<div class="app-header__logo">
 			<h3 style="    color: white;
-																												    font-weight: bold;font-size:26px;">NEW CRM</h3>
+																																    font-weight: bold;font-size:26px;">NEW CRM</h3>
 			<div class="header__pane ml-auto">
 				<div>
 					<button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
@@ -51,7 +51,7 @@
 								</div>
 							</div>
 
-						
+
 							<ul class="nav flex-column">
 								<li class="nav-item-divider nav-item"></li>
 								<li class="nav-item-btn text-center nav-item">
@@ -157,7 +157,7 @@
 							<span class="icon-wrapper icon-wrapper-alt rounded-circle">
 								<span class="icon-wrapper-bg bg-danger"></span>
 								<i class="icon text-danger icon-anim-pulse ion-android-notifications"></i>
-							
+
 							</span>
 						</button>
 						<div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu-xl rm-pointers dropdown-menu dropdown-menu-right" style="">
@@ -180,9 +180,11 @@
 											<div class="p-3">
 												<div class="notifications-box">
 													<div class="vertical-time-simple vertical-without-time vertical-timeline vertical-timeline--one-column">
-													
-													
-												
+
+														{% for notification in notifications %}
+															{{notification.type}}
+														{% endfor %}
+
 													</div>
 												</div>
 											</div>

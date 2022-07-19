@@ -27,12 +27,12 @@ class MainController extends AbstractController
     public function index(NotificationsRepository $notificationsRepository, ClassesRepository $classesRepository, ): Response
     {
         $user = $this->getUser();
+        $classe = $user->getClasse();
         
-
 
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
-            'notifications' => $notificationsRepository->findAll(),
+            'notifications' => $notificationsRepository->findBy(array('classeid'=>$classe)),
         ]);
     }
 
