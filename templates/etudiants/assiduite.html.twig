@@ -97,6 +97,7 @@
 										<tr role="row">
 											<th>Date</th>
 											<th>Module</th>
+											<th>Horaire</th>
 											<th>Justification</th>
 
 										</tr>
@@ -115,6 +116,11 @@
 												<td>
 
 													{{absence.module.nom}}
+
+												</td>
+												<td>
+
+													{{absence.calendrier.duree|date('H:i') }}
 
 												</td>
 												<td>
