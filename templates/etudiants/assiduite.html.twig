@@ -91,6 +91,14 @@
 						<div class="main-card mb-3 card">
 							<div class="card-body">
 								<h5 class="card-title">Absences</h5>
+								{% set totalAbsences = 0 %}
+								{% for absence in absences %}
+
+									{% set totalAbsences = totalAbsences + 1 %}
+
+								{% endfor %}
+								<br>
+								Total absences :	{{ totalAbsences}}
 								<ul class="list-group list-group-flush"></ul>
 								<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
 									<thead>
@@ -154,8 +162,9 @@
 
 					</table>
 					<br><b>
-						Total absences : 
-						</b> {{ totalAbsences}}
+						Total absences :
+					</b>
+					{{ totalAbsences}}
 				</div>
 			</div>
 		</div>
