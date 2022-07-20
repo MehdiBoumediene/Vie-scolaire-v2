@@ -96,8 +96,9 @@
 									<thead>
 										<tr role="row">
 											<th>Date</th>
-											<th>Heure</th>
 											<th>Module</th>
+											<th>Heure</th>
+											<th>Durée</th>
 											<th>Justification</th>
 
 										</tr>
@@ -113,6 +114,12 @@
 
 
 												</td>
+
+												<td>
+
+													{{absence.module.nom}}
+
+												</td>
 												<td>
 													{% for horaire in absence.module.calendriers %}
 														{% if loop.last %}
@@ -121,12 +128,12 @@
 													{% endfor %}
 												</td>
 												<td>
-
-													{{absence.module.nom}}
-
+													{% for horaire in absence.module.calendriers %}
+														{% if loop.last %}
+															{{horaire.duree|date('H:i') }}
+														{% endif %}
+													{% endfor %}
 												</td>
-
-
 												<td>
 
 													Absence injustifiée</td>
