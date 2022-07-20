@@ -145,13 +145,14 @@
 								<tr>
 									<td colspan="7">Pas d'absences</td>
 								</tr>
+								{% set totalAbsences = {{ horaire|length }} %}
 							{% endfor %}
 
 						</tbody>
 
 					</table>
 					<br><b>Nombre total d'absences:
-						{{ horaires|length }}</b>
+						{{ totalAbsences}}</b>
 				</div>
 			</div>
 		</div>
