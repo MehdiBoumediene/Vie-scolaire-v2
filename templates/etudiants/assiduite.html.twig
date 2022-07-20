@@ -99,7 +99,7 @@
 									{% for horaire in absence.module.calendriers %}
 										{% if loop.last %}
 											{% set totalheures = totalheures + horaire.duree|date('H') %}
-											{{horaire.duree|date('H:i') }}
+										
 										{% endif %}
 									{% endfor %}
 								{% endfor %}
