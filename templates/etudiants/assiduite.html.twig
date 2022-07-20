@@ -95,8 +95,10 @@
 								<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
 									<thead>
 										<tr role="row">
-											<th>Etat</th>
 											<th>Date</th>
+											<th>Module</th>
+											<th>Justification</th>
+
 										</tr>
 									</thead>
 									<tbody>
@@ -106,14 +108,18 @@
 
 												<td>
 
-													Absent
-
-												</td>
-
-												<td>
-
 													{{ absence.date|date('Y-m-d H:i') }}
 
+
+												</td>
+												<td>
+
+													{{absence.modules.nom}}
+
+												</td>
+												<td>
+
+													absence injustifiée
 
 												</td>
 
