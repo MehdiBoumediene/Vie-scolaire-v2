@@ -98,7 +98,7 @@
 									{% set totalAbsences = totalAbsences + 1 %}
 									{% for horaire in absence.module.calendriers %}
 										{% if loop.last %}
-											{% set totalheures = totalheures + horaire.duree|date('H:i') + 1 %}
+											{% set totalheures = totalheures + horaire.duree|date('H:i') %}
 											{{horaire.duree|date('H:i') }}
 										{% endif %}
 									{% endfor %}
@@ -107,7 +107,8 @@
 								Total absences :
 								{{ totalAbsences}}
 
-								Total heures d'absences : 	{{ totalheures}}
+								Total heures d'absences :
+								{{ totalheures}}
 								<ul class="list-group list-group-flush"></ul>
 								<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
 									<thead>
