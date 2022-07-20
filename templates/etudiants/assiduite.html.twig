@@ -92,14 +92,22 @@
 							<div class="card-body">
 								<h5 class="card-title">Absences</h5>
 								{% set totalAbsences = 0 %}
+								{% set totalheures = 0 %}
 								{% for absence in absences %}
 
 									{% set totalAbsences = totalAbsences + 1 %}
-
+									{% for horaire in absence.module.calendriers %}
+										{% if loop.last %}
+											{% set totalheures = totalheures + horaire.duree|date('H:i') + 1 %}
+											{{horaire.duree|date('H:i') }}
+										{% endif %}
+									{% endfor %}
 								{% endfor %}
 								<br>
 								Total absences :
 								{{ totalAbsences}}
+
+								Total heures d'absences : 	{{ totalheures}}
 								<ul class="list-group list-group-flush"></ul>
 								<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
 									<thead>
