@@ -122,9 +122,9 @@
 
 												<td>
 													{% for horaire in absence.module.calendriers %}
-
-														{{horaire.duree|date('H:i')|last }}
-
+														{% if loop.last %}
+															{{horaire.duree|date('H:i') }}
+														{% endif %}
 													{% endfor %}
 												</td>
 												<td>
