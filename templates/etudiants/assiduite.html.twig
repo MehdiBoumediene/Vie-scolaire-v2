@@ -104,7 +104,7 @@
 										</tr>
 									</thead>
 									<tbody>
-
+										{% set totalAbsences = 0 %}
 										{% for absence in absences %}
 											<tr>
 
@@ -141,6 +141,7 @@
 										</tbody>
 									</tbody>
 								</tr>
+
 								{% set totalAbsences = totalAbsences + 1 %}
 							{% else %}
 								<tr>
