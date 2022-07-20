@@ -118,7 +118,7 @@ class EtudiantsController extends AbstractController
         $delay = new \Datetime('last month');
         $day = new \Datetime('last day');
         
-        return $this->render('etudiants/show.html.twig', [
+        return $this->render('etudiants/assiduite.html.twig', [
             'etudiant' => $etudiant,
             'retards' => $absencesRepository->findByUserAbsences($etudiant,$delay,$day),
             'absences' => $absencesRepository->findByUser($etudiant,$delay,$day),
@@ -135,7 +135,7 @@ class EtudiantsController extends AbstractController
         $delay = new \Datetime('last month');
         $day = new \Datetime('last day');
         
-        return $this->render('etudiants/show.html.twig', [
+        return $this->render('etudiants/notes.html.twig', [
             'etudiant' => $etudiant,
             'retards' => $absencesRepository->findByUserAbsences($etudiant,$delay,$day),
             'absences' => $absencesRepository->findByUser($etudiant,$delay,$day),
