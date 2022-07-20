@@ -141,11 +141,12 @@
 										</tbody>
 									</tbody>
 								</tr>
+								{% set totalAbsences = horaire|length %}
 							{% else %}
 								<tr>
 									<td colspan="7">Pas d'absences</td>
 								</tr>
-								{% set totalAbsences = horaire|length %}
+
 							{% endfor %}
 
 						</tbody>
