@@ -121,9 +121,9 @@
 												</td>
 
 												<td>
-													{% for horaire in absence.module.calendriers %}
+													{% for horaire in absence.module.calendriers[0] %}
 
-														{{horaire[0].duree|date('H:i') }}
+														{{horaire.duree|date('H:i') }}
 
 													{% endfor %}
 												</td>
