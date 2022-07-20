@@ -113,22 +113,24 @@
 
 
 												</td>
+
 												<td>
 
 													{{absence.module.nom}}
 
 												</td>
+
 												<td>
 													{% for horaire in absence.module.calendriers %}
 
 														{{horaire.duree|date('H:i') }}
 													{% endfor %}
 												</td>
-											</tr>
-										</td>
-										<td>
+												<td>
 
-											Absence injustifiée</td>
+													Absence injustifiée</td>
+											</tr>
+										</tbody>
 									</tbody>
 								</tr>
 							{% else %}
