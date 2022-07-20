@@ -109,6 +109,40 @@ class EtudiantsController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/{id}/assiduité", name="app_etudiants_assiduite", methods={"GET"})
+     */
+    public function assiduite(Etudiants $etudiant, AbsencesRepository $absencesRepository,NotesRepository $notesRepository): Response
+    {
+        $delay = new \Datetime('last month');
+        $day = new \Datetime('last day');
+        
+        return $this->render('etudiants/show.html.twig', [
+            'etudiant' => $etudiant,
+            'retards' => $absencesRepository->findByUserAbsences($etudiant,$delay,$day),
+            'absences' => $absencesRepository->findByUser($etudiant,$delay,$day),
+            'notes' => $notesRepository->findBy(array('etudiantid'=>$etudiant)),
+
+        ]);
+    }
+
+     /**
+     * @Route("/{id}/notes", name="app_etudiants_notes", methods={"GET"})
+     */
+    public function notes(Etudiants $etudiant, AbsencesRepository $absencesRepository,NotesRepository $notesRepository): Response
+    {
+        $delay = new \Datetime('last month');
+        $day = new \Datetime('last day');
+        
+        return $this->render('etudiants/show.html.twig', [
+            'etudiant' => $etudiant,
+            'retards' => $absencesRepository->findByUserAbsences($etudiant,$delay,$day),
+            'absences' => $absencesRepository->findByUser($etudiant,$delay,$day),
+            'notes' => $notesRepository->findBy(array('etudiantid'=>$etudiant)),
+
+        ]);
+    }
     /**
      * @Route("/{id}/edit", name="app_etudiants_edit", methods={"GET", "POST"})
      */
