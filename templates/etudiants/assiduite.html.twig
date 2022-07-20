@@ -141,7 +141,7 @@
 										</tbody>
 									</tbody>
 								</tr>
-								{% set totalAbsences = absence|length %}
+								{% set totalAbsences = totalAbsences + 1 %}
 							{% else %}
 								<tr>
 									<td colspan="7">Pas d'absences</td>
