@@ -72,13 +72,13 @@
 																{% endif %}
 															{% endfor %}
 														</td>
-													</tr>
-												</td>
 
-												<td>
-													<a href="{{ path('app_absences_show', {'id': absence.id}) }}">show</a>
-													<a href="{{ path('app_absences_edit', {'id': absence.id}) }}">edit</a>
-												</td>
+														<td>
+															<a href="{{ path('app_absences_show', {'id': absence.id}) }}">show</a>
+															<a href="{{ path('app_absences_edit', {'id': absence.id}) }}">edit</a>
+														</td>
+													</tr>
+												</tbody>
 											</tbody>
 										</tr>
 									{% else %}
