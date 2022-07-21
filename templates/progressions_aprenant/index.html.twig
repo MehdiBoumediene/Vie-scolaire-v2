@@ -85,35 +85,97 @@
 						<div class="col-md-12">
 							<div class="main-card mb-3 card">
 								<div class="card-body">
-									{% for note in notes %}
 
 
-										<b>Module:</b>
-										{{note.moduleid}}<br>
-										<b>type:</b>
-										{{note.type}}
-									</br>
-									<b>Note:</b>
-									{{note.note}}/20
-								</br>
-								<hr>
+									<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+										<thead>
+											<tr role="row">
+
+												<th>Bloc / Modules</th>
+												<th>Moyenne</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											{% for note in notes %}
+												<tr>
 
 
+													<td>
+														<button class="accordion bloc">
+															<b>
+																Bloc :
+															</b>
+															{{note.module.bloc.nom}}
+															&ensp; &ensp; &ensp;
+
+
+															<b>Coefficient :
+															</b>
+															{{note.module.bloc.coefficient}}
+															<i class="pe-7s-plus"></i>
+														</button>
+
+														<div class="panel">
+
+															{% for module in note.module.bloc.modules %}
+																<button class="accordion module">
+																	<b>
+																		Module :
+																	</b>
+																	{{module.nom}}
+																	&ensp; &ensp; &ensp;
+
+																	<b>
+																		Type :
+																	</b>
+																	{{note.type}}
+																	&ensp; &ensp; &ensp;
+																	<b>
+																		Coefficient :
+																	</b>
+																	{{note.module.coefficient}}
+																	&ensp; &ensp; &ensp;
+																	<b>Note :
+																	</b>
+																	{{note.note}}/20
+
+																</button>
+															{% endfor %}
+
+
+														</div>
+													</td>
+													<td>
+
+														{{note.note}}/20
+
+
+													</td>
+
+												</tr>
+											{% else %}
+												<tr>
+													<td colspan="7">Pas de notes</td>
+												</tr>
+											{% endfor %}
+
+										</tbody>
+
+									</table>
+								</div>
 							</div>
+						</div>
 
-						{% endfor %}
 
 					</div>
+
+
 				</div>
 			</div>
-
-
 		</div>
-
-
-	</div>
-</div></div><script>
-var acc = document.getElementsByClassName("accordion");
+		<script>
+			var acc = document.getElementsByClassName("accordion");
 var i;
 for (i = 0; i < acc.length; i++) {
 acc[i].addEventListener("click", function () {
@@ -125,4 +187,6 @@ panel.style.display = "none";
 panel.style.display = "block";
 }
 });
-}</script>{% endblock %}
+}
+		</script>
+	{% endblock %}
