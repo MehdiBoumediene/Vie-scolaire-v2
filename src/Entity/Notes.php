@@ -51,6 +51,11 @@ class Notes
      */
     private $moyenne;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Modules::class, inversedBy="notes")
+     */
+    private $module;
+
 
 
 
@@ -130,6 +135,18 @@ class Notes
     public function setMoyenne(?string $moyenne): self
     {
         $this->moyenne = $moyenne;
+
+        return $this;
+    }
+
+    public function getModule(): ?Modules
+    {
+        return $this->module;
+    }
+
+    public function setModule(?Modules $module): self
+    {
+        $this->module = $module;
 
         return $this;
     }
