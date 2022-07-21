@@ -94,11 +94,8 @@
 								<ul class="list-group list-group-flush">
 
 
-									{% for note in notes %}
-										{% for module in note.module %}
-											{{module.nom}}
-										{% endfor %}
-
+									{% for module in modules %}
+										{{module.nom}}
 									{% endfor %}
 
 
