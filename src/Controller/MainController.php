@@ -101,7 +101,7 @@ class MainController extends AbstractController
         $duree = $request->query->get('duree');
         $module = $request->query->get('module');
   
-        $etudiant = $etudiantsRepository->findOneBy(array('user'=>$user));
+        $etudiant = $etudiantsRepository->findOneBy(array('id'=>$user));
         $username = $etudiant->getNom();
      
 
