@@ -107,7 +107,7 @@ class NotesController extends AbstractController
 
         $moyenne = ($note * $coefficient) / $coefficient;
   
-    $sql = "INSERT INTO `notes` (`id`,`note`, `moduleid`, `etudiantid`, `intervenantid`, `type`, `moyenne`, `module_id`) VALUES (null,'$note','$lemodule','$etud','$ap','$type','$moyenne',1)";
+    $sql = "INSERT INTO `notes` (`id`,`note`, `moduleid`, `etudiantid`, `intervenantid`, `type`, `moyenne`, `module_id`) VALUES (null,'$note','$lemodule','$etud','$ap','$type','$moyenne','$module_id')";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();
