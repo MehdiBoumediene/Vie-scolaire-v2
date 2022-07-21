@@ -41,11 +41,11 @@ class CalendrierController extends AbstractController
             $type = $calendrier->getTitre();
             $classe = $calendrier->getClasse();
             $module = $calendrier->getModule();
-            $date = $calendrier->getDate();
-            $heure = $calendrier->getHeurdebut();
+            $date = $calendrier->getDate()->format('Y-m-d') ;
+            $heure = $calendrier->getHeurdebut()->format('H:i') ;
 
 
-            $message= "Nouvel événement: $type $module le $date->format('d/m/Y' H:i) à $heure->format('H:i')";
+            $message= "Nouvel événement: $type $module le $date à $heure";
          
 
 
