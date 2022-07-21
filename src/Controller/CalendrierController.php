@@ -45,7 +45,7 @@ class CalendrierController extends AbstractController
             $heure = $calendrier->getHeurdebut();
 
 
-            $message= "Nouvel événement: $type $module le $date->format('d/m/Y' H:i) à $heure->format('d/m/Y H:i')";
+            $message= "Nouvel événement: $type $module le $date->format('d/m/Y' H:i) à $heure->format('H:i')";
          
 
 
