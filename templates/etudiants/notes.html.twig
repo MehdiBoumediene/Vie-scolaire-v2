@@ -186,6 +186,11 @@
 
 														<div class="panel">
 
+															{% for module in note.module.bloc.modules %}
+															{{module.nom}}
+															{% endfor %}
+
+
 															<button class="accordion module">
 																<b>
 																	Module :
@@ -208,6 +213,7 @@
 																{{note.note}}/20
 
 															</button>
+
 														</div>
 													</td>
 													<td>
