@@ -49,7 +49,7 @@
 											<thead>
 												<tr role="row">
 
-													<th>Etudiant</th>
+													<th>Apprenant</th>
 													<th>Date</th>
 													<th>Module</th>
 													<th>Durée</th>
@@ -61,7 +61,7 @@
 
 												{% for absence in absences %}
 													<tr>
-														<td>{{ absence.user.nom }}</td>
+														<td>{{ absence.user.id }}</td>
 														<td>{{ absence.date ? absence.date|date('Y-m-d H:i:s') : '' }}</td>
 														<td>{{ absence.module.nom }}</td>
 
