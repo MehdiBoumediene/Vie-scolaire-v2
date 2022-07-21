@@ -15,7 +15,7 @@ class ProgressionsAprenantController extends AbstractController
     /**
      * @Route("/progressions/aprenant", name="app_progressions_aprenant")
      */
-    public function index(Etudiants $etudiant, EtudiantsRepository $etudiantsRepository,  AbsencesRepository $absencesRepository, NotesRepository $notesRepository): Response
+    public function index( EtudiantsRepository $etudiantsRepository,  AbsencesRepository $absencesRepository, NotesRepository $notesRepository): Response
     {
 
         $delay = new \Datetime('last month');
