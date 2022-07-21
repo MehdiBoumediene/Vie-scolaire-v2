@@ -102,7 +102,7 @@ class MainController extends AbstractController
         $module = $request->query->get('module');
   
         $etudiant = $etudiantsRepository->findOneBy(array('id'=>$user));
-        $username = $etudiant->getNom();
+        $username = $etudiant->getNom() .' '. $etudiant->getPrenom() ;
      
 
   if( $etat == 'Présent'){
