@@ -94,10 +94,7 @@
 								<h5 class="card-title">Notes</h5>
 
 								<ul class="list-group list-group-flush">
-									{% for module in notes.module %}
-										{{module.nom}}
-										aaa
-									{% endfor %}
+
 									<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
 										<thead>
 											<tr role="row">
@@ -121,7 +118,7 @@
 
 														{{note.moduleid}}
 
-
+														{{note.module.nom}}
 													</td>
 													<td>
 
