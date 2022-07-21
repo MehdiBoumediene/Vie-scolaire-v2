@@ -150,40 +150,13 @@
 								<h5 class="card-title">Notes</h5>
 
 								<ul class="list-group list-group-flush">
-									{% for note in notes %}
 
-										<button class="accordion bloc">
-											<b>
-												Bloc :
-											</b>
-											{{note.module.bloc.nom}}
-											&ensp; &ensp; &ensp; 
-																																																																																																			
-																																																																																																			
-																																																																																																														Coefficient :
-											{{note.module.bloc.coefficient}}
-
-										</button>
-										<div class="panel">
-											<button class="accordion module">
-												<b>
-													Module :
-												</b>
-												{{note.module.nom}}
-												&ensp; &ensp; &ensp; Note:
-												{{note.note}}/20
-
-											</button>
-										</div>
-
-
-									{% endfor %}
 									<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
 										<thead>
 											<tr role="row">
 												<th>Type</th>
 												<th>Module</th>
-												<th>Note</th>
+												<th>Moyenne</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -204,9 +177,9 @@
 															</b>
 															{{note.module.bloc.nom}}
 															&ensp; &ensp; &ensp; 
-																																																																																																																																							
-																																																																																																																																							
-																																																																																																																																																		Coefficient :
+																																																																																																																																																						
+																																																																																																																																																						
+																																																																																																																																																																	Coefficient :
 															{{note.module.bloc.coefficient}}
 
 														</button>
