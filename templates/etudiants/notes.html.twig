@@ -96,9 +96,48 @@
 								<ul class="list-group list-group-flush">
 
 
-									{% for module in modules %}
-										{{module.nom}}
-									{% endfor %}
+									<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+										<thead>
+											<tr role="row">
+												<th>Type</th>
+												<th>Module</th>
+												<th>Note</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											{% for note in notes %}
+												<tr>
+
+													<td>
+
+														{{note.type}}
+
+													</td>
+
+													<td>
+
+														{{note.moduleid}}
+
+
+													</td>
+													<td>
+
+														{{note.note}}/20
+
+
+													</td>
+
+												</tr>
+											{% else %}
+												<tr>
+													<td colspan="7">Pas de notes</td>
+												</tr>
+											{% endfor %}
+
+										</tbody>
+
+									</table>
 
 
 								</ul>
