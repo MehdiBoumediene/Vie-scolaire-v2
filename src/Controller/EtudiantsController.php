@@ -17,6 +17,7 @@ use App\Entity\Users;
 use App\Form\UsersType;
 use App\Form\IntervenantsType;
 use App\Repository\AbsencesRepository;
+
 use App\Repository\IntervenantsRepository;
 use App\Repository\ModulesRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -130,13 +131,17 @@ class EtudiantsController extends AbstractController
      /**
      * @Route("/{id}/notes", name="app_etudiants_notes", methods={"GET"})
      */
-    public function notes(Etudiants $etudiant, AbsencesRepository $absencesRepository,NotesRepository $notesRepository): Response
+    public function notes(Etudiants $etudiant, AbsencesRepository $absencesRepository,NotesRepository $notesRepository,ModulesRepository $modulesRepository): Response
     {
         $delay = new \Datetime('last month');
         $day = new \Datetime('last day');
+
+        $user = $this->getUser();
+        $classe = $user->getClasse();
         
         return $this->render('etudiants/notes.html.twig', [
             'etudiant' => $etudiant,
+            'modules' => $absencesRepository->findBy(array('classe'=>$classe)),
             'retards' => $absencesRepository->findByUserAbsences($etudiant,$delay,$day),
             'absences' => $absencesRepository->findByUser($etudiant,$delay,$day),
             'notes' => $notesRepository->findBy(array('etudiantid'=>$etudiant)),
