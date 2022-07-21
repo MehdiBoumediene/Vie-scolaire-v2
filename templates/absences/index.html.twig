@@ -64,7 +64,7 @@
 														<td>{{ absence.username }}</td>
 														<td>{{ absence.module.nom }}</td>
 
-														<td>{{ absence.date ? absence.date|date('Y-m-d H:i:s') : '' }}</td>
+														<td>{{ absence.date ? absence.date|date('Y-m-d H:i') : '' }}</td>
 
 														<td>
 															{% for horaire in absence.module.calendriers %}
