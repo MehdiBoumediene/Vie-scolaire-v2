@@ -61,6 +61,7 @@ class NotesController extends AbstractController
         $form = $this->createForm(NotesType::class, $note);
         $form->handleRequest($request);
         $user = $this->getUser();
+        $class= $this->getUser()->getClasse();
         $intervenant = $user->getIntervenants();
 
         foreach ($intervenant as $inter){
@@ -68,7 +69,7 @@ class NotesController extends AbstractController
         }
 
 
-        $etudiant = $etudiantsRepository->findByClasse($classe);
+        $etudiant = $etudiantsRepository->findByClasse($class);
        
         return $this->renderForm('notes/gestion.html.twig', [
             'etudiants' => $etudiant,
