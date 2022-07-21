@@ -61,7 +61,7 @@
 
 												{% for absence in absences %}
 													<tr>
-														<td>{{ absence.user.etudiants.nom }}</td>
+														<td>{{ absence.username }}</td>
 														<td>{{ absence.date ? absence.date|date('Y-m-d H:i:s') : '' }}</td>
 														<td>{{ absence.module.nom }}</td>
 
