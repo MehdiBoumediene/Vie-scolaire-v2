@@ -81,6 +81,7 @@
 					<li class="nav-item">
 						<a role="tab" class="nav-link active" href="{{ path('app_etudiants_notes', {'id': etudiant.id}) }}">
 							<span>Progressions et résultats</span>
+
 						</a>
 					</li>
 
@@ -91,12 +92,10 @@
 						<div class="main-card mb-3 card">
 							<div class="card-body">
 								<h5 class="card-title">Notes</h5>
+								{% for module in modules %}
+									{{module.nom}}
+								{% endfor %}
 								<ul class="list-group list-group-flush">
-
-
-									{% for module in modules %}
-										{{module.nom}}
-									{% endfor %}
 
 
 									<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
