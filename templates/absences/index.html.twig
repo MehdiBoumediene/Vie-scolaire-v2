@@ -64,34 +64,40 @@
 														<td>{{ absence.user.nom }}</td>
 														<td>{{ absence.date ? absence.date|date('Y-m-d H:i:s') : '' }}</td>
 														<td>{{ absence.module.nom }}</td>
-														<td>{{ absence.du ? absence.du|date('Y-m-d H:i:s') : '' }}</td>
-														<td>{{ absence.au ? absence.au|date('Y-m-d H:i:s') : '' }}</td>
+
 														<td>
-															<a href="{{ path('app_absences_show', {'id': absence.id}) }}">show</a>
-															<a href="{{ path('app_absences_edit', {'id': absence.id}) }}">edit</a>
+															{% for horaire in absence.module.calendriers %}
+																{% if loop.last %}
+																	{{horaire.start|date('H:i') }}
+																{% endif %}
+															{% endfor %}
 														</td>
 													</tr>
-												{% else %}
-													<tr>
-														<td colspan="7">no records found</td>
-													</tr>
-												{% endfor %}
+												</td>
 
+												<td>
+													<a href="{{ path('app_absences_show', {'id': absence.id}) }}">show</a>
+													<a href="{{ path('app_absences_edit', {'id': absence.id}) }}">edit</a>
+												</td>
 											</tbody>
+										</tr>
+									{% else %}
+										<tr>
+											<td colspan="7">no records found</td>
+										</tr>
+									{% endfor %}
 
-										</table>
-									</div>
-								</div>
+								</tbody>
 
-
-							</div>
+							</table>
 						</div>
 					</div>
 
 
 				</div>
 			</div>
-
 		</div>
 
-	{% endblock %}
+
+	</div>
+</div></div>{% endblock %}
