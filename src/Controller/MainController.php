@@ -93,7 +93,7 @@ class MainController extends AbstractController
      /**
      * @Route("/calendrier_absences", name="app_gestion_calendrier_absences", methods={"GET", "POST"})
      */
-    public function calendrierAbsences( EntityManagerInterface $em, Request $request): Response
+    public function calendrierAbsences( EntityManagerInterface $em, EtudiantsRepository $etudiantsRepository, Request $request): Response
     {
         $date = date('Y-m-d H:i:s');
         $etat = $request->query->get('etat');
@@ -101,29 +101,30 @@ class MainController extends AbstractController
         $duree = $request->query->get('duree');
         $module = $request->query->get('module');
   
-     
+        $etudiant = $etudiantsRepository->findOneBy(array('user'=>$user));
+        $username = $etudiant->getNom();
      
 
   if( $etat == 'Présent'){
-    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `retard`) VALUES (NULL, '$module', '$date', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '0', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '1', '2022-06-07 16:48:04', '$user', '$user',null)";
+    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `username`, `retard`) VALUES (NULL, '$module', '$date', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '0', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '1', '2022-06-07 16:48:04', '$user', '$user', '$username',null)";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();
   
   }  elseif( $etat == 'En retard'){
-    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `retard`) VALUES (NULL, '$module', '$date', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '0', '2022-06-07 16:48:04', '1', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '$user', '$user',null)";
+    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `username`, `retard`) VALUES (NULL, '$module', '$date', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '0', '2022-06-07 16:48:04', '1', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '$user', '$user', '$username',null)";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();
   } elseif( $etat == 'absent'){
-    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `dureeretard`) VALUES (NULL, '$module', '$date', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '1', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '$user', '$user',null)";
+    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `username`, `dureeretard`) VALUES (NULL, '$module', '$date', '2022-04-04 10:37:26', NULL, '2022-06-07 16:40:41', '2022-06-07 16:40:41', '2', '1', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '0', '2022-06-07 16:48:04', '$user', '$user', '$username',null)";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();
   }
   elseif( $etat == 'duree'){
     
-    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `dureeretard`) VALUES (NULL, '$module', '$date', null, NULL, null, null, '2', '0', null, '1', null, '0', null, '$user', '$user','$duree')";
+    $sql = "INSERT INTO `absences` (`id`, `module_id`, `date`, `created_at`, `created_by`, `du`, `au`, `classe_id`, `absent`, `dateabsence`, `enretard`, `dateretard`, `present`, `datepresence`, `user_id`, `userid`, `username`, `dureeretard`) VALUES (NULL, '$module', '$date', null, NULL, null, null, '2', '0', null, '1', null, '0', null, '$user', '$user', '$username','$duree')";
     $stmt = $em->getConnection()->prepare($sql);
  
     $result = $stmt->execute();
