@@ -19,32 +19,37 @@
 		}
 		.active,
 		.accordion:hover {
-			background-color: #ccc;
+			background-color: none;
 		}
 		.panel {
 			padding: 0 18px;
 			display: none;
-			background-color: white;
+			background: none;
 			overflow: hidden;
 		}
 		.accordion {
-			margin: 10px;
+			margin: 0;
+			padding: 0;
+			background: none;
 		}
 		.bloc {
-			background-color: #fff;
+			background-color: none;
 			color: black;
+			padding: 0;
 		}
 		.bloc:hover {
-			background-color: #274c8d;
-			color: white;
+			background-color: none;
+			color: black;
+			padding: 0;
 		}
 		.module {
-			background-color: #fff;
+			background: none;
 			color: black;
+			padding-top: 8px;
 		}
 		.module:hover {
-			background-color: #4f70ad;
-			color: white;
+			background: none;
+			color: black;
 		}
 		.chapitre {
 			background-color: #7587a7;
@@ -53,6 +58,10 @@
 		.chapitre:hover {
 			background-color: #7587a7;
 			color: white;
+		}
+		b,
+		strong {
+			font-weight: 500;
 		}
 	</style>
 	{{ block("MenuTop", "Menus/MenuTop.html.twig") }}
