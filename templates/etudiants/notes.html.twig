@@ -1,0 +1,260 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notes
+{% endblock %}
+
+{% block body %}
+	{{ block("MenuTop", "Menus/MenuTop.html.twig") }}
+	<div class="app-main">
+		{{ block("MenuLeft", "Menus/MenuLeft.html.twig") }}
+		<style>
+			.accordion {
+				background-color: #eee;
+				color: #444;
+				cursor: pointer;
+				padding: 18px;
+				width: 100%;
+				border: none;
+				text-align: left;
+				outline: none;
+				font-size: 15px;
+				transition: 0.4s;
+			}
+			.active,
+			.accordion:hover {
+				background-color: none;
+			}
+			.panel {
+				padding: 0 18px;
+				display: none;
+				background: none;
+				overflow: hidden;
+			}
+			.accordion {
+				margin: 0;
+				padding: 0;
+				background: none;
+			}
+			.bloc {
+				background-color: none;
+				color: black;
+				padding: 0;
+			}
+			.bloc:hover {
+				background-color: none;
+				color: black;
+				padding: 0;
+			}
+			.module {
+				background: none;
+				color: black;
+				padding-top: 8px;
+			}
+			.module:hover {
+				background: none;
+				color: black;
+			}
+			.chapitre {
+				background-color: #7587a7;
+				color: white;
+			}
+			.chapitre:hover {
+				background-color: #7587a7;
+				color: white;
+			}
+			b,
+			strong {
+				font-weight: 500;
+			}
+		</style>
+		<div class="app-main__outer">
+			<div class="app-main__inner">
+				<div class="app-page-title">
+					<div class="page-title-wrapper">
+						<div class="page-title-heading">
+
+							<img width="42" class="rounded-circle" src="{{asset('assets/images/avatars/user01.png')}}" alt="" style="width: 65px;margin-right: 15px;">
+
+
+							<div>
+								{{ etudiant.nom }}
+								{{ etudiant.prenom }}
+								<div class="page-title-subheading" style="opacity: 1;">
+									{% if app.user.roles[0] == "ROLE_ADMIN" %}
+										Créée Le
+										{{ etudiant.createdAt ? etudiant.createdAt|date('Y-m-d H:i') : '' }}
+										Par
+										{{ etudiant.createdBy }}
+										{% else %}
+
+									{% endif %}
+								</div>
+							</div>
+						</div>
+
+						<div class="page-title-actions">
+
+							<div class="d-inline-block dropdown">
+								<a href="{{ path('app_etudiants_index') }}">
+									<button class="mb-2 mr-2 btn btn-shadow btn-outline-2x btn-outline-secondary">
+										<span class="btn-icon-wrapper pr-2 opacity-7">
+											<i class="fa fa-fw" aria-hidden="true" title="Copy to use arrow-circle-left"></i>
+										</span>
+										Retour à la liste
+									</button>
+
+								</a>
+								{% if app.user.roles[0] == "ROLE_ADMIN" %}
+									<a href="{{ path('app_etudiants_edit',{id:etudiant.id}) }}">
+										<button class="mb-2 mr-2 btn-outline-2x btn btn-shadow-warning btn-outline-warning">
+											<span class="btn-icon-wrapper pr-2 opacity-7">
+												<i class="fa fa-fw" aria-hidden="true" title="Copy to use edit"></i>
+											</span>
+											Modifier
+										</button>
+									</a>
+									{{ include('etudiants/_delete_form.html.twig') }}
+
+									{% else %}
+
+								{% endif %}
+
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+					<li class="nav-item">
+						<a role="tab" class="nav-link" href="{{ path('app_etudiants_show', {'id': etudiant.id}) }}">
+							<span>
+								Informations</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a role="tab" class="nav-link" href="{{ path('app_etudiants_assiduite', {'id': etudiant.id}) }}">
+							<span>Assiduité</span>
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<a role="tab" class="nav-link active" href="{{ path('app_etudiants_notes', {'id': etudiant.id}) }}">
+							<span>Progressions et résultats</span>
+
+						</a>
+					</li>
+
+				</ul>
+				<div class="tabs-animation">
+
+					<div class="col-md-12">
+						<div class="main-card mb-3 card">
+							<div class="card-body">
+								<h5 class="card-title">Notes</h5>
+
+								<ul class="list-group list-group-flush">
+
+									<table style="width: 100%;" id="example" class="table table-hover table-striped table-bordered dataTable dtr-inline" role="grid" aria-describedby="example_info">
+										<thead>
+											<tr role="row">
+
+												<th>Bloc / Modules</th>
+												<th>Moyenne</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											{% for note in notes %}
+												<tr>
+
+
+													<td>
+														<button class="accordion bloc">
+															<b>
+																Bloc :
+															</b>
+															{{note.module.bloc.nom}}
+															&ensp; &ensp; &ensp;
+
+
+															<b>Coefficient :
+															</b>
+															{{note.module.bloc.coefficient}}
+															<i class="pe-7s-plus"></i>
+														</button>
+
+														<div class="panel">
+
+															{% for module in note.module.bloc.modules %}
+																<button class="accordion module">
+																	<b>
+																		Module :
+																	</b>
+																	{{module.nom}}
+																	&ensp; &ensp; &ensp;
+
+																	<b>
+																		Type :
+																	</b>
+																	{{note.type}}
+																	&ensp; &ensp; &ensp;
+																	<b>
+																		Coefficient :
+																	</b>
+																	{{note.module.coefficient}}
+																	&ensp; &ensp; &ensp;
+																	<b>Note :
+																	</b>
+																	{{note.note}}/20
+
+																</button>
+															{% endfor %}
+
+
+														</div>
+													</td>
+													<td>
+
+														{{note.note}}/20
+
+
+													</td>
+
+												</tr>
+											{% else %}
+												<tr>
+													<td colspan="7">Pas de notes</td>
+												</tr>
+											{% endfor %}
+
+										</tbody>
+
+									</table>
+
+
+								</ul>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			{{ block("Footer", "Menus/Footer.html.twig") }}
+
+			<script>
+				var acc = document.getElementsByClassName("accordion");
+var i;
+for (i = 0; i < acc.length; i++) {
+acc[i].addEventListener("click", function () {
+this.classList.toggle("active");
+var panel = this.nextElementSibling;
+if (panel.style.display === "block") {
+panel.style.display = "none";
+} else {
+panel.style.display = "block";
+}
+});
+}
+			</script>
+		{% endblock %}

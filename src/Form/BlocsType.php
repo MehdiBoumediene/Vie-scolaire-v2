@@ -17,6 +17,7 @@ class BlocsType extends AbstractType
     {
         $builder
             ->add('nom')
+            ->add('coefficient')
             ->remove('created_at')
             ->remove('created_by')
             ->add('Classe', EntityType::class, [

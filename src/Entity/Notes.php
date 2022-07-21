@@ -22,44 +22,43 @@ class Notes
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, unique=false)
      */
     private $note;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $coefmodule;
+    private $etudiantid;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $coefbloc;
+    private $moduleid;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $moy;
+    private $intervenantid;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $moygeneral;
+    private $type;
 
     /**
-     * @ORM\OneToOne(targetEntity=Modules::class, cascade={"persist", "remove"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $moyenne;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Modules::class, inversedBy="notes")
      */
     private $module;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Etudiants::class, cascade={"persist", "remove"})
-     */
-    private $apprenant;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Intervenants::class, cascade={"persist", "remove"})
-     */
-    private $Intervenant;
+
+
 
     
 
@@ -80,50 +79,62 @@ class Notes
         return $this;
     }
 
-    public function getCoefmodule(): ?string
+    public function getEtudiantid(): ?string
     {
-        return $this->coefmodule;
+        return $this->etudiantid;
     }
 
-    public function setCoefmodule(?string $coefmodule): self
+    public function setEtudiantid(?string $etudiantid): self
     {
-        $this->coefmodule = $coefmodule;
+        $this->etudiantid = $etudiantid;
 
         return $this;
     }
 
-    public function getCoefbloc(): ?string
+    public function getModuleid(): ?string
     {
-        return $this->coefbloc;
+        return $this->moduleid;
     }
 
-    public function setCoefbloc(?string $coefbloc): self
+    public function setModuleid(?string $moduleid): self
     {
-        $this->coefbloc = $coefbloc;
+        $this->moduleid = $moduleid;
 
         return $this;
     }
 
-    public function getMoy(): ?string
+    public function getIntervenantid(): ?string
     {
-        return $this->moy;
+        return $this->intervenantid;
     }
 
-    public function setMoy(?string $moy): self
+    public function setIntervenantid(?string $intervenantid): self
     {
-        $this->moy = $moy;
+        $this->intervenantid = $intervenantid;
 
         return $this;
     }
 
-    public function getMoygeneral(): ?string
+    public function getType(): ?string
     {
-        return $this->moygeneral;
+        return $this->type;
     }
 
-    public function setMoygeneral(?string $moygeneral): self
+    public function setType(?string $type): self
     {
-        $this->moygeneral = $moygeneral;
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getMoyenne(): ?string
+    {
+        return $this->moyenne;
+    }
+
+    public function setMoyenne(?string $moyenne): self
+    {
+        $this->moyenne = $moyenne;
 
         return $this;
     }
@@ -140,31 +151,7 @@ class Notes
         return $this;
     }
 
-    public function getApprenant(): ?Etudiants
-    {
-        return $this->apprenant;
-    }
 
-    public function setApprenant(?Etudiants $apprenant): self
-    {
-        $this->apprenant = $apprenant;
-
-        return $this;
-    }
-
-    public function getIntervenant(): ?Intervenants
-    {
-        return $this->Intervenant;
-    }
-
-    public function setIntervenant(?Intervenants $Intervenant): self
-    {
-        $this->Intervenant = $Intervenant;
-
-        return $this;
-    }
-
-    
 
     
 }

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Classes;
 use App\Entity\Etudiants;
 use App\Entity\Intervenants;
+use App\Entity\Modules;
 use App\Entity\Notes;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -18,23 +19,9 @@ class NotesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('note',TextType::class,[
-                'label'=>'note',
-            ])
-            ->add('coefmodule',TextType::class,[
-                'label'=>'Coefficient module',
-            ])
-            ->add('coefbloc',TextType::class,[
-                'label'=>'Coefficient bloc',
-            ])
-            ->add('moy',TextType::class,[
-                'label'=>'Moyenne',
-            ])
-            ->add('moygeneral',TextType::class,[
-                'label'=>'Moyenne générale',
-            ])
-            ->add('module', EntityType::class, [
-                'class' => Classes::class,
+         
+            ->add('moduleid', EntityType::class, [
+                'class' => Modules::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.nom', 'ASC');
@@ -42,8 +29,9 @@ class NotesType extends AbstractType
                 'choice_label' => 'nom',
               
             ])
+            
       
-            ->add('apprenant', EntityType::class, [
+            ->remove('apprenant', EntityType::class, [
                 'class' => Etudiants::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
@@ -58,7 +46,7 @@ class NotesType extends AbstractType
                
                 ])
            
-            ->add('intervenant', EntityType::class, [
+            ->remove('intervenant', EntityType::class, [
                 'class' => Intervenants::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')

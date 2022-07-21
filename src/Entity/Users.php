@@ -138,10 +138,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $tuteur;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Classes::class, inversedBy="users")
-     */
-    private $classe;
+
 
     /**
      * @ORM\OneToMany(targetEntity=Calendrier::class, mappedBy="intervenant")
@@ -164,6 +161,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $telechargements;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Classes::class, inversedBy="users")
+     */
+    private $classe;
+
    
 
    
@@ -180,7 +182,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         $this->documents = new ArrayCollection();
         $this->module = new ArrayCollection();
         $this->tuteur = new ArrayCollection();
-        $this->classe = new ArrayCollection();
+    
         $this->calendriers = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->telechargements = new ArrayCollection();
@@ -658,30 +660,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Classes>
-     */
-    public function getClasse(): Collection
-    {
-        return $this->classe;
-    }
-
-    public function addClasse(Classes $classe): self
-    {
-        if (!$this->classe->contains($classe)) {
-            $this->classe[] = $classe;
-        }
-
-        return $this;
-    }
-
-    public function removeClasse(Classes $classe): self
-    {
-        $this->classe->removeElement($classe);
-
-        return $this;
-    }
-
+  
     /**
      * @return Collection<int, Calendrier>
      */
@@ -781,6 +760,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
                 $telechargement->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getClasse(): ?Classes
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?Classes $classe): self
+    {
+        $this->classe = $classe;
 
         return $this;
     }

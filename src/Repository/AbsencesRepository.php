@@ -46,18 +46,36 @@ class AbsencesRepository extends ServiceEntityRepository
     }
 
 
-    public function findByUser($user)
+    public function findByUser($user,$delay,$day)
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.user = :val')
+       
+            ->andWhere('a.absent = :absent')
             ->setParameter('val', $user)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+
+            ->setParameter('absent', 1)
+            ->orderBy('a.date', 'DESC')
+         
             ->getQuery()
             ->getResult()
         ;
     }
     
+    public function findByUserAbsences($user,$delay,$day)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.user = :val')
+
+            ->andWhere('a.enretard = :retard')
+            ->setParameter('val', $user)
+            ->setParameter('retard', 1)
+            ->orderBy('a.date', 'DESC')
+        
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?Absences

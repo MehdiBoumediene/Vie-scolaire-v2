@@ -128,6 +128,11 @@ class Absences
      */
     private $minute;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $username;
+
  
 
 
@@ -423,6 +428,18 @@ class Absences
     public function setMinute(?string $minute): self
     {
         $this->minute = $minute;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }

@@ -56,6 +56,11 @@ class Blocs
      */
     private $calendriers;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $coefficient;
+
 
     public function __toString() {
         return $this->nom;
@@ -187,6 +192,18 @@ class Blocs
                 $calendrier->setBloc(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCoefficient(): ?string
+    {
+        return $this->coefficient;
+    }
+
+    public function setCoefficient(?string $coefficient): self
+    {
+        $this->coefficient = $coefficient;
 
         return $this;
     }

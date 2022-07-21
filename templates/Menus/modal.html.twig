@@ -212,48 +212,59 @@
 						<br><br></th>
 					<th>Etat
 						<br><br></th>
-					<label for="resultsForm_1111009155_checkall">Cocher tout présent</label>
-					&nbsp;
-					<input type="checkbox" id="resultsForm_1111009155_checkall" class="checkall_box" title="Tout cocher">
+					<div class="allpresent" style="float: right;">
+						<label for="resultsForm_1111009155_checkall">Cocher tout "Présent"</label>
 
+						<input type="checkbox" id="resultsForm_1111009155_checkall" class="checkall_box" title="Tout cocher">
+					</div>
 
 					{% if etudiants_calendar %}
 						{% for etudiant in etudiants_calendar %}
+
 							<tr style="border-bottom: solid 1px  #dddddd;" id="etat{{etudiant.id}}">
 								<td style="padding-right:30px;     padding-bottom: 10px;">
 
 
 									{{etudiant.prenom}}
 									{{etudiant.nom}}<br>
+
 								</td>
 								<td style="padding-bottom: 10px;">
 
 									<fieldset>
 
 										<label for="Présent{{etudiant.id}}">Présent</label>
-										<input type="checkbox" id="Présent{{etudiant.id}}" name="{{etudiant.id}}" class="Présent" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
+
+										<input type="checkbox" id="Présent{{etudiant.id}}" name="{{etudiant.id}}" class="Présent" classe="{{etudiant.classes.id}}" module="" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
+
 										<label for="Enretard{{etudiant.id}}">En retard</label>
-										<input type="checkbox" id="Enretard" name="Enretard" class="Enretard" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
+
+										<input type="checkbox" id="Enretard" name="Enretard" class="Enretard" classe="{{etudiant.classes.id}}" module="" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
+
 										<div class="dureeretard" style="display: contents;">
 											<label for="duree{{etudiant.id}}">Durée</label>
-											<input type="time" id="duree{{etudiant.id}}" name="duree" class="duree" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
+											<input type="time" id="duree{{etudiant.id}}" name="duree" class="duree" classe="{{etudiant.classes.id}}" module="" user="{{etudiant.id}}">&nbsp;&nbsp;&nbsp;
 
 										</div>
+
 										<label for="Absent{{etudiant.id}}">Absent</label>
-										<input type="checkbox" id="Absent{{etudiant.id}}" name="{{etudiant.id}}" class="Absent" user="{{etudiant.id}}"></td>
+
+
+										<input type="checkbox" id="Absent{{etudiant.id}}" name="{{etudiant.id}}" class="Absent" classe="{{etudiant.classes.id}}" module="" user="{{etudiant.id}}">
+
+
+									</td>
 								</td>
 							</tr>
-						</fieldset>
-					</td>
-				</tr>
-
-			</td>
-		</tr>
-
+						</td>
+					</tr>
+				</td>
+			</tr>
+		</fieldset>
 	</td>
-</tr>{% endfor %}{% else %}{% endif %}</table><br></div><div class="modal-footer"><button type="button" class="btn btn-success sauvegarder">sauvegarder</button><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div></div></div></div><script type="text/javascript"></script><script>$(".Présent").each(function (index) {
+</tr></td></tr></td></tr>{% endfor %}{% else %}{% endif %}</table><br></div><div class="modal-footer"><button type="button" class="btn btn-success sauvegarder">sauvegarder</button><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div></div> </div></div><script type="text/javascript"></script><script> $(".Présent").each(function (index) {
 console.log(index + ": " + $(this).attr("id"));
-
+$(this).attr("module", $('.moduleid').text())
 var tblFruits = document.getElementById('etat' + $(this).attr('user'));
 var chks = tblFruits.getElementsByTagName("INPUT");
 for (var i = 0; i < chks.length; i++) {
@@ -278,7 +289,8 @@ type: 'GET',
 url: "{{ path('app_gestion_calendrier_absences', {'etat': 'Présent','user': "+$(this).attr('user')+"}) }}",
 data: {
 etat: et,
-user: $(this).attr('user')
+user: $(this).attr('user'),
+module: $(".moduleid").val()
 
 
 },
@@ -333,7 +345,8 @@ type: 'GET',
 url: "{{ path('app_gestion_calendrier_absences', {'etat': 'En retard','user': "+$(this).attr('user')+"}) }}",
 data: {
 etat: et,
-user: $(this).attr('user')
+user: $(this).attr('user'),
+module: $(".moduleid").val()
 
 
 },
@@ -395,7 +408,8 @@ url: "{{ path('app_gestion_calendrier_absences', {'etat': 'En retard','user': "+
 data: {
 etat: et,
 user: $(this).attr('user'),
-duree: $(this).val()
+duree: $(this).val(),
+module: $(".moduleid").val()
 
 
 },
@@ -405,6 +419,62 @@ $("#Enretard" + data.user).attr("checked", "checked")
 
 } else {
 $("#Enretard" + data.user).attr("checked", false)
+}
+
+}
+});
+
+
+});
+
+
+});
+
+
+$(".Absent").each(function (index) {
+console.log(index + ": " + $(this).attr("id"));
+
+
+var tblFruits = document.getElementById('etat' + $(this).attr('user'));
+var chks = tblFruits.getElementsByTagName("INPUT");
+for (var i = 0; i < chks.length; i++) {
+chks[i].onclick = function () {
+for (var i = 0; i < chks.length; i++) {
+if (chks[i] != this && this.checked) {
+chks[i].checked = false;
+
+}
+}
+};
+}
+
+$(this).change(function () {
+
+if ($(this)) {
+
+var et = 'absent';
+} else {
+var et = '0';
+
+}
+
+$.ajax({
+type: 'GET',
+url: "{{ path('app_gestion_calendrier_absences', {'etat': 'absent','user': "+$(this).attr('user')+"}) }}",
+data: {
+etat: et,
+user: $(this).attr('user'),
+module: $(".moduleid").val()
+
+
+},
+success: function (data) { // $('#magasinDatas').html(data);
+if (data.etat == 1) {
+$("#Enretard" + data.user).attr("checked", "checked")
+
+} else {
+$("#Enretard" + data.user).attr("checked", false)
+
 }
 
 }
@@ -470,4 +540,4 @@ $("#Enretard" + data.user).attr("checked", false)
 });
 
 
-});</script>{% endblock %}
+});</script>{% endblock %}</td></tr>
