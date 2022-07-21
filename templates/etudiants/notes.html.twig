@@ -187,32 +187,30 @@
 														<div class="panel">
 
 															{% for module in note.module.bloc.modules %}
-														<button class="accordion module">
-																<b>
-																	Module :
-																</b>
-																{{module.nom}}
-																&ensp; &ensp; &ensp;
+																<button class="accordion module">
+																	<b>
+																		Module :
+																	</b>
+																	{{module.nom}}
+																	&ensp; &ensp; &ensp;
 
-																<b>
-																	Type :
-																</b>
-																{{module.notes.type}}
-																&ensp; &ensp; &ensp;
-																<b>
-																	Coefficient :
-																</b>
-																{{note.module.coefficient}}
-																&ensp; &ensp; &ensp;
-																<b>Note :
-																</b>
-																{{module.notes.note}}/20
+																	<b>
+																		Type :
+																	</b>
+																	{{module.note.type}}
+																	&ensp; &ensp; &ensp;
+																	<b>
+																		Coefficient :
+																	</b>
+																	{{note.module.coefficient}}
+																	&ensp; &ensp; &ensp;
+																	<b>Note :
+																	</b>
+																	{{module.note.note}}/20
 
-															</button>
+																</button>
 															{% endfor %}
 
-
-															
 
 														</div>
 													</td>
