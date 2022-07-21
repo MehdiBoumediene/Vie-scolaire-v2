@@ -23,6 +23,7 @@ class ProgressionsAprenantController extends AbstractController
 
         $user = $this->getUser();
         $classe = $user->getClasse();
+        $etudiant = $etudiantsRepository->findBy(array('user'=>$user));
 
         return $this->render('progressions_aprenant/index.html.twig', [
             'controller_name' => 'ProgressionsAprenantController',
