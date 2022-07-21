@@ -7,6 +7,57 @@
 	{{ block("MenuTop", "Menus/MenuTop.html.twig") }}
 	<div class="app-main">
 		{{ block("MenuLeft", "Menus/MenuLeft.html.twig") }}
+		<style>
+			.accordion {
+				background-color: #eee;
+				color: #444;
+				cursor: pointer;
+				padding: 18px;
+				width: 100%;
+				border: none;
+				text-align: left;
+				outline: none;
+				font-size: 15px;
+				transition: 0.4s;
+			}
+			.active,
+			.accordion:hover {
+				background-color: #ccc;
+			}
+			.panel {
+				padding: 0 18px;
+				display: none;
+				background-color: white;
+				overflow: hidden;
+			}
+			.accordion {
+				margin: 10px;
+			}
+			.bloc {
+				background-color: #274c8d;
+				color: white;
+			}
+			.bloc:hover {
+				background-color: #274c8d;
+				color: white;
+			}
+			.module {
+				background-color: #4f70ad;
+				color: white;
+			}
+			.module:hover {
+				background-color: #4f70ad;
+				color: white;
+			}
+			.chapitre {
+				background-color: #7587a7;
+				color: white;
+			}
+			.chapitre:hover {
+				background-color: #7587a7;
+				color: white;
+			}
+		</style>
 		<div class="app-main__outer">
 			<div class="app-main__inner">
 				<div class="app-page-title">
@@ -96,10 +147,26 @@
 								<ul class="list-group list-group-flush">
 									{% for note in notes %}
 
+										<button class="accordion bloc">
+											<b>
+												Bloc :
+											</b>
+											{{note.module.bloc.nom}}
 
-									<b> Bloc : </b>	{{note.module.bloc.nom}} Coefficient : {{note.module.bloc.coefficient}}  
-										<br>
-									<b> Module : </b>		{{note.module.nom}} <br>
+
+											Coefficient :
+											{{note.module.bloc.coefficient}}
+
+										</button>
+										<div class="panel">
+											<button class="accordion module">
+												<b>
+													Module :
+												</b>
+												{{note.module.nom}}
+
+											</button>
+										</div>
 
 
 									{% endfor %}
@@ -155,4 +222,20 @@
 				</div>
 			</div>
 			{{ block("Footer", "Menus/Footer.html.twig") }}
+
+			<script>
+				var acc = document.getElementsByClassName("accordion");
+var i;
+for (i = 0; i < acc.length; i++) {
+acc[i].addEventListener("click", function () {
+this.classList.toggle("active");
+var panel = this.nextElementSibling;
+if (panel.style.display === "block") {
+panel.style.display = "none";
+} else {
+panel.style.display = "block";
+}
+});
+}
+			</script>
 		{% endblock %}
