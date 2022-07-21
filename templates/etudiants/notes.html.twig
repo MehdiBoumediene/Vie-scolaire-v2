@@ -151,10 +151,11 @@
 											<b>
 												Bloc :
 											</b>
-											{{note.module.bloc.nom}} &ensp; &ensp; &ensp; 
-
-
-											Coefficient :
+											{{note.module.bloc.nom}}
+											&ensp; &ensp; &ensp; 
+											
+											
+																						Coefficient :
 											{{note.module.bloc.coefficient}}
 
 										</button>
@@ -163,7 +164,9 @@
 												<b>
 													Module :
 												</b>
-												{{note.module.nom}} &ensp; &ensp; &ensp; Note: {{note.note}}/20
+												{{note.module.nom}}
+												&ensp; &ensp; &ensp; Note:
+												{{note.note}}/20
 
 											</button>
 										</div>
@@ -190,10 +193,29 @@
 													</td>
 
 													<td>
+														<button class="accordion bloc">
+															<b>
+																Bloc :
+															</b>
+															{{note.module.bloc.nom}}
+															&ensp; &ensp; &ensp; 
+															
+															
+																										Coefficient :
+															{{note.module.bloc.coefficient}}
 
+														</button>
+														<div class="panel">
+											<button class="accordion module">
+												<b>
+													Module :
+												</b>
+												{{note.module.nom}}
+												&ensp; &ensp; &ensp; Note:
+												{{note.note}}/20
 
-														{{note.module.bloc.nom}}
-														{{note.module.nom}}
+											</button>
+										</div>
 													</td>
 													<td>
 
